@@ -1,0 +1,329 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "AddProducts",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.AddProducts",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ChiTietKhachHang",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ChiTietKhachHang",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ChiTietPhieuNhap",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ChiTietPhieuNhap",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "DSIMEII",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.DSIMEII",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "EditProduct",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.EditProduct",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "HuyHoaDon",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.HuyHoaDon",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "QuanLyHDH",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.QuanLyHDH",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "QuanLyRAM",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.QuanLyRAM",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "QuanLyROM",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.QuanLyROM",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "QuanLyThuongHieu",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.QuanLyThuongHieu",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaCauHinh",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaCauHinh",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaHDH",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaHDH",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaKhachHang",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaKhachHang",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaNhaCungCapDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaNhaCungCapDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaNhanVienDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaNhanVienDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaNhomQuyen",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaNhomQuyen",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaRAM",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaRAM",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaROM",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaROM",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaTaiKhoan",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaTaiKhoan",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "SuaThuongHieu",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.SuaThuongHieu",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemCauHinh",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemCauHinh",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemHDH",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemHDH",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemKhachHang",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemKhachHang",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemNhaCungCap",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemNhaCungCap",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemNhaCungCapCURD",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemNhaCungCapCURD",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemNhanVienDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemNhanVienDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemNhomQuyen",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemNhomQuyen",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemPhieuNhap",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemPhieuNhap",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemPhieuNhapDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemPhieuNhapDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemPhieuXuat",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemPhieuXuat",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemRAM",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemRAM",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemROM",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemROM",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemTaiKhoan",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemTaiKhoan",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ThemThuongHieu",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ThemThuongHieu",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "ViewCauHinh",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.ViewCauHinh",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemChiTietPhieuNhapDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemChiTietPhieuNhapDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemChiTietPhieuXuatDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemChiTietPhieuXuatDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemChiTietSanPham",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemChiTietSanPham",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemKhachHang",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemKhachHang",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemNhaCungCapDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemNhaCungCapDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemNhanVienDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemNhanVienDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemNhomQuyen",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemNhomQuyen",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemTaiKhoan",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemTaiKhoan",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "XemThongKeTonKhoDialog",
+            "request": "launch",
+            "mainClass": "GUI.CRUD.XemThongKeTonKhoDialog",
+            "projectName": "DoAnJavaa-main_28455175"
+        },
+        {
+            "type": "java",
+            "name": "LogIn",
+            "request": "launch",
+            "mainClass": "GUI.LogIn",
+            "projectName": "DoAnJavaa-main_28455175"
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+Cách chạy: Vào phpmyadmin tạo database tên: "quanlilaptop" sau đó import quanlilaptop.sql vào rồi chạy.
