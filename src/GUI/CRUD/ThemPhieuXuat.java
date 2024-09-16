@@ -123,7 +123,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 BUS_ChiTietCauHinh bus_ChiTietCauHinh = new BUS_ChiTietCauHinh();
                 int maphienban = Integer.parseInt(jComboBox1.getSelectedItem().toString().split(" ")[11]);
                 DTO_ChiTietCauHinh dto_ChiTietCauHinh = bus_ChiTietCauHinh.getchitietcauhinh(maphienban);
-                jTextField3.setText("0");
+                jTextField3.setText("10");
                 check = true;
             }
         });
