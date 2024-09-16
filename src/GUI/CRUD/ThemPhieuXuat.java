@@ -102,7 +102,8 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 // vnd gia xuat currenct vietnam
                 Locale vietnam = Locale.forLanguageTag("vi-VN");
                 NumberFormat format = NumberFormat.getCurrencyInstance(vietnam);
-                jTextField3.setText("0");
+                jTextField3.setText("10");
+                
 
             }
         });
