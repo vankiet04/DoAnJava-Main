@@ -43,7 +43,7 @@ public class LogIn extends JFrame implements KeyListener {
 
     public LogIn() {
         KhoiTaoComponent();
-        txtUsername.setText("admin t");
+        txtUsername.setText("admin");
         txtPassword.setPass("123456");
     }
     
