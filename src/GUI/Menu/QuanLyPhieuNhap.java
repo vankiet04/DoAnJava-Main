@@ -60,6 +60,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     DTO_TaiKhoan user;
      BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
      ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+     BUS_ChiTietSanPham busCTSP = new BUS_ChiTietSanPham();
      public QuanLyPhieuNhap() {
 
          initComponents();
@@ -997,6 +998,17 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here: Xoa
         int index = jTablePN.getSelectedRow();
+        // kiem tra co bao nhieu phien ban phien ban trong ma phieu nhap co ton tai ma phieu xuat
+        if (index == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để hủy!");
+            return;
+        }
+        int cnt = busCTSP.getsoluongphienbansanphamtontaitrongphieuxuat(Integer.parseInt(jTablePN.getValueAt(index, 0).toString()));
+        if (cnt > 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Không thể hủy vì có " + cnt + " phiên bản sản phẩm trong phiếu nhập đã được xuất đi!");
+            return;
+        }
         if (index != -1) {
             int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\n Hãy nghĩ kĩ vì sau khi hủy\n không thể hoàn tác lại.", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
             if (input == 0) {

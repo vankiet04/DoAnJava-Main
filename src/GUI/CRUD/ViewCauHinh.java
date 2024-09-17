@@ -22,6 +22,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import BUS.BUS_ChiTietCauHinh;
+import BUS.BUS_ChiTietSanPham;
 import BUS.BUS_Product;
 import ConnectDB.JDBCUtil;
 import DTO.DTO_ChiTietCauHinh;
@@ -36,6 +37,7 @@ public class ViewCauHinh extends javax.swing.JDialog {
      * Creates new form ViewCauHinh
      */
     BUS_ChiTietCauHinh bus_ChiTietCauHinh = new BUS_ChiTietCauHinh();
+    BUS_ChiTietSanPham bus_ChiTietSanPham = new BUS_ChiTietSanPham();
     int productid;
     java.awt.Frame parent;
     String currentIDselected = "-1";
@@ -45,8 +47,6 @@ public class ViewCauHinh extends javax.swing.JDialog {
         this.productid = productid;
         this.parent = parent;
         fillTablePhienBanSP();
-        jPanel3.setVisible(false);
-        jPanel4.setVisible(false);
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -257,6 +257,8 @@ public class ViewCauHinh extends javax.swing.JDialog {
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
         // TODO add your handling code here:
+        //kiem tra phien ban san pham ma ma phieu nhap !=null
+        
         ThemCauHinh addCauHinh = new ThemCauHinh(parent, true, productid + "");
         addCauHinh.setLocationRelativeTo(null);
         addCauHinh.setVisible(true);
@@ -268,6 +270,12 @@ public class ViewCauHinh extends javax.swing.JDialog {
         // TODO add your handling code here: sua
         if (currentIDselected.equals("-1")) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn một phiên bản sản phẩm để sửa");
+            return;
+        }
+        boolean check = bus_ChiTietSanPham.checkmapbsp(Integer.parseInt(currentIDselected));
+        if(check){
+            JOptionPane.showMessageDialog(parent, "Không thể sửa vì phiên bản sản phẩm tồn tại trong phiếu nhập!", "Cảnh báo!",
+            JOptionPane.WARNING_MESSAGE);
             return;
         }
         SuaCauHinh editCauHinh = new SuaCauHinh(parent, true, currentIDselected);
@@ -282,6 +290,12 @@ public class ViewCauHinh extends javax.swing.JDialog {
         // TODO add your handling code here: xoa
         if (currentIDselected.equals("-1")) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn một phiên bản sản phẩm để xóa");
+            return;
+        }
+        boolean check = bus_ChiTietSanPham.checkmapbsp(Integer.parseInt(currentIDselected));
+        if (check) {
+            JOptionPane.showMessageDialog(parent, "Không thể xóa vì phiên bản sản phẩm tồn tại trong phiếu nhập!", "Cảnh báo!",
+            JOptionPane.WARNING_MESSAGE);
             return;
         }
         int dialogButton = JOptionPane.YES_NO_OPTION;

@@ -371,6 +371,44 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
         return result;
     }
 
+    public int getsoluongphienbansanphamtontaitrongphieuxuat(int maphieunhap) {
+        int result = 0;
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            //ma phieu xuat khac null
+            String sql = "SELECT COUNT(*) as soluong FROM ctsanpham WHERE maphieunhap = ? and maphieuxuat IS NOT NULL";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            pst.setInt(1, maphieunhap);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            if (rs.next()) {
+                result = rs.getInt("soluong");
+            }
+            JDBCUtil.close(con);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
+        }
+        return result;
+    }
+
+    public boolean checkmapbsp(int mapbsp) {
+        boolean result = false;
+        // kiem tra mapbsp ma maphieu nahp != null
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT * FROM ctsanpham WHERE maphienbansp = ? and maphieunhap IS NOT NULL";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            pst.setInt(1, mapbsp);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            if (rs.next()) {
+                result = true;
+            }
+            JDBCUtil.close(con);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
+        }
+        return result;
+    }
+
     public String getLargestImei() {
         String result = "";
         try {

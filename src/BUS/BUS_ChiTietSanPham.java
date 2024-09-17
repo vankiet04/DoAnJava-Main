@@ -78,6 +78,14 @@ public class BUS_ChiTietSanPham {
     public int setmaphieuxuatnull(int maphieuxuat) {
         return ctspDAO.setmaphieuxuatnull(maphieuxuat);
     }
+
+    public int getsoluongphienbansanphamtontaitrongphieuxuat(int maphieunhap) {
+        return ctspDAO.getsoluongphienbansanphamtontaitrongphieuxuat(maphieunhap);
+    }
+
+    public boolean checkmapbsp(int mapbsp) {
+        return ctspDAO.checkmapbsp(mapbsp);
+    }
     
     public ArrayList<String> getToanBoImeiTheoPhienBanSanPham(int mapb) {
         return ctspDAO.getToanBoImeiTheoPhienBanSanPham(mapb);
