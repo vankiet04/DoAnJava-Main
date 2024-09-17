@@ -337,5 +337,20 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
         }
     }
 
+    public boolean checkMaSP(int masp) {
+        try {
+            String sql = "SELECT * FROM phienbansanpham WHERE masanpham = ?";
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            pst.setInt(1, masp);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
    
 }
