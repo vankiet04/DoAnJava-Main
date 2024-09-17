@@ -78,6 +78,10 @@ public class BUS_ChiTietSanPham {
     public int setmaphieuxuatnull(int maphieuxuat) {
         return ctspDAO.setmaphieuxuatnull(maphieuxuat);
     }
+    
+    public ArrayList<String> getToanBoImeiTheoPhienBanSanPham(int mapb) {
+        return ctspDAO.getToanBoImeiTheoPhienBanSanPham(mapb);
+    }
 }
 
 

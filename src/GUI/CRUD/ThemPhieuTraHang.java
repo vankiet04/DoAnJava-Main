@@ -49,7 +49,7 @@ import java.text.NumberFormat;
  *
  * @author Admin
  */
-public class ThemPhieuXuat extends javax.swing.JDialog {
+public class ThemPhieuTraHang extends javax.swing.JDialog {
 
     /**
      * Creates new form ThemPhieuNhap
@@ -78,7 +78,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
     boolean check = true;
     BUS_PhieuNhap busPhieuNhap = new BUS_PhieuNhap();
 
-    public ThemPhieuXuat(java.awt.Frame parent, boolean modal, DTO_TaiKhoan user, GUI.Menu.QuanLyPhieuXuat px) {
+    public ThemPhieuTraHang(java.awt.Frame parent, boolean modal, DTO_TaiKhoan user, GUI.Menu.QuanLyPhieuXuat px) {
         super(parent, modal);
         this.user = user;
         this.px = px;
@@ -441,8 +441,14 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
         jPanel5.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
         jComboBox1.setPreferredSize(new java.awt.Dimension(50, 22));
-       
-      
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            }
+        });
+        jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+            }
+        });
         jPanel5.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jPanel16.add(jPanel5);
@@ -838,17 +844,9 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
      
     }//GEN-LAST:event_jComboBox1ItemStateChanged
     private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
-        // TODO add your handling code here:
-        allimei = busChiTietSanPham.getImeiTheoMaPhienban(Integer.parseInt(jComboBox1.getSelectedItem().toString().split(" ")[11]));
-        ArrayList<String> tempimeidachon = new ArrayList<>(imeidachon);
-        // nếu chưa nhập số lượng xuất
-        if (jTextField5.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Nhập số lượng trước khi chọn imei");
-            return;
-        }
-        DSIMEII dsimei = new DSIMEII(null, true, allimei, this, tempimeidachon, Integer.parseInt(jTextField5.getText()));
-        dsimei.setLocationRelativeTo(null);
-        dsimei.setVisible(true);
+        // TODO add your handling code here: an vao dsimei
+        BUS_ChiTietSanPham bus_ChiTietSanPham = new BUS_ChiTietSanPham();
+        
         
     }//GEN-LAST:event_jButton5MousePressed
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -878,14 +876,19 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuXuat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemPhieuTraHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuXuat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemPhieuTraHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuXuat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemPhieuTraHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuXuat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ThemPhieuTraHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
