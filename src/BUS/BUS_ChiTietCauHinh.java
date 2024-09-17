@@ -79,6 +79,10 @@ public class BUS_ChiTietCauHinh {
     public void truSoLuongPhienBanSanPham(int maphienbansp, int soluong) {
         chitietproduct.truSoLuongPhienBanSanPham(maphienbansp, soluong);
     }
+
+    public boolean checkMaSP(int masp) {
+        return chitietproduct.checkMaSP(masp);
+    }
   
   
 }
