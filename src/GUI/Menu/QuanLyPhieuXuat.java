@@ -36,7 +36,8 @@ import DTO.DTO_TaiKhoan;
 import GUI.CRUD.HuyHoaDon;
 import GUI.CRUD.ThemPhieuXuat;
 import GUI.CRUD.XemChiTietPhieuXuatDialog;
-
+// import them phieu nhap hang
+import GUI.CRUD.ThemPhieuTraHang;
 
 
 /**
@@ -113,7 +114,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 e1.printStackTrace();
             }
         });
-        txtSearchNCC.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 try {
                     Fillter();
@@ -193,7 +194,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 : buskh.getByIndex(jComboBox1.getSelectedIndex() - 1).getMaKhachHang();
         int manv = jComboBox2.getSelectedIndex() == 0 ? 0
                 : busnv.getByIndex(jComboBox2.getSelectedIndex() - 1).getManv();
-        String input = txtSearchNCC.getText() != null ? txtSearchNCC.getText() : "";
+        String input = jTextField1.getText() != null ? jTextField1.getText() : "";
         jDateChooser1.setDateFormatString("dd/MM/yyyy");
         jDateChooser2.setDateFormatString("dd/MM/yyyy");
         java.util.Date ngaybatdau = jDateChooser1.getDate();
@@ -428,12 +429,11 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         jTable2 = new javax.swing.JTable();
         jPanel12 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        txtSearchNCC = new com.raven.suportSwing.TextField();
         jComboBoxNCC = new javax.swing.JComboBox<>();
-        myButton1NCC = new com.raven.suportSwing.MyButton();
         jButton2 = new javax.swing.JButton();
         jLabel2NCC = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -451,6 +451,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
         jLabel4NCC1 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(3200, 600));
 
@@ -565,7 +566,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 "Mã phiếu xuất", "Thời gian tạo", "Khách hàng", "Nhân viên tạo", "Tổng tiền"
             }
         ));
-
+        // jTable2.setPreferredSize(new java.awt.Dimension(1250, 81));
         jScrollPane1.setViewportView(jTable2);
 
         jPanel22.add(jScrollPane1);
@@ -576,38 +577,11 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
 
-        txtSearchNCC.setLabelText("Tìm theo tên or mã");
-        txtSearchNCC.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearchNCCFocusGained(evt);
-            }
-        });
-        txtSearchNCC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchNCCActionPerformed(evt);
-            }
-        });
-        txtSearchNCC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSearchNCCKeyReleased(evt);
-            }
-        });
-
         jComboBoxNCC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lọc theo hãng" }));
         jComboBoxNCC.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jComboBoxNCC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxNCCActionPerformed(evt);
-            }
-        });
-
-        myButton1NCC.setBackground(new java.awt.Color(204, 255, 255));
-        myButton1NCC.setText("Reset");
-        myButton1NCC.setBorderColor(new java.awt.Color(153, 255, 255));
-        myButton1NCC.setRadius(20);
-        myButton1NCC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                myButton1NCCActionPerformed(evt);
             }
         });
 
@@ -629,17 +603,17 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 255, 204));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
+        jTextField1.setText("Tìm kiếm");
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtSearchNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jComboBoxNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(myButton1NCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel11Layout.createSequentialGroup()
@@ -655,14 +629,12 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 .addComponent(jLabel2NCC, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(myButton1NCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBoxNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtSearchNCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -848,20 +820,37 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jButton8.setText("Trả hàng về nhà cung cấp");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton8MousePressed(evt);
+            }
+        });
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addContainerGap(197, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)))))
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -884,7 +873,8 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33))
+                                .addGap(10, 10, 10)
+                                .addComponent(jButton8))
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -962,7 +952,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
     private void myButton1NCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1NCCActionPerformed
         // TODO add your handling code here:
         //reset
-        txtSearchNCC.setText("");
+        jTextField1.setText("");
         jComboBoxNCC.setSelectedIndex(0);
         jComboBox1.setSelectedIndex(0);
         jComboBox2.setSelectedIndex(0);
@@ -977,17 +967,17 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxNCCActionPerformed
 
-    private void txtSearchNCCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNCCKeyReleased
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchNCCKeyReleased
+    }//GEN-LAST:event_jTextField1KeyReleased
 
-    private void txtSearchNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchNCCActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchNCCActionPerformed
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void txtSearchNCCFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchNCCFocusGained
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
 
-    }//GEN-LAST:event_txtSearchNCCFocusGained
+    }//GEN-LAST:event_jTextField1FocusGained
 
     private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
         // TODO add your handling code here: them phieu xuát
@@ -1049,6 +1039,17 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         huy.setVisible(true);
     }//GEN-LAST:event_jButton6MousePressed
 
+    private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
+        // TODO add your handling code here: tra hang
+        ThemPhieuTraHang themPhieuTraHang = new ThemPhieuTraHang(parent, true, user, this);
+        themPhieuTraHang.setLocationRelativeTo(null);
+        themPhieuTraHang.setVisible(true);
+    }//GEN-LAST:event_jButton8MousePressed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
@@ -1057,6 +1058,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBoxNCC;
@@ -1095,9 +1097,8 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private com.raven.suportSwing.MyButton myButton1NCC;
-    private com.raven.suportSwing.TextField txtSearchNCC;
     // End of variables declaration//GEN-END:variables
 }

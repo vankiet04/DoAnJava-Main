@@ -86,6 +86,10 @@ public class BUS_ChiTietSanPham {
     public boolean checkmapbsp(int mapbsp) {
         return ctspDAO.checkmapbsp(mapbsp);
     }
+    
+    public ArrayList<String> getToanBoImeiTheoPhienBanSanPham(int mapb) {
+        return ctspDAO.getToanBoImeiTheoPhienBanSanPham(mapb);
+    }
 }
 
 
