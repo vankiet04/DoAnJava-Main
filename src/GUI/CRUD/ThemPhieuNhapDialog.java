@@ -11,6 +11,7 @@ import BUS.BUS_PhieuNhap;
 import BUS.BUS_Product;
 import BUS.BUS_RamList;
 import BUS.BUS_RomList;
+import COM.rsa.jsafe.bu;
 import DTO.DTO_ChiTietCauHinh;
 import DTO.DTO_ChiTietPhieuNhap;
 import DTO.DTO_NhaCungCap;
@@ -219,6 +220,13 @@ public class ThemPhieuNhapDialog extends javax.swing.JDialog {
 
     public void chonSanPham() {
         int index = jTable1.getSelectedRow();
+        int masp = Integer.parseInt(tblModelSP.getValueAt(index, 0).toString());
+        //kiem tra masp co ton tai trong listPhienBanSP khong
+        boolean check = phienbanBus.checkMaSP(masp);
+        if (!check) {
+            JOptionPane.showMessageDialog(null, "Không thể chọn sản phẩm này vì chưa có phiên bản cấu hình!");
+            return;
+        }
         if (index >= 0) {
             resetForm();
             DTO_Product sp = listSP.get(index);
