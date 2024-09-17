@@ -408,4 +408,40 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
         }
         return result;
     }
+
+    public String getLargestImei() {
+        String result = "";
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT maimei FROM ctsanpham ORDER BY maimei DESC LIMIT 1";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            if (rs.next()) {
+                result = rs.getString("maimei");
+            }
+            JDBCUtil.close(con);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
+        }
+        return result;
+    }
+
+    public ArrayList<String> getToanBoImeiTheoPhienBanSanPham(int mapb) {
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT maimei FROM ctsanpham WHERE maphienbansp = ?";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            pst.setInt(1, mapb);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            while (rs.next()) {
+                String imei = rs.getString("maimei");
+                result.add(imei);
+            }
+            JDBCUtil.close(con);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
+        }
+        return result;
+    }
 }

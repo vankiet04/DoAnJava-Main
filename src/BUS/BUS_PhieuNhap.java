@@ -32,6 +32,7 @@ public class BUS_PhieuNhap {
     ArrayList<DTO_PhieuNhap> listPhieuNhap;
     BUS_NhaCungCap nccBUS = new BUS_NhaCungCap();
     BUS_NhanVien nvBUS = new BUS_NhanVien();
+    BUS_ChiTietSanPham chitietsanphamBUS = new BUS_ChiTietSanPham();
     public BUS_PhieuNhap() {
     }
 

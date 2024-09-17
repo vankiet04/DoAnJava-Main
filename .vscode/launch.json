@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LogIn",
+            "request": "launch",
+            "mainClass": "GUI.LogIn",
+            "projectName": "DoAnJava-Main_7c792fd6"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
