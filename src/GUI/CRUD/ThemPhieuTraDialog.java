@@ -129,9 +129,9 @@ public class ThemPhieuTraDialog extends javax.swing.JDialog {
         
         String tennhacungcap = jComboBox5.getSelectedItem().toString().split("-")[1].trim();
         int manhacungcap = nccBus.getMaNhaCungCap(tennhacungcap);
-        JOptionPane.showMessageDialog(null, manhacungcap);
+        // JOptionPane.showMessageDialog(null, manhacungcap);
         ArrayList<Integer> listMaPhieuNhap = busPhieuNhap.getAllMaPhieuNhapByMancc(manhacungcap);
-        JOptionPane.showMessageDialog(null, listMaPhieuNhap);
+        // JOptionPane.showMessageDialog(null, listMaPhieuNhap);
         ArrayList<Integer> listMaPhienBan = busChiTietSanPham.getAllMaPhienBanByMaPhieuNhap(listMaPhieuNhap);
         ArrayList<DTO_ChiTietCauHinh> listPhienBanSP = busChiTietCauHinh.getAllPhienBanByListMaPhienBan(listMaPhienBan);
         //sap xep theo ten san pham
@@ -718,7 +718,7 @@ public class ThemPhieuTraDialog extends javax.swing.JDialog {
             long tonggia = Long.parseLong(model.getValueAt(i, 6).toString());
             DTO_ChiTietPhieuTra ctptra = new DTO_ChiTietPhieuTra(maphieutra, maphienban, soluongtra, tonggia);
             //tru so luong ton bang so luong tra voi ma phien ban
-            JOptionPane.showMessageDialog(null, maphienban + " " + soluongtra);
+            // JOptionPane.showMessageDialog(null, maphienban + " " + soluongtra);
             int kq = 0;
             kq = DAO_ChiTietCauHinh.getInstance().updateSoLuongTon(maphienban,
                     -(soluongtra));
@@ -829,7 +829,7 @@ public class ThemPhieuTraDialog extends javax.swing.JDialog {
         }
         //Hay them tiep tuc phan tu vao listImeiDaChonVaoPhieuTra
         listImeiDaChonVaoPhieuTra.add(listImeiDaChon);
-        JOptionPane.showMessageDialog(null, listImeiDaChonVaoPhieuTra);
+        // JOptionPane.showMessageDialog(null, listImeiDaChonVaoPhieuTra);
         //setenable nhacungcap
         jComboBox5.setEnabled(false);
       

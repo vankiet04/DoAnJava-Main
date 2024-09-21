@@ -107,8 +107,8 @@ public class BUS_ChiTietSanPham {
         ArrayList<DTO_ChiTietSanPham> listImei = ctspDAO.getAllImeiByMaphienbanVaListMaphieunhap(mapphienban,
                 listMaPhieuNhap);
         ArrayList<DTO_ChiTietSanPhamTra> listImeiDaChon = ctsptra.getAll();
-        JOptionPane.showMessageDialog(null, listImei);
-                JOptionPane.showMessageDialog(null, listImeiDaChon);
+        // JOptionPane.showMessageDialog(null, listImei);
+        //         JOptionPane.showMessageDialog(null, listImeiDaChon);
         int soluong = 0;
         for (DTO_ChiTietSanPham i : listImei) {
             boolean check = false;
