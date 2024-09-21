@@ -851,3 +851,53 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE phieutra (
+    maphieutra INT PRIMARY KEY,
+    thoigian DATETIME,
+    manhacungcap INT,
+    nguoitao INT,
+    tongtien DECIMAL(18, 2),
+    trangthai INT
+);
+
+-- Chèn dữ liệu mẫu vào bảng phieutra
+INSERT INTO phieutra (maphieutra, thoigian, manhacungcap, nguoitao, tongtien, trangthai) VALUES
+(1, '2024-09-15 15:15:39', 2, 1, 111670000, 1),
+(2, '2024-09-15 15:15:57', 1, 1, 66000000, 1),
+(3, '2024-09-15 15:16:24', 7, 1, 108170000, 1),
+(4, '2024-09-15 15:16:49', 4, 1, 94000000, 1),
+(5, '2024-09-15 15:17:01', 5, 1, 25000000, 1),
+(6, '2024-09-15 15:17:10', 3, 1, 38000000, 1);
+
+
+CREATE TABLE ctsphamtra (
+    maimei VARCHAR(20),
+    maphienbansp INT,
+    maphieutra INT,
+    tinhtrang INT,
+    PRIMARY KEY (maimei, maphienbansp, maphieutra)
+);
+-- Chèn dữ liệu mẫu vào bảng `ctsphamtra`
+INSERT INTO ctsphamtra (maimei, maphienbansp, maphieutra, tinhtrang) VALUES
+('1047949689', 37, 1, 1),
+('1029001982', 37, 1, 1),
+('1051286004', 34, 1, 1),
+('1077697627', 29, 1, 1),
+('1027553503', 30, 1, 1);
+
+
+CREATE TABLE ctphieutra (
+    maphieutra INT,
+    maphienbansp INT,
+    soluong INT,
+    tonggia DECIMAL(18, 2),
+    PRIMARY KEY (maphieutra, maphienbansp)
+);
+-- Chèn dữ liệu mẫu vào bảng `ctphieutra`
+INSERT INTO ctphieutra (maphieutra, maphienbansp, soluong, tonggia) VALUES
+(1, 37, 2, 22590000),
+(1, 34, 1, 15000000),
+(1, 29, 1, 16500000),
+(1, 30, 1, 15990000);
