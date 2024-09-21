@@ -8,19 +8,19 @@ package DTO;
  *
  * @author KIET
  */
-public class DTO_ChiTietPhieuNhap {
-     int maphieu;
-     int maphienbansp;
-     long soluong;
-     long dongia;
+public class DTO_ChiTietPhieuTra {
+    private int maphieu;
+    private int maphienbansp;
+    private long soluong;
+    private long tonggia;
 
-    public DTO_ChiTietPhieuNhap() {
+    public DTO_ChiTietPhieuTra() {
     }
-    public DTO_ChiTietPhieuNhap(int maphieu, int maphienbansp, int soluong, long dongia) {
+    public DTO_ChiTietPhieuTra(int maphieu, int maphienbansp, int soluong, long tonggia) {
         this.maphieu = maphieu;
         this.maphienbansp = maphienbansp;
         this.soluong = soluong;
-        this.dongia = dongia;
+        this.tonggia = tonggia;
     }
 
     public int getMaphieu() {
@@ -35,8 +35,8 @@ public class DTO_ChiTietPhieuNhap {
         return soluong;
     }
 
-    public long getDongia() {
-        return dongia;
+    public long gettonggia() {
+        return tonggia;
     }
 
     public void setMaphieu(int maphieu) {
@@ -51,8 +51,8 @@ public class DTO_ChiTietPhieuNhap {
         this.soluong = soluong;
     }
 
-    public void setDongia(long dongia) {
-        this.dongia = dongia;
+    public void settonggia(long tonggia) {
+        this.tonggia = tonggia;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class DTO_ChiTietPhieuNhap {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DTO_ChiTietPhieuNhap other = (DTO_ChiTietPhieuNhap) obj;
+        final DTO_ChiTietPhieuTra other = (DTO_ChiTietPhieuTra) obj;
         if (this.maphieu != other.maphieu) {
             return false;
         }
@@ -82,12 +82,12 @@ public class DTO_ChiTietPhieuNhap {
         if (this.soluong != other.soluong) {
             return false;
         }
-        return this.dongia == other.dongia;
+        return this.tonggia == other.tonggia;
     }
 
     @Override
     public String toString() {
-        return "DTO_ChiTietPhieu{" + "maphieu=" + maphieu + ", maphienbansp=" + maphienbansp + ", soluong=" + soluong + ", dongia=" + dongia + '}';
+        return "DTO_ChiTietPhieu{" + "maphieu=" + maphieu + ", maphienbansp=" + maphienbansp + ", soluong=" + soluong + ", tonggia=" + tonggia + '}';
     }
     
     

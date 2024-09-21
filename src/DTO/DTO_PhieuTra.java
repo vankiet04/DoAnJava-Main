@@ -12,18 +12,18 @@ import javax.swing.JOptionPane;
  *
  * @author KIET
  */
-public class DTO_PhieuNhap extends DTO_Phieu {
+public class DTO_PhieuTra extends DTO_Phieu {
          int manhacungcap;
         // ??????
 
-    public DTO_PhieuNhap() {
+    public DTO_PhieuTra() {
     }
 
-    public DTO_PhieuNhap(int manhacungcap) {
+    public DTO_PhieuTra(int manhacungcap) {
         this.manhacungcap = manhacungcap;
     }
 
-    public DTO_PhieuNhap(int maphieu, Timestamp thoigiantao, int manhacungcap, int manguoitao, long tongTien,
+    public DTO_PhieuTra(int maphieu, Timestamp thoigiantao, int manhacungcap, int manguoitao, long tongTien,
             int trangthai) {
     
         this.maphieu = maphieu;
@@ -67,13 +67,13 @@ public class DTO_PhieuNhap extends DTO_Phieu {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DTO_PhieuNhap other = (DTO_PhieuNhap) obj;
+        final DTO_PhieuTra other = (DTO_PhieuTra) obj;
         return this.manhacungcap == other.manhacungcap;
     }
 
     @Override
     public String toString() {
-        return "DTO_PhieuNhap{" + "manhacungcap=" + manhacungcap + '}';
+        return "DTO_PhieuTra{" + "manhacungcap=" + manhacungcap + '}';
     }
 
     

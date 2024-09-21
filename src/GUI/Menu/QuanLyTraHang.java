@@ -4,29 +4,12 @@
  */
 package GUI.Menu;
 
-import BUS.BUS_ChiTietSanPham;
-import BUS.BUS_ChucNangNhomQuyen;
-import BUS.BUS_NhaCungCap;
-import BUS.BUS_NhanVien;
-import BUS.BUS_PhieuNhap;
-import DTO.DTO_ChiTietSanPham;
-import DTO.DTO_ChucNangNhomQuyen;
-import DTO.DTO_Phieu;
-import DTO.DTO_PhieuNhap;
-import DTO.DTO_TaiKhoan;
-import GUI.CRUD.ThemPhieuNhap;
-import GUI.CRUD.ThemPhieuNhapDialog;
-import GUI.CRUD.XemChiTietPhieuNhapDialog;
-import helper.Formater;
-
-import java.sql.Timestamp;
-import java.beans.PropertyChangeEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
+import java.lang.reflect.Array;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,87 +17,81 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.formdev.flatlaf.json.ParseException;
+import com.formdev.flatlaf.ui.FlatListCellBorder.Default;
+
+import BUS.BUS_ChiTietPhieuTra;
+import BUS.BUS_NhaCungCap;
+import BUS.BUS_NhanVien;
+import BUS.BUS_PhieuTra;
+import DTO.DTO_PhieuTra;
+import DTO.DTO_PhieuTra;
+import DTO.DTO_TaiKhoan;
+import GUI.CRUD.ThemPhieuTraDialog;
+import GUI.CRUD.XemChiTietPhieuNhapDialog;
+import GUI.CRUD.XemChiTietPhieuTraDialog;
 
 /**
  *
- * @author Admin
+ * @author KIET
  */
-public class QuanLyPhieuNhap extends javax.swing.JPanel {
+public class QuanLyTraHang extends javax.swing.JPanel {
 
     /**
-     * Creates new form QuanLyPhieuNhap
+     * Creates new form QuanLyTraHang
      */
-    BUS_PhieuNhap phieunhapBUS = new BUS_PhieuNhap();
-    BUS_NhaCungCap nccBUS = new BUS_NhaCungCap();
-    BUS_NhanVien nvBUS = new BUS_NhanVien();
-    BUS_ChiTietSanPham ctspBUS = new BUS_ChiTietSanPham();
-    ArrayList<DTO_PhieuNhap> listPhieu;
-    DefaultTableModel model;
-
+    
     GUI.MainProgram main;
     DTO_TaiKhoan user;
-     BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
-     ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
-     BUS_ChiTietSanPham busCTSP = new BUS_ChiTietSanPham();
-     public QuanLyPhieuNhap() {
 
-         initComponents();
-        //  loadTable();
-        loadComboSearch();
-        onChangeSearch();
+    BUS_PhieuTra busPhieuTra = new BUS_PhieuTra();
+    BUS_NhaCungCap busNhaCungCap = new BUS_NhaCungCap();
+    BUS_NhanVien busNhanVien = new BUS_NhanVien();
+    ArrayList<DTO_PhieuTra> listPhieu;
+    DefaultTableModel model;
 
-        listPhieu = phieunhapBUS.getAll();
-        loadDataTalbe(listPhieu);
-
+    public QuanLyTraHang() {
+        initComponents();
     }
-
-    public QuanLyPhieuNhap(GUI.MainProgram main, DTO_TaiKhoan user) {
+    
+    public QuanLyTraHang(GUI.MainProgram main, DTO_TaiKhoan user) {
         this.main = main;
         this.user = user;
         initComponents();
         // loadTable();
-        listPhieu = phieunhapBUS.getAll();
-        loadComboSearch();
-        onChangeSearch();
-        loadDataTalbe(listPhieu);
+
         jTextField3.setText("0");
         jTextField4.setText("100000000000");
-        jButton4.setEnabled(false);
-        jButton5.setEnabled(false);
-        jButton3.setEnabled(false);
+        loadComboSearch();
+        onChangeSearch();
 
-        jLabel1NCC.setEnabled(false);
-        jLabel3NCC.setEnabled(false);
-        jLabel4NCC.setEnabled(false);
-        loadChucNangNhomQuyen();
-
+        ArrayList<DTO_PhieuTra> listPhieuTra = busPhieuTra.getAll();
+        loadTablePhieuTra(listPhieuTra);
     }
-    public void loadChucNangNhomQuyen() {
-        // JOptionPane. showMessageDialog(null,"kkk"+ user.getManhomquyen());
-        listNQ = busNQ.selectAllChucNangNQ(user.getManhomquyen());
 
-        for (DTO_ChucNangNhomQuyen iNQ : listNQ) {
-            if (iNQ.getMachucnang().equals("nhaphang") && iNQ.getHanhdong().equals("create")) {
-                jButton4.setEnabled(true);
-                jLabel1NCC.setEnabled(true);
-            } 
-            if (iNQ.getMachucnang().equals("nhaphang") && iNQ.getHanhdong().equals("delete")) {
-                jButton3.setEnabled(true);
-                jLabel3NCC.setEnabled(true);
-            } 
-            if (iNQ.getMachucnang().equals("nhaphang") && iNQ.getHanhdong().equals("view")) {
-                jButton5.setEnabled(true);
-                jLabel4NCC.setEnabled(true);
-            }
+    public void loadComboSearch() {
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Tất cả");
+        for (int i = 0; i < busNhaCungCap.getAllData().size(); i++) {
+            jComboBox1.addItem(busNhaCungCap.getAllData().get(i).getTenncc());
         }
+
+        jComboBox2.removeAllItems();
+        jComboBox2.addItem("Tất cả");
+        for (int i = 0; i < busNhanVien.getAllData().size(); i++) {
+            jComboBox2.addItem(busNhanVien.getAllData().get(i).getHoten());
+        }
+
+        jComboBoxNCC.removeAllItems();
+        jComboBoxNCC.addItem("Tất cả");
+        jComboBoxNCC.addItem("Mã phiếu nhập");
+        jComboBoxNCC.addItem("Tên nhà cung cấp");
+        jComboBoxNCC.addItem("Tên nhân viên");
     }
 
-    // onChangeSearch
     public void onChangeSearch() {
         jComboBox1.addActionListener((e) -> {
             try {
@@ -190,47 +167,14 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 }
             }
         });
-         
-    }
-    // loadComboSearch
-    public void loadComboSearch() {
-        jComboBox1.removeAllItems();
-        jComboBox1.addItem("Tất cả");
-        for (int i = 0; i < nccBUS.getAllData().size(); i++) {
-            jComboBox1.addItem(nccBUS.getAllData().get(i).getTenncc());
-        }
-
-        jComboBox2.removeAllItems();
-        jComboBox2.addItem("Tất cả");
-        for (int i = 0; i < nvBUS.getAllData().size(); i++) {
-            jComboBox2.addItem(nvBUS.getAllData().get(i).getHoten());
-        }
-
-        jComboBoxNCC.removeAllItems();
-        jComboBoxNCC.addItem("Tất cả");
-        jComboBoxNCC.addItem("Mã phiếu nhập");
-        jComboBoxNCC.addItem("Tên nhà cung cấp");
-        jComboBoxNCC.addItem("Tên nhân viên");
-    }
-
-    public void resetAll(){
-        jComboBox1.setSelectedIndex(0);
-        jComboBox2.setSelectedIndex(0);
-        txtSearchNCC.setText("");
-        jDateChooser1.setDate(null);
-        jDateChooser2.setDate(null);
-        jTextField3.setText("0");
-        jTextField4.setText("1000000000");
-        this.listPhieu = phieunhapBUS.getAll();
-        loadDataTalbe(listPhieu);
     }
 
     public void Fillter() throws ParseException {
         int type = jComboBoxNCC.getSelectedIndex();
         int mancc = jComboBox1.getSelectedIndex() == 0 ? 0
-                : nccBUS.getByIndex(jComboBox1.getSelectedIndex() - 1).getMancc();
+                : busNhaCungCap.getByIndex(jComboBox1.getSelectedIndex() - 1).getMancc();
         int manv = jComboBox2.getSelectedIndex() == 0 ? 0
-                : nvBUS.getByIndex(jComboBox2.getSelectedIndex() - 1).getManv();
+                : busNhanVien.getByIndex(jComboBox2.getSelectedIndex() - 1).getManv();
         String input = txtSearchNCC.getText() != null ? txtSearchNCC.getText() : "";
         jDateChooser1.setDateFormatString("dd/MM/yyyy");
         jDateChooser2.setDateFormatString("dd/MM/yyyy");
@@ -241,10 +185,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-   
-   
 
-        
         //net textfiel3 khong phai la so thi thong bao
         if (!jTextField3.getText().matches("[0-9]+") && jTextField3.getText() != "") {
             // JOptionPane.showMessageDialog(this, "Vui lòng nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -256,123 +197,71 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
             return;
 
         }
-       
+
         long min_price = Long.parseLong(jTextField3.getText());
         long max_price = Long.parseLong(jTextField4.getText());
-        if(min_price > max_price){
+        if (min_price > max_price) {
             JOptionPane.showMessageDialog(this, "Giá trị tối thiểu không được lớn hơn giá trị tối đa", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         // JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được lớn hơn ngày kết thúc"+ ngaybatdau + ngayketthuc, "Lỗi",
         //             JOptionPane.ERROR_MESSAGE);
-        
-
-   
 
         // Date time_start = jDateChooser1.getDate() != null ? new Date(jDateChooser1.getDate().getTime()) : null;
         // Date time_end = jDateChooser2.getDate() != null ? new Date(jDateChooser2.getDate().getTime()) : null;
         // String min_price = jTextField3.getText();
         // String max_price = jTextField4.getText();
-        this.listPhieu = phieunhapBUS.fillterPhieuNhapCoNgay(type, input, mancc, manv, ngaybatdau, ngayketthuc, min_price, max_price);
+        this.listPhieu = busPhieuTra.fillterPhieuNhapCoNgay(type, input, mancc, manv, ngaybatdau, ngayketthuc,
+                min_price, max_price);
         // neu tat ca deu chua gia tri thi khong load 
-        if (jComboBox1.getSelectedIndex() == 0 && jComboBox2.getSelectedIndex() == 0 && txtSearchNCC.getText().equals("") && jDateChooser1.getDate() == null && jDateChooser2.getDate() == null && jTextField3.getText().equals("0") && jTextField4.getText().equals("100000000000")) {
+        if (jComboBox1.getSelectedIndex() == 0 && jComboBox2.getSelectedIndex() == 0
+                && txtSearchNCC.getText().equals("") && jDateChooser1.getDate() == null
+                && jDateChooser2.getDate() == null && jTextField3.getText().equals("0")
+                && jTextField4.getText().equals("100000000000")) {
             return;
         }
-        loadDataTalbe(listPhieu);
+        loadTablePhieuTra(listPhieu);
     }
-    
-
-    public void resetForm() {
+    public void resetAll(){
         jComboBox1.setSelectedIndex(0);
         jComboBox2.setSelectedIndex(0);
         txtSearchNCC.setText("");
         jDateChooser1.setDate(null);
         jDateChooser2.setDate(null);
-        jTextField3.setText("");
-        jTextField4.setText("");
-        this.listPhieu = phieunhapBUS.getAll();
-        loadDataTalbe(listPhieu);
+        jTextField3.setText("0");
+        jTextField4.setText("1000000000");
+        this.listPhieu = busPhieuTra.getAll();
+        loadTablePhieuTra(listPhieu);
     }
     
-    public boolean validateSelectDate() throws ParseException {
-        Date time_start = jDateChooser1.getDate() != null ? new Date(jDateChooser1.getDate().getTime()) : null;
-        Date time_end = jDateChooser2.getDate() != null ? new Date(jDateChooser2.getDate().getTime()) : null;   
-        // if(time_start < time_end){
-        //     JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày bắt đầu", "Lỗi !", JOptionPane.ERROR_MESSAGE);
-        //     return false;
-        // }
+        
 
-        // Date current_date = new Date();
-        // if (time_start != null && time_start.after(current_date)) {
-        //     JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được lớn hơn ngày hiện tại", "Lỗi !", JOptionPane.ERROR_MESSAGE);
-        //     dateStart.getDateChooser().setCalendar(null);
-        //     return false;
-        // }
-        // if (time_end != null && time_end.after(current_date)) {
-        //     JOptionPane.showMessageDialog(this, "Ngày kết thúc không được lớn hơn ngày hiện tại", "Lỗi !", JOptionPane.ERROR_MESSAGE);
-        //     dateEnd.getDateChooser().setCalendar(null);
-        //     return false;
-        // }
-        // if (time_start != null && time_end != null && time_start.after(time_end)) {
-        //     JOptionPane.showMessageDialog(this, "Ngày kết thúc phải lớn hơn ngày bắt đầu", "Lỗi !", JOptionPane.ERROR_MESSAGE);
-        //     dateEnd.getDateChooser().setCalendar(null);
-        //     return false;
-        // }
-        return true;
-    }
-
-    public int getRowSelected() {
-        return jTablePN.getSelectedRow();
-
-    }
-    // loadDataTalbe
-    public void loadDataTalbe(ArrayList<DTO_PhieuNhap> list) {
-        model = (DefaultTableModel) jTablePN.getModel();
+    public void loadTablePhieuTra(ArrayList<DTO_PhieuTra> listPhieuTra) {
+        DefaultTableModel model = (DefaultTableModel) jTablePN.getModel();
         model.setRowCount(0);
-        for (int i = 0; i < list.size(); i++) {
-            DTO_PhieuNhap phieu = list.get(i);
-            model.addRow(new Object[] {
-                    phieu.getMaphieu(),
-                    phieu.getThoigiantao(),
-                    nccBUS.getTenNhaCungCap(phieu.getManhacungcap()),
-                    nvBUS.getNameById(phieu.getManguoitao()),
-                    Formater.FormatVND(phieu.getTongTien())
-            });
+        for (DTO_PhieuTra phieuTra : listPhieuTra) {
+            String tennhacungcap = busNhaCungCap.getTenNhaCungCap(phieuTra.getManhacungcap());
+            String tennhanvien = busNhanVien.getNameById(phieuTra.getManguoitao());
+            model.addRow(new Object[] { phieuTra.getMaphieu(), phieuTra.getThoigiantao(), tennhacungcap,
+                tennhanvien, helper.Formater.FormatVND(phieuTra.getTongTien()), phieuTra.getTrangthai() });
         }
-        // JOptionPane.showMessageDialog(null, "Load table thành công:" + listPhieu.size());
-        // can giua
+
+        //table căn giữa
+       
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < 5; i++) {
-            jTablePN.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+        jTablePN.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        jTablePN.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        jTablePN.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        jTablePN.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        jTablePN.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+
+        
+        
     }
 
-    // public void loadTable() {
-    //     model = (DefaultTableModel) jTablePN.getModel();
-    //     model.setRowCount(0);
-
-    //     JOptionPane.showMessageDialog(null, "Load table thành công:" + listPhieu.size());
-    //     for (int i = 0; i < listPhieu.size(); i++) {
-    //         DTO_PhieuNhap phieu = listPhieu.get(i);
-    //         model.addRow(new Object[] {
-    //                 phieu.getMaphieu(),
-    //                 phieu.getThoigiantao(),
-    //                 nccBUS.getTenNhaCungCap(phieu.getManhacungcap()),
-    //                 nvBUS.getNameById(phieu.getManguoitao()),
-    //                 phieu.getTongTien()
-    //         });
-    //     }
-    //     // can giua
-    //     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-    //     centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-    //     for (int i = 0; i < 5; i++) {
-    //         jTablePN.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-    //     }
-
-    // }
-    public void exportJTableToExcel() {
+     public void exportJTableToExcel() {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Chọn đường dẫn lưu file Excel");
     FileNameExtensionFilter filter = new FileNameExtensionFilter("XLSX files", "xlsx");
@@ -435,6 +324,9 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         }
     }
 }
+    
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -475,6 +367,8 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         myButton1NCC = new com.raven.suportSwing.MyButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel4NCC = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
@@ -484,11 +378,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         jPanel14 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jLabel1NCC = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jLabel3NCC = new javax.swing.JLabel();
-
-        setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(3200, 800));
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -705,6 +595,31 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton3.setText("HỦY PHIẾU");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4NCC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-view-75.png"))); // NOI18N
@@ -805,13 +720,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButton3.setText("HỦY PHIẾU");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jLabel3NCC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-delete-85.png"))); // NOI18N
         jLabel3NCC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -826,17 +734,15 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel3NCC)
-                        .addGap(10, 10, 10)))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel3NCC, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -848,12 +754,11 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel3NCC, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
@@ -895,7 +800,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -904,7 +809,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1947, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -918,116 +823,69 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
-    private void jLabel1NCCMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1NCCMousePressed
-        // TODO add your handling code here:
-        //        AddProducts add = new AddProducts(parent, true, this);
-        //        add.setLocationRelativeTo(null);
-        //        add.setVisible(true);
-    }//GEN-LAST:event_jLabel1NCCMousePressed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        // System.out.println("Button 4 được nhấn!");
-         ThemPhieuNhapDialog dialog = new ThemPhieuNhapDialog(new javax.swing.JFrame(), true, this, user);
-         dialog.setLocationRelativeTo(null);
-         dialog.setVisible(true);
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        exportJTableToExcel();
-        
-        
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        int index = jTablePN.getSelectedRow();
-        if (index == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để xem chi tiết!");
-            return;
-        }
-        int id = (int) jTablePN.getValueAt(index, 0);
-     Timestamp date = (Timestamp) jTablePN.getValueAt(index, 1);
-     int mancc = nccBUS.getMaNhaCungCap(jTablePN.getValueAt(index, 2).toString());
-     int manv = nvBUS.getIdByName(jTablePN.getValueAt(index, 3).toString());
-     String tongtienStr = jTablePN.getValueAt(index, 4).toString().replace("VND", "").replace(",", "");
-     tongtienStr = tongtienStr.substring(0, tongtienStr.length() - 1);
-    
-     long tongtien = Long.parseLong(tongtienStr);
-        // JOptionPane.showMessageDialog(null, "ID: " + id + " Date: " + date + " NCC: " + mancc + " NV: " + manv + " TongTien: " + tongtien);
-        DTO_PhieuNhap pn = new DTO_PhieuNhap(id, date,mancc, manv, tongtien, 1);
-
-        XemChiTietPhieuNhapDialog dialog = new XemChiTietPhieuNhapDialog(new javax.swing.JFrame(), true, pn);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-
-    public void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
-  
-    private void myButton1NCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1NCCActionPerformed
-        // TODO add your handling code here:
-        resetAll();
-    }//GEN-LAST:event_myButton1NCCActionPerformed
-
-    private void jComboBoxNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNCCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxNCCActionPerformed
-
-    private void txtSearchNCCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNCCKeyReleased
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_txtSearchNCCKeyReleased
-
-    private void txtSearchNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchNCCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchNCCActionPerformed
 
     private void txtSearchNCCFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchNCCFocusGained
 
     }//GEN-LAST:event_txtSearchNCCFocusGained
 
+    private void txtSearchNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchNCCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchNCCActionPerformed
+
+    private void txtSearchNCCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNCCKeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtSearchNCCKeyReleased
+
+    private void jComboBoxNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNCCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxNCCActionPerformed
+
+    private void myButton1NCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1NCCActionPerformed
+        // TODO add your handling code here:
+        resetAll();
+    }//GEN-LAST:event_myButton1NCCActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here: Xoa
-        int index = jTablePN.getSelectedRow();
-        // kiem tra co bao nhieu phien ban phien ban trong ma phieu nhap co ton tai ma phieu xuat
-        if (index == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để hủy!");
-            return;
-        }
-        int cnt = busCTSP.getsoluongphienbansanphamtontaitrongphieuxuat(Integer.parseInt(jTablePN.getValueAt(index, 0).toString()));
-        if (cnt > 0) {
-            JOptionPane.showMessageDialog(null,
-                "Không thể hủy vì có " + cnt + " phiên bản sản phẩm trong phiếu nhập đã được xuất đi!");
-            return;
-        }
-        if (index != -1) {
-            int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\n Hãy nghĩ kĩ vì sau khi hủy\n không thể hoàn tác lại.", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-            if (input == 0) {
-                DTO_PhieuNhap pn = listPhieu.get(index);
-                // if (!phieunhapBUS.checkCancelPn(pn.getMaphieu())) {
-                    //     JOptionPane.showMessageDialog(null, "Sản phẩm trong phiếu này đã được xuất đi không thể hủy phiếu này!");
-                    // } else {
-                    int c = phieunhapBUS.cancelPhieuNhap(pn.getMaphieu());
-                    //cap nhat maimei co ma phieu nhap vua xoa la tinh trang bang 0
-                    int check = ctspBUS.capNhatctspTinhTrangbang0(pn.getMaphieu());
+        // // TODO add your handling code here: Xoa
+        // int index = jTablePN.getSelectedRow();
+        // // kiem tra co bao nhieu phien ban phien ban trong ma phieu nhap co ton tai ma phieu xuat
+        // if (index == -1) {
+        //     JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để hủy!");
+        //     return;
+        // }
+        // int cnt = busCTSP.getsoluongphienbansanphamtontaitrongphieuxuat(Integer.parseInt(jTablePN.getValueAt(index, 0).toString()));
+        // if (cnt > 0) {
+        //     JOptionPane.showMessageDialog(null,
+        //         "Không thể hủy vì có " + cnt + " phiên bản sản phẩm trong phiếu nhập đã được xuất đi!");
+        //     return;
+        // }
+        // if (index != -1) {
+        //     int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\n Hãy nghĩ kĩ vì sau khi hủy\n không thể hoàn tác lại.", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        //     if (input == 0) {
+        //         DTO_PhieuTra pn = listPhieu.get(index);
+        //         // if (!phieunhapBUS.checkCancelPn(pn.getMaphieu())) {
+        //             //     JOptionPane.showMessageDialog(null, "Sản phẩm trong phiếu này đã được xuất đi không thể hủy phiếu này!");
+        //             // } else {
+        //             int c = phieunhapBUS.cancelPhieuNhap(pn.getMaphieu());
+        //             //cap nhat maimei co ma phieu nhap vua xoa la tinh trang bang 0
+        //             int check = ctspBUS.capNhatctspTinhTrangbang0(pn.getMaphieu());
 
-                    if (c == 0 && check == 0) {
-                        JOptionPane.showMessageDialog(null, "Hủy phiếu không thành công!");
-                    } else {
-                        // ma phieu nhap tang them 1
+        //             if (c == 0 && check == 0) {
+        //                 JOptionPane.showMessageDialog(null, "Hủy phiếu không thành công!");
+        //             } else {
+        //                 // ma phieu nhap tang them 1
 
-                        JOptionPane.showMessageDialog(null, "Hủy phiếu thành công!");
-                        listPhieu = phieunhapBUS.getAll();
-                        loadDataTalbe(listPhieu);
-                    }
-                    // }
-            }
-        }
+        //                 JOptionPane.showMessageDialog(null, "Hủy phiếu thành công!");
+        //                 listPhieu = phieunhapBUS.getAll();
+        //                 loadDataTalbe(listPhieu);
+        //             }
+        //             // }
+        //     }
+        // }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -1041,6 +899,53 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         //        JOptionPane.showMessageDialog(parent, "Xóa sản phẩm thành công", "Thông báo!", JOptionPane.INFORMATION_MESSAGE);
         //        FillTable(productBUS.getAllData());
     }//GEN-LAST:event_jLabel3NCCMousePressed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int index = jTablePN.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để xem!");
+            return;
+        }
+        ;
+        int id = (int) jTablePN.getValueAt(index, 0);
+     Timestamp date = (Timestamp) jTablePN.getValueAt(index, 1);
+     int mancc = busNhaCungCap.getMaNhaCungCap(jTablePN.getValueAt(index, 2).toString());
+     int manv = busNhanVien.getIdByName(jTablePN.getValueAt(index, 3).toString());
+     String tongtienStr = jTablePN.getValueAt(index, 4).toString().replace("VND", "").replace(",", "");
+     tongtienStr = tongtienStr.substring(0, tongtienStr.length() - 1);
+    
+     long tongtien = Long.parseLong(tongtienStr);
+        // JOptionPane.showMessageDialog(null, "ID: " + id + " Date: " + date + " NCC: " + mancc + " NV: " + manv + " TongTien: " + tongtien);
+        DTO_PhieuTra pn = new DTO_PhieuTra(id, date,mancc, manv, tongtien, 1);
+
+        XemChiTietPhieuTraDialog dialog = new XemChiTietPhieuTraDialog(new javax.swing.JFrame(), true, pn);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        exportJTableToExcel();
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    
+        ThemPhieuTraDialog dialog = new ThemPhieuTraDialog(new javax.swing.JFrame(), true, this, user);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jLabel1NCCMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1NCCMousePressed
+        // TODO add your handling code here:
+        //        AddProducts add = new AddProducts(parent, true, this);
+        //        add.setLocationRelativeTo(null);
+        //        add.setVisible(true);
+    }//GEN-LAST:event_jLabel1NCCMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1078,6 +983,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
