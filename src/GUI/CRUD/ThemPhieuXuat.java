@@ -400,7 +400,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 "Mã sản phẩm", "Tên sản phẩm", "Số lượng"
             }
         ));
-        // jTable2.setPreferredSize(new java.awt.Dimension(225, 120));
+        jTable2.setPreferredSize(new java.awt.Dimension(225, 120));
         jScrollPane2.setViewportView(jTable2);
 
         jPanel10.add(jScrollPane2);
@@ -441,8 +441,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
         jPanel5.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
         jComboBox1.setPreferredSize(new java.awt.Dimension(50, 22));
-       
-      
+ 
         jPanel5.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jPanel16.add(jPanel5);
@@ -484,6 +483,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 jButton5MousePressed(evt);
             }
         });
+       
         jPanel20.add(jButton5, java.awt.BorderLayout.PAGE_END);
 
         jPanel16.add(jPanel20);

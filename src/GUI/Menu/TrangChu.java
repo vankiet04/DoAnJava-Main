@@ -38,11 +38,13 @@ public class TrangChu extends javax.swing.JPanel {
         for (DTO_PhieuXuat dto_PhieuXuat : list) {
             String tenkh = buskh.getkhtheoid(dto_PhieuXuat.getIdkhachhang()).getHoTen();
             String tennv = busnv.getNhanVien(dto_PhieuXuat.getIdnhanvien()).getHoten();
-            String vndtongtien = String.format("%,d", (int) dto_PhieuXuat.getTongtien());
+
+            //lonng tiền
+            String vndtongtien = String.format("%,d", dto_PhieuXuat.getTongtien());
             model.addRow(new Object[]{
                 tenkh,
                 tennv,
-                vndtongtien,
+               vndtongtien,
                 dto_PhieuXuat.getThoigian()
             });
         }

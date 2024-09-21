@@ -129,11 +129,13 @@ public class DAO_PhieuNhap implements DAOInterface<DTO_PhieuNhap> {
         }
         return maxId + 1;
     }
-    public int cancelPhieuNhap(int maphieu){
+
+    public int cancelPhieuNhap(int maphieu) {
         int result = 0;
         ArrayList<DTO_ChiTietPhieuNhap> arrCt = DAO_ChiTietPhieuNhap.getInstance().selectAll(Integer.toString(maphieu));
         for (DTO_ChiTietPhieuNhap chiTietPhieuNhapDTO : arrCt) {
-            DAO_ChiTietCauHinh.getInstance().updateSoLuongTon(chiTietPhieuNhapDTO.getMaphienbansp(), -(chiTietPhieuNhapDTO.getSoluong()));
+            DAO_ChiTietCauHinh.getInstance().updateSoLuongTon(chiTietPhieuNhapDTO.getMaphienbansp(),
+                    -(chiTietPhieuNhapDTO.getSoluong()));
         }
         DAO_ChiTietPhieuNhap.getInstance().delete(Integer.toString(maphieu));
         try {
@@ -146,7 +148,25 @@ public class DAO_PhieuNhap implements DAOInterface<DTO_PhieuNhap> {
             // JOptionPane.showMessageDialog(null, "Huy phieu nhap thanh cong: "+ result);
         } catch (SQLException ex) {
             // JOptionPane.showMessageDialog(null, "Loi huy phieu nhap: "+ ex.getMessage());
-            
+
+        }
+        return result;
+    }
+    
+    public ArrayList<Integer> getAllPhieuNhapByMancc(int manhacungcap) {
+        ArrayList<Integer> result = new ArrayList<>();
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT maphieunhap FROM phieunhap WHERE manhacungcap = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, manhacungcap);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                result.add(rs.getInt("maphieunhap"));
+            }
+            JDBCUtil.close(con);
+        } catch (SQLException e) {
+            // JOptionPane.showMessageDialog(null, "Loi lay danh sach phieu nhap theo mancc: "+ e.getMessage());
         }
         return result;
     }

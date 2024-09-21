@@ -58,8 +58,7 @@ public class ThemPhieuNhapDialog extends javax.swing.JDialog {
     ArrayList<DTO_ChiTietCauHinh> listPhienBanSP = new ArrayList<>();
     ArrayList<DTO_ChiTietPhieuNhap> chitietphieu;
     int maphieunhap;
-
-        GUI.MainProgram main;
+     GUI.MainProgram main;
     DTO_TaiKhoan user;
     
     public void loadComboboxNhaCungCap() {
