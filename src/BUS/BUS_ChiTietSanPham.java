@@ -93,12 +93,6 @@ public class BUS_ChiTietSanPham {
     public boolean checkmapbsp(int mapbsp) {
         return ctspDAO.checkmapbsp(mapbsp);
     }
-<<<<<<< HEAD
-    
-    public ArrayList<String> getToanBoImeiTheoPhienBanSanPham(int mapb) {
-        return ctspDAO.getToanBoImeiTheoPhienBanSanPham(mapb);
-    }
-=======
 
     public ArrayList<Integer> getAllMaPhienBanByMaPhieuNhap(ArrayList<Integer> listMaPhieuNhap) {
         return ctspDAO.getAllMaPhienBanByMaPhieuNhap(listMaPhieuNhap);
@@ -134,7 +128,6 @@ public class BUS_ChiTietSanPham {
     }
 
   
->>>>>>> vankiet
 }
 
 
