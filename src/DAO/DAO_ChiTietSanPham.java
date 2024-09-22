@@ -410,17 +410,6 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
         return result;
     }
 
-<<<<<<< HEAD
-    public String getLargestImei() {
-        String result = "";
-        try {
-            Connection con = (Connection) JDBCUtil.getConnectDB();
-            String sql = "SELECT maimei FROM ctsanpham ORDER BY maimei DESC LIMIT 1";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            if (rs.next()) {
-                result = rs.getString("maimei");
-=======
     public ArrayList<Integer> getAllMaPhienBanByMaPhieuNhap(ArrayList<Integer> listMaPhieuNhap) {
         ArrayList<Integer> result = new ArrayList<>();
 
@@ -438,7 +427,6 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
                 result.add(rs.getInt("maphienbansp"));
->>>>>>> vankiet
             }
             JDBCUtil.close(con);
         } catch (Exception e) {
@@ -447,19 +435,6 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
         return result;
     }
 
-<<<<<<< HEAD
-    public ArrayList<String> getToanBoImeiTheoPhienBanSanPham(int mapb) {
-        ArrayList<String> result = new ArrayList<>();
-        try {
-            Connection con = (Connection) JDBCUtil.getConnectDB();
-            String sql = "SELECT maimei FROM ctsanpham WHERE maphienbansp = ?";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setInt(1, mapb);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            while (rs.next()) {
-                String imei = rs.getString("maimei");
-                result.add(imei);
-=======
     public ArrayList<DTO_ChiTietCauHinh> getAllPhienBanByListMaPhienBan(ArrayList<Integer> listmaphienban) {
         ArrayList<DTO_ChiTietCauHinh> result = new ArrayList<>();
         try {
@@ -518,14 +493,11 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
                 int tinhtrang = rs.getInt("tinhtrang");
                 DTO_ChiTietSanPham ct = new DTO_ChiTietSanPham(imei, maphienbansp, maphieunhap, maphieuxuat, tinhtrang);
                 result.add(ct);
->>>>>>> vankiet
             }
             JDBCUtil.close(con);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
         }
-<<<<<<< HEAD
-=======
 
         return result;
     }
@@ -560,7 +532,6 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
             JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
         }
 
->>>>>>> vankiet
         return result;
     }
 }
