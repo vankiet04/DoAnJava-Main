@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
 
 import BUS.BUS_ThongKe;
 import BUS.BUS_ThongKeTuNgayDenNgay;
-import COM.rsa.jsafe.v;
 import DTO.DTO_ThongKeThang;
 import DTO.DTO_ThongKeTuNgayDenNgay;
 
@@ -185,7 +184,7 @@ public class ThongKeTuNgayDenNgayy extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;

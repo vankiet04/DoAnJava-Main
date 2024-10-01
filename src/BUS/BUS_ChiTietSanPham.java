@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
-import COM.rsa.jsafe.bo;
 import DAO.DAO_ChiTietSanPham;
 import DTO.DTO_ChiTietCauHinh;
 import DTO.DTO_ChiTietSanPham;
