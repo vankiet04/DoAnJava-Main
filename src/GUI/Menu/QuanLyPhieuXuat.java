@@ -37,7 +37,6 @@ import GUI.CRUD.HuyHoaDon;
 import GUI.CRUD.ThemPhieuXuat;
 import GUI.CRUD.XemChiTietPhieuXuatDialog;
 // import them phieu nhap hang
-import GUI.CRUD.ThemPhieuTraHang;
 
 
 /**
@@ -1041,7 +1040,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
 
     private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
         // TODO add your handling code here: tra hang
-        ThemPhieuTraHang themPhieuTraHang = new ThemPhieuTraHang(parent, true, user, this);
+        ThemPhieuXuat themPhieuTraHang = new ThemPhieuXuat(parent, true, user, this);
         themPhieuTraHang.setLocationRelativeTo(null);
         themPhieuTraHang.setVisible(true);
     }//GEN-LAST:event_jButton8MousePressed
