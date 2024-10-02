@@ -149,7 +149,6 @@ public final class FormItems extends javax.swing.JPanel {
      public void FillTable(ArrayList<DTO_Product> result) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        jTable1.enable(false);
         for (DTO_Product sp : result) {
             model.addRow(new Object[]{sp.getMasanpham(), sp.getTensanpham(), 
                 sp.getBoxuly(), sp.getHedieuhanh(), sp.getThuonghieu(), sp.getThoigianbaohanh() + " năm"
