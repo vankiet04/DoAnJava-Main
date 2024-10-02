@@ -29,9 +29,7 @@ import BUS.BUS_NhanVien;
 import BUS.BUS_PhieuNhap;
 import BUS.BUS_PhieuXuat;
 import BUS.BUS_Product;
-import COM.rsa.Intel.e1;
-import COM.rsa.jsafe.da;
-import COM.rsa.jsafe.ds;
+
 import DTO.DTO_ChiTietCauHinh;
 import DTO.DTO_ChiTietPhieuNhap;
 import DTO.DTO_ChiTietPhieuXuat;
@@ -77,7 +75,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
     GUI.Menu.QuanLyPhieuXuat px;
     boolean check = true;
     BUS_PhieuNhap busPhieuNhap = new BUS_PhieuNhap();
-
+    BUS_PhieuXuat phieuxuatBUS = new BUS_PhieuXuat();
     public ThemPhieuXuat(java.awt.Frame parent, boolean modal, DTO_TaiKhoan user, GUI.Menu.QuanLyPhieuXuat px) {
         super(parent, modal);
         this.user = user;
@@ -400,7 +398,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 "Mã sản phẩm", "Tên sản phẩm", "Số lượng"
             }
         ));
-        jTable2.setPreferredSize(new java.awt.Dimension(225, 120));
+        // jTable2.setPreferredSize(new java.awt.Dimension(225, 120));
         jScrollPane2.setViewportView(jTable2);
 
         jPanel10.add(jScrollPane2);
@@ -441,7 +439,8 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
         jPanel5.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
         jComboBox1.setPreferredSize(new java.awt.Dimension(50, 22));
- 
+       
+      
         jPanel5.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jPanel16.add(jPanel5);
@@ -483,7 +482,6 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 jButton5MousePressed(evt);
             }
         });
-       
         jPanel20.add(jButton5, java.awt.BorderLayout.PAGE_END);
 
         jPanel16.add(jPanel20);
@@ -696,7 +694,8 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
         for (int i = 0; i < danhsachnhap.size(); i++) {
             tongtien += danhsachnhap.get(i).getSoluongton() * giamappingdanhsach.get(i);
         }
-        String thoigian = java.time.LocalDateTime.now().toString();
+        long now = System.currentTimeMillis();
+        java.sql.Timestamp thoigian = new java.sql.Timestamp(now);
 
         DTO_PhieuXuat dto_PhieuXuat = new DTO_PhieuXuat(maphieuxuat, thoigian, tongtien, manv, makh);
         int res = busPhieuXuat.insert(dto_PhieuXuat);
@@ -722,7 +721,8 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
 
                 // update ma phieu xuat cho imei trong table ctsp
                 busChiTietSanPham.updateMaPhieuXuat(danhsachnhap, Integer.parseInt(jTextField6.getText()), danhsachimeitungsanpham);
-                px.loadtablepx();
+                
+                px.loadtablepx(phieuxuatBUS.getAll());
                 JOptionPane.showMessageDialog(null, "Thêm phiếu xuất thành công");
                 this.dispose();
             } else {

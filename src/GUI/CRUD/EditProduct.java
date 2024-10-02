@@ -1274,20 +1274,33 @@ public class EditProduct extends javax.swing.JDialog {
 
     public int editProduct() {
         int masp = Integer.parseInt(jTextField13.getText());
-        String tensp = jTextField16.getText();
-        String boxuly = jTextField17.getText();
+        String tensp = jTextField16.getText().strip();
+        String boxuly = jTextField17.getText().strip();
         String kho = (String) jComboBox17.getSelectedItem();
         String hedieuhanh = (String) jComboBox16.getSelectedItem();
         String thoigianbaohanh = jTextField19.getText();
         String thuonghieu = (String) jComboBox15.getSelectedItem();
         String hinhsanpham = inpIMG3.getUrl();
+        
+        
+        if( boxuly.equals("")){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin của bộ xử lý");
+            return -1;
+        }
+            
+        
+        String regex="[a-zA-Z0-9]+";
+        if (!tensp.matches(regex) || !boxuly.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng định dạng");      
+            return -1;
+        }
+        
         if (url_cur.equals(hinhsanpham)) {
             int trangthai = 1;
             int maloai = 9;
             p = new DTO_Product(masp, tensp, boxuly, hedieuhanh, kho, hinhsanpham, thoigianbaohanh, trangthai, thuonghieu,
                     maloai);
                           
-    
             p.setHinhsanpham(addImage(p.getHinhsanpham()));
             return 1;
         }
@@ -1297,18 +1310,15 @@ public class EditProduct extends javax.swing.JDialog {
         p = new DTO_Product(masp, tensp, boxuly, hedieuhanh, kho, hinhsanpham, thoigianbaohanh, trangthai, thuonghieu,
                 maloai);
                       
-
         p.setHinhsanpham(addImage(p.getHinhsanpham()));
-        JOptionPane.showMessageDialog(null, "Sửa sản phẩm thành công");
         return 1;
     }
 
     public boolean validateEditProduct() {
         if(jTextField16.getText().equals("") || jTextField17.getText().equals("")  || jComboBox15.getSelectedItem().equals("Chọn thương hiệu") || jComboBox16.getSelectedItem().equals("Chọn hệ điều hành")){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");            
             return false;
         }
-        
-
         return true;    
     }
 
@@ -1316,11 +1326,14 @@ public class EditProduct extends javax.swing.JDialog {
         if(validateEditProduct() == false){
             return;
         }
-        editProduct();
-        formItems.productBUS.update(p);
-        formItems.listProducts = formItems.productBUS.getAllData();
-        formItems.FillTable(formItems.listProducts);
-        this.dispose();
+        if ( editProduct() == 1){
+            JOptionPane.showMessageDialog(null, "Sửa sản phẩm thành công");    
+            formItems.productBUS.update(p);
+            formItems.listProducts = formItems.productBUS.getAllData();
+            formItems.FillTable(formItems.listProducts);
+            this.dispose();
+        }
+
     
     }//GEN-LAST:event_jButton4MousePressed
 

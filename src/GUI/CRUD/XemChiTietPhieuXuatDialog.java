@@ -102,7 +102,7 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
         jTextField1.setText(arr.getMaphieuxuat() + "");
         jTextField2.setText(tennv);
         jTextField3.setText(tenkh);
-        jTextField4.setText(arr.getThoigian());
+        jTextField4.setText(arr.getThoigian().toString());
     }
 
     public void loadctspxuat() {

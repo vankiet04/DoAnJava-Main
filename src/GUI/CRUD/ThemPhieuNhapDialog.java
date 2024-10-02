@@ -11,7 +11,7 @@ import BUS.BUS_PhieuNhap;
 import BUS.BUS_Product;
 import BUS.BUS_RamList;
 import BUS.BUS_RomList;
-import COM.rsa.jsafe.bu;
+
 import DTO.DTO_ChiTietCauHinh;
 import DTO.DTO_ChiTietPhieuNhap;
 import DTO.DTO_NhaCungCap;
@@ -58,7 +58,8 @@ public class ThemPhieuNhapDialog extends javax.swing.JDialog {
     ArrayList<DTO_ChiTietCauHinh> listPhienBanSP = new ArrayList<>();
     ArrayList<DTO_ChiTietPhieuNhap> chitietphieu;
     int maphieunhap;
-     GUI.MainProgram main;
+
+        GUI.MainProgram main;
     DTO_TaiKhoan user;
     
     public void loadComboboxNhaCungCap() {

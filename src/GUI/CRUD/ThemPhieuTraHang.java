@@ -29,9 +29,7 @@ import BUS.BUS_NhanVien;
 import BUS.BUS_PhieuNhap;
 import BUS.BUS_PhieuXuat;
 import BUS.BUS_Product;
-import COM.rsa.Intel.e1;
-import COM.rsa.jsafe.da;
-import COM.rsa.jsafe.ds;
+
 import DTO.DTO_ChiTietCauHinh;
 import DTO.DTO_ChiTietPhieuNhap;
 import DTO.DTO_ChiTietPhieuXuat;
@@ -702,7 +700,8 @@ public class ThemPhieuTraHang extends javax.swing.JDialog {
         for (int i = 0; i < danhsachnhap.size(); i++) {
             tongtien += danhsachnhap.get(i).getSoluongton() * giamappingdanhsach.get(i);
         }
-        String thoigian = java.time.LocalDateTime.now().toString();
+                long now = System.currentTimeMillis();
+        java.sql.Timestamp thoigian = new java.sql.Timestamp(now);
 
         DTO_PhieuXuat dto_PhieuXuat = new DTO_PhieuXuat(maphieuxuat, thoigian, tongtien, manv, makh);
         int res = busPhieuXuat.insert(dto_PhieuXuat);
@@ -728,7 +727,8 @@ public class ThemPhieuTraHang extends javax.swing.JDialog {
 
                 // update ma phieu xuat cho imei trong table ctsp
                 busChiTietSanPham.updateMaPhieuXuat(danhsachnhap, Integer.parseInt(jTextField6.getText()), danhsachimeitungsanpham);
-                px.loadtablepx();
+//                px.loadtablepx();
+        BUS_PhieuNhap busPhieuNhap = new BUS_PhieuNhap();
                 JOptionPane.showMessageDialog(null, "Thêm phiếu xuất thành công");
                 this.dispose();
             } else {
