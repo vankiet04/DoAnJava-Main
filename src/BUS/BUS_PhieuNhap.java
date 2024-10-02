@@ -239,7 +239,7 @@ public class BUS_PhieuNhap {
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        
+
         // Timestamp time_end = new Timestamp(calendar.getTimeInMillis());
         ArrayList<DTO_PhieuNhap> result = new ArrayList<>();
         for (DTO_PhieuNhap phieuNhap : getAll()) {
@@ -268,11 +268,12 @@ public class BUS_PhieuNhap {
                         match = true;
                     }
                 }
-               
+
             }
 
             if (match
-                    && (manv == 0 || phieuNhap.getManguoitao() == manv) && (mancc == 0 || phieuNhap.getManhacungcap() == mancc)
+                    && (manv == 0 || phieuNhap.getManguoitao() == manv)
+                    && (mancc == 0 || phieuNhap.getManhacungcap() == mancc)
                     // && (phieuNhap.getThoigiantao().compareTo(time_start) >= 0)
                     // && (phieuNhap.getThoigiantao().compareTo(time_end) <= 0)
                     && phieuNhap.getTongTien() >= price_min
@@ -282,5 +283,10 @@ public class BUS_PhieuNhap {
         }
 
         return result;
+    }
+    
+
+    public ArrayList<Integer> getAllMaPhieuNhapByMancc(int mancc) {
+        return phieunhapDAO.getAllPhieuNhapByMancc(mancc);
     }
 }

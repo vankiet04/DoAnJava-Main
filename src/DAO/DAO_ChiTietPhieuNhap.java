@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import ConnectDB.JDBCUtil;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -145,5 +146,72 @@ public class DAO_ChiTietPhieuNhap implements DAOChiTietInterface<DTO_ChiTietPhie
         }
         return result;
     }
-    
+
+    public ArrayList<DTO_ChiTietPhieuNhap> getAllctphieunhapByMaphienbanVaListmaphiuenhap(int maphienban,
+            ArrayList<Integer> listmaphieunhap) {
+        ArrayList<DTO_ChiTietPhieuNhap> result = new ArrayList<>();
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT * FROM ctphieunhap WHERE maphienbansp = ? AND maphieunhap = ?";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            for (int i = 0; i < listmaphieunhap.size(); i++) {
+                pst.setInt(1, maphienban);
+                pst.setInt(2, listmaphieunhap.get(i));
+                ResultSet rs = (ResultSet) pst.executeQuery();
+                while (rs.next()) {
+                    int maphieu = rs.getInt("maphieunhap");
+                    int maphienbansp = rs.getInt("maphienbansp");
+                    int dongia = rs.getInt("dongia");
+                    int soluong = rs.getInt("soluong");
+                    DTO_ChiTietPhieuNhap ctphieu = new DTO_ChiTietPhieuNhap(maphieu, maphienbansp, soluong, dongia);
+                    result.add(ctphieu);
+                }
+            }
+            JDBCUtil.close(con);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Loi select all chi tiet phieu nhap ne: " + e.getMessage());
+        }
+        return result;
+    }
+
+    public ArrayList<DTO_ChiTietPhieuNhap> getAll() {
+        ArrayList<DTO_ChiTietPhieuNhap> result = new ArrayList<>();
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT * FROM ctphieunhap";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            while (rs.next()) {
+                int maphieu = rs.getInt("maphieunhap");
+                int maphienbansp = rs.getInt("maphienbansp");
+                int dongia = rs.getInt("dongia");
+                int soluong = rs.getInt("soluong");
+                DTO_ChiTietPhieuNhap ctphieu = new DTO_ChiTietPhieuNhap(maphieu, maphienbansp, soluong, dongia);
+                result.add(ctphieu);
+            }
+            JDBCUtil.close(con);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Loi select all chi tiet phieu nhap ne: " + e.getMessage());
+        }
+        return result;
+    }
+
+    public long getGiaNhap(int maphieunhap, int maphienban) {
+        long result = 0;
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT dongia FROM ctphieunhap WHERE maphieunhap = ? AND maphienbansp = ?";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            pst.setInt(1, maphieunhap);
+            pst.setInt(2, maphienban);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            if (rs.next()) {
+                result = rs.getLong("dongia");
+            }
+            JDBCUtil.close(con);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Loi select gia nhap ne: " + e.getMessage());
+        }
+        return result;
+    }
 }
