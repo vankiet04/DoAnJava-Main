@@ -26,7 +26,7 @@ public class DAO_PhieuXuat implements DAOInterface<DTO_PhieuXuat> {
             String sql = "INSERT INTO phieuxuat(maphieuxuat, thoigian, manv, makh, tongtien, trangthai) VALUES(?, ?, ?, ?, ?,1)";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setInt(1, t.getMaphieuxuat());
-            pst.setString(2, t.getThoigian());
+            pst.setTimestamp(2, t.getThoigian());
             pst.setInt(3, t.getIdnhanvien());
             pst.setInt(4, t.getIdkhachhang());
             pst.setLong(5, t.getTongtien());
@@ -64,7 +64,7 @@ public class DAO_PhieuXuat implements DAOInterface<DTO_PhieuXuat> {
             while (rs.next()) {
                 DTO_PhieuXuat phieuxuat = new DTO_PhieuXuat();
                 phieuxuat.setMaphieuxuat(rs.getInt("maphieuxuat"));
-                phieuxuat.setThoigian(rs.getString("thoigian"));
+                phieuxuat.setThoigian(rs.getTimestamp("thoigian"));
                 phieuxuat.setIdnhanvien(rs.getInt("manv"));
                 phieuxuat.setIdkhachhang(rs.getInt("makh"));
                 phieuxuat.setTongtien(rs.getLong("tongtien"));
@@ -91,7 +91,7 @@ public class DAO_PhieuXuat implements DAOInterface<DTO_PhieuXuat> {
             while (rs.next()) {
                 result = new DTO_PhieuXuat();
                 result.setMaphieuxuat(rs.getInt("maphieuxuat"));
-                result.setThoigian(rs.getString("thoigian"));
+                result.setThoigian(rs.getTimestamp("thoigian"));
                 result.setIdnhanvien(rs.getInt("manv"));
                 result.setIdkhachhang(rs.getInt("makh"));
                 result.setTongtien(rs.getLong("tongtien"));
@@ -135,7 +135,7 @@ public class DAO_PhieuXuat implements DAOInterface<DTO_PhieuXuat> {
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
                 phieuxuat.setMaphieuxuat(rs.getInt("maphieuxuat"));
-                phieuxuat.setThoigian(rs.getString("thoigian"));
+                phieuxuat.setThoigian(rs.getTimestamp("thoigian"));
                 phieuxuat.setIdnhanvien(rs.getInt("manv"));
                 phieuxuat.setIdkhachhang(rs.getInt("makh"));
                 phieuxuat.setTongtien(rs.getLong("tongtien"));
@@ -159,7 +159,7 @@ public class DAO_PhieuXuat implements DAOInterface<DTO_PhieuXuat> {
             while (rs.next()) {
                 DTO_PhieuXuat phieuxuat = new DTO_PhieuXuat();
                 phieuxuat.setMaphieuxuat(rs.getInt("maphieuxuat"));
-                phieuxuat.setThoigian(rs.getString("thoigian"));
+                phieuxuat.setThoigian(rs.getTimestamp("thoigian"));
                 phieuxuat.setIdnhanvien(rs.getInt("manv"));
                 phieuxuat.setIdkhachhang(rs.getInt("makh"));
                 phieuxuat.setTongtien(rs.getLong("tongtien"));
@@ -184,7 +184,7 @@ public class DAO_PhieuXuat implements DAOInterface<DTO_PhieuXuat> {
             while (rs.next()) {
                 DTO_PhieuXuat phieuxuat = new DTO_PhieuXuat();
                 phieuxuat.setMaphieuxuat(rs.getInt("maphieuxuat"));
-                phieuxuat.setThoigian(rs.getString("thoigian"));
+                phieuxuat.setThoigian(rs.getTimestamp("thoigian"));
                 phieuxuat.setIdnhanvien(rs.getInt("manv"));
                 phieuxuat.setIdkhachhang(rs.getInt("makh"));
                 phieuxuat.setTongtien(rs.getLong("tongtien"));
