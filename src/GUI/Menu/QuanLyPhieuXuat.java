@@ -961,7 +961,6 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 new String[] {
                         "Mã phiếu xuất", "Thời gian tạo", "Khách hàng", "Nhân viên tạo", "Tổng tiền"
                 }));
-        jTable2.setEnabled(false);
         jTable2.setPreferredSize(new java.awt.Dimension(1250, 600));
         jScrollPane1.setViewportView(jTable2);
 
