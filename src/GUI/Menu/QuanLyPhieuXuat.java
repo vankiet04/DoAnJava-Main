@@ -45,6 +45,7 @@ import GUI.CRUD.ThemPhieuTraHang;
  * @author Admin
  */
 public class QuanLyPhieuXuat extends javax.swing.JPanel {
+//    private com.raven.suportSwing.TextField txtSearchNCC;
 
     /**
      * Creates new form QuanLyPhieuNhap
@@ -69,6 +70,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         this.main = main;
         this.user = user;
         initComponents();
+
         loadComboSearch();
         onChangeSearch();
         
@@ -82,11 +84,14 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         jLabel2NCC.setEnabled(false);
         jLabel3NCC.setEnabled(false);
         jLabel4NCC.setEnabled(false);
+        
         loadChucNangNhomQuyen();
         
 
         // system list phieu
-        loadtablepx();
+        
+        this.listPhieu = phieuxuatBUS.getAll();
+        loadtablepx(this.listPhieu);
         jPanel6.setVisible(false);
     }
     public void onChangeSearch() {
@@ -188,6 +193,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
     }
 
     public void Fillter() throws ParseException {
+
         // JOptionPane.showMessageDialog(null, "Fillter");
         int type = jComboBoxNCC.getSelectedIndex();
         String makh = jComboBox1.getSelectedIndex() == 0 ? "0"
@@ -195,38 +201,59 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         int manv = jComboBox2.getSelectedIndex() == 0 ? 0
                 : busnv.getByIndex(jComboBox2.getSelectedIndex() - 1).getManv();
         String input = jTextField1.getText() != null ? jTextField1.getText() : "";
+        
         jDateChooser1.setDateFormatString("dd/MM/yyyy");
         jDateChooser2.setDateFormatString("dd/MM/yyyy");
         java.util.Date ngaybatdau = jDateChooser1.getDate();
         java.util.Date ngayketthuc = jDateChooser2.getDate();
+        
         if (ngaybatdau != null && ngayketthuc != null && ngaybatdau.after(ngayketthuc)) {
             JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được lớn hơn ngày kết thúc", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (!jTextField3.getText().matches("[0-9]+") && jTextField3.getText() != "") {
-            // JOptionPane.showMessageDialog(this, "Vui lòng nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-
-        }
-        if (!jTextField4.getText().matches("[0-9]+") && jTextField4.getText() != "") {
-            // JOptionPane.showMessageDialog(this, "Vui lòng nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-
+        int check = 0;
+        // Kiểm tra jTextField3
+        if (!jTextField3.getText().matches("[0-9]+") && !jTextField3.getText().equals("")) {
+            jTextField3.setText("0");
+            JOptionPane.showMessageDialog(this, "Vui lòng chỉ nhập số và số không âm", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            check += 1;
         }
 
-        long min_price = Long.parseLong(jTextField3.getText());
-        long max_price = Long.parseLong(jTextField4.getText());
+        // Kiểm tra jTextField4
+        if (!jTextField4.getText().matches("[0-9]+") && !jTextField3.getText().equals("")) {
+            jTextField4.setText("1000000000");
+            JOptionPane.showMessageDialog(this, "Vui lòng chỉ nhập số và số không âm ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            check += 1;
+        }
+
+        if (check != 0) {
+            return;
+        }   
+        
+        if((jTextField3.getText().trim().equals("")) && (jTextField4.getText().trim().equals(""))){
+            jTextField3.setText("0");    
+            jTextField4.setText("1000000000");
+            JOptionPane.showMessageDialog(this, "Cần nhập đủ 2 trường giá để lọc", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+       
+        long min_price = jTextField3.getText().trim().equals("") ? 0 : Long.parseLong(jTextField3.getText());
+        long max_price = jTextField4.getText().trim().equals("") ? 1000000000 : Long.parseLong(jTextField4.getText());
         if(min_price > max_price){
             JOptionPane.showMessageDialog(this, "Giá trị tối thiểu không được lớn hơn giá trị tối đa", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         int makhInt = Integer.parseInt(makh);
+        
+
 
         this.listPhieu = phieuxuatBUS.fillerphieuXuatCoNgay(type, input, makhInt, manv, ngaybatdau, ngayketthuc, min_price, max_price);
-        loadtablepx();
+
+        loadtablepx(this.listPhieu);
     }
 
     public void exportJTableToExcel() {
@@ -322,16 +349,18 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         }
     }
 
-    public void loadtablepx() {
+    public void loadtablepx(ArrayList<DTO_PhieuXuat> list) {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
-        ArrayList<DTO_PhieuXuat> listProduct = phieuxuatBUS.getAll();
+        ArrayList<DTO_PhieuXuat> listProduct = list;
+  
+
         //reverse list
      
         for (DTO_PhieuXuat sp : listProduct) {
             model.addRow(new Object[] {
                     sp.getMaphieuxuat(),
-                    sp.getThoigian(),
+                    sp.getThoigian().toString(),
                     buskh.getkhtheoid(sp.getIdkhachhang()).getHoTen(),
                     busnv.getNvtheoid(sp.getIdnhanvien()).getHoten(),
                     toVND(sp.getTongtien())
@@ -405,6 +434,31 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel13 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jComboBoxNCC = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jLabel2NCC = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jLabel3NCC = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
+        jLabel4NCC = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jLabel6NCC = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
+        jLabel1NCC = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
+        jLabel4NCC1 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -427,151 +481,11 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         jTextField4 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jPanel12 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        jComboBoxNCC = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jLabel2NCC = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jPanel10 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jLabel3NCC = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jLabel4NCC = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jLabel6NCC = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jLabel1NCC = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
-        jLabel4NCC1 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(3200, 600));
 
         jPanel13.setBackground(new java.awt.Color(255, 204, 255));
         jPanel13.setLayout(new java.awt.BorderLayout());
-
-        jPanel22.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel22.setPreferredSize(new java.awt.Dimension(1300, 1220));
-        jPanel22.setRequestFocusEnabled(false);
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT);
-        flowLayout1.setAlignOnBaseline(true);
-        jPanel22.setLayout(flowLayout1);
-
-        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel15.setPreferredSize(new java.awt.Dimension(210, 450));
-
-        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel16.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel16.setLayout(new java.awt.BorderLayout());
-
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Nhà cung cấp");
-        jPanel16.add(jLabel1, java.awt.BorderLayout.PAGE_START);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 30));
-        jPanel16.add(jComboBox1, java.awt.BorderLayout.PAGE_END);
-
-        jPanel15.add(jPanel16);
-
-        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel17.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel17.setLayout(new java.awt.BorderLayout());
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Nhân viên nhập");
-        jPanel17.add(jLabel2, java.awt.BorderLayout.CENTER);
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setPreferredSize(new java.awt.Dimension(72, 30));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
-        jPanel17.add(jComboBox2, java.awt.BorderLayout.PAGE_END);
-
-        jPanel15.add(jPanel17);
-
-        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel18.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel18.setLayout(new java.awt.BorderLayout());
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Từ ngày");
-        jPanel18.add(jLabel3, java.awt.BorderLayout.PAGE_START);
-        jPanel18.add(jDateChooser1, java.awt.BorderLayout.CENTER);
-
-        jPanel15.add(jPanel18);
-
-        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel19.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel19.setLayout(new java.awt.BorderLayout());
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Đến ngày");
-        jPanel19.add(jLabel4, java.awt.BorderLayout.PAGE_START);
-        jPanel19.add(jDateChooser2, java.awt.BorderLayout.CENTER);
-
-        jPanel15.add(jPanel19);
-
-        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel20.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel20.setLayout(new java.awt.BorderLayout());
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Từ số tiền (VNĐ)");
-        jPanel20.add(jLabel5, java.awt.BorderLayout.CENTER);
-
-        jTextField3.setPreferredSize(new java.awt.Dimension(71, 30));
-        jPanel20.add(jTextField3, java.awt.BorderLayout.PAGE_END);
-
-        jPanel15.add(jPanel20);
-
-        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel21.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel21.setLayout(new java.awt.BorderLayout());
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Đến số tiền (VNĐ)");
-        jPanel21.add(jLabel6, java.awt.BorderLayout.CENTER);
-
-        jTextField4.setPreferredSize(new java.awt.Dimension(71, 30));
-        jPanel21.add(jTextField4, java.awt.BorderLayout.PAGE_END);
-
-        jPanel15.add(jPanel21);
-
-        jPanel22.add(jPanel15);
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(1000, 450));
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Mã phiếu xuất", "Thời gian tạo", "Khách hàng", "Nhân viên tạo", "Tổng tiền"
-            }
-        ));
-        // jTable2.setPreferredSize(new java.awt.Dimension(1250, 81));
-        jScrollPane1.setViewportView(jTable2);
-
-        jPanel22.add(jScrollPane1);
-
-        jPanel13.add(jPanel22, java.awt.BorderLayout.CENTER);
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -603,7 +517,14 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 255, 204));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jTextField1.setText("Tìm kiếm");
+        jButton1.setBackground(new java.awt.Color(153, 255, 255));
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
+        jButton1.setText("Reset");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -614,8 +535,14 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jComboBoxNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(494, 494, 494)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,7 +561,8 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -820,18 +748,6 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButton8.setText("Trả hàng về nhà cung cấp");
-        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton8MousePressed(evt);
-            }
-        });
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -843,14 +759,9 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25)))))
+                        .addGap(0, 191, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)))
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -873,8 +784,7 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jButton8))
+                                .addGap(33, 33, 33))
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -903,6 +813,120 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
 
         jPanel13.add(jPanel12, java.awt.BorderLayout.NORTH);
 
+        jPanel22.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel22.setPreferredSize(new java.awt.Dimension(1300, 1220));
+        jPanel22.setRequestFocusEnabled(false);
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT);
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel22.setLayout(flowLayout1);
+
+        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel15.setPreferredSize(new java.awt.Dimension(210, 450));
+
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel16.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel16.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Nhà cung cấp");
+        jPanel16.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 30));
+        jPanel16.add(jComboBox1, java.awt.BorderLayout.PAGE_END);
+
+        jPanel15.add(jPanel16);
+
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel17.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel17.setLayout(new java.awt.BorderLayout());
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Nhân viên nhập");
+        jPanel17.add(jLabel2, java.awt.BorderLayout.CENTER);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setPreferredSize(new java.awt.Dimension(72, 30));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(jComboBox2, java.awt.BorderLayout.PAGE_END);
+
+        jPanel15.add(jPanel17);
+
+        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel18.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel18.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Từ ngày");
+        jPanel18.add(jLabel3, java.awt.BorderLayout.PAGE_START);
+        jPanel18.add(jDateChooser1, java.awt.BorderLayout.CENTER);
+
+        jPanel15.add(jPanel18);
+
+        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel19.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel19.setLayout(new java.awt.BorderLayout());
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Đến ngày");
+        jPanel19.add(jLabel4, java.awt.BorderLayout.PAGE_START);
+        jPanel19.add(jDateChooser2, java.awt.BorderLayout.CENTER);
+
+        jPanel15.add(jPanel19);
+
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel20.setLayout(new java.awt.BorderLayout());
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Từ số tiền (VNĐ)");
+        jPanel20.add(jLabel5, java.awt.BorderLayout.CENTER);
+
+        jTextField3.setPreferredSize(new java.awt.Dimension(71, 30));
+        jPanel20.add(jTextField3, java.awt.BorderLayout.PAGE_END);
+
+        jPanel15.add(jPanel20);
+
+        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel21.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel21.setLayout(new java.awt.BorderLayout());
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Đến số tiền (VNĐ)");
+        jPanel21.add(jLabel6, java.awt.BorderLayout.CENTER);
+
+        jTextField4.setPreferredSize(new java.awt.Dimension(71, 30));
+        jPanel21.add(jTextField4, java.awt.BorderLayout.PAGE_END);
+
+        jPanel15.add(jPanel21);
+
+        jPanel22.add(jPanel15);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1000, 450));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Mã phiếu xuất", "Thời gian tạo", "Khách hàng", "Nhân viên tạo", "Tổng tiền"
+            }
+        ));
+        jTable2.setEnabled(false);
+        jTable2.setPreferredSize(new java.awt.Dimension(1250, 600));
+        jScrollPane1.setViewportView(jTable2);
+
+        jPanel22.add(jScrollPane1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -910,11 +934,17 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 1336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 1864, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 1336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -949,9 +979,8 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         xem.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void myButton1NCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1NCCActionPerformed
-        // TODO add your handling code here:
-        //reset
+    public void resetAll(){
+                //reset
         jTextField1.setText("");
         jComboBoxNCC.setSelectedIndex(0);
         jComboBox1.setSelectedIndex(0);
@@ -960,7 +989,12 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         jDateChooser2.setDate(null);
         jTextField3.setText("0");
         jTextField4.setText("100000000");
- 
+        this.listPhieu = phieuxuatBUS.getAll();
+        loadtablepx(listPhieu);        
+    }
+    
+    private void myButton1NCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1NCCActionPerformed
+        // TODO add your handling code here:
     }//GEN-LAST:event_myButton1NCCActionPerformed
 
     private void jComboBoxNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNCCActionPerformed
@@ -1039,26 +1073,19 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
         huy.setVisible(true);
     }//GEN-LAST:event_jButton6MousePressed
 
-    private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
-        // TODO add your handling code here: tra hang
-        ThemPhieuTraHang themPhieuTraHang = new ThemPhieuTraHang(parent, true, user, this);
-        themPhieuTraHang.setLocationRelativeTo(null);
-        themPhieuTraHang.setVisible(true);
-    }//GEN-LAST:event_jButton8MousePressed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        resetAll();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBoxNCC;

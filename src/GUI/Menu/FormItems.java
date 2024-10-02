@@ -9,7 +9,7 @@ import BUS.BUS_Brand;
 import BUS.BUS_ChiTietCauHinh;
 import BUS.BUS_ChucNangNhomQuyen;
 import BUS.BUS_Product;
-import COM.rsa.jsafe.cu;
+
 import DAO.DAO_Product;
 import DTO.DTO_Brand;
 import DTO.DTO_ChiTietCauHinh;
@@ -75,7 +75,7 @@ public final class FormItems extends javax.swing.JPanel {
         initComponents();
         txtSearch.setLabelText("Tìm kiếm theo tên sản phẩm:");
         FillTable(listProducts);
-        System.out.println("size" + listProducts.size());
+
 
         fillComboboxBrand(listBrands);
 
@@ -148,6 +148,7 @@ public final class FormItems extends javax.swing.JPanel {
      public void FillTable(ArrayList<DTO_Product> result) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
+        jTable1.enable(false);
         for (DTO_Product sp : result) {
             model.addRow(new Object[]{sp.getMasanpham(), sp.getTensanpham(), 
                 sp.getBoxuly(), sp.getHedieuhanh(), sp.getThuonghieu(), sp.getThoigianbaohanh() + " năm"
@@ -545,6 +546,7 @@ private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         //reset
         txtSearch.setText("");
+        lblSearch.setText("");
         FillTable(productBUS.getAllData());
 
     }//GEN-LAST:event_myButton2ActionPerformed
@@ -552,6 +554,9 @@ private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         // TODO add your handling code here:
         String search = txtSearch.getText();
+        search= search.trim();
+        if( search.contains("%"))
+            search= search.replace("%", "!");
         if (search.equals("")) {
             lblSearch.setText("Vui lòng nhập từ khóa để tìm kiếm");
             FillTable(productBUS.getAllData());
