@@ -83,21 +83,20 @@ public class BUS_PhieuXuat {
         ArrayList<DTO_PhieuXuat> result = new ArrayList<>();
         java.sql.Timestamp timebd = convertDateToTimestamp(ngaybatdau);
         java.sql.Timestamp timekt = convertDateToTimestamp(ngayketthuc);
-    //    JOptionPane.showMessageDialog(null, "ok" + "tien min: "+price_min + "tien max: "+price_max);
+
         if (timebd == null || timekt == null) {
             // change timebd to 1-1-1970
             timebd = new java.sql.Timestamp(0);
             // timekt to now
             timekt = new java.sql.Timestamp(System.currentTimeMillis());
         }
+
         // JOptionPane.showMessageDialog(null, "okkee");
         for (DTO_PhieuXuat phieuXuat : getAll()) {
             boolean match = false;
             switch (type) {
                 case 0 -> {
                     if (Integer.toString(phieuXuat.getMaphieuxuat()).contains(input.toLowerCase())
-                            // || phieuXuat.getThoigian().toLowerCase().contains(input.toLowerCase())
-                            // || Double.toString(phieuXuat.getTongtien()).contains(input)
                             || nvBUS.getNameById(phieuXuat.getIdnhanvien()).toLowerCase().contains(input.toLowerCase())
                             || khBUS.getKHbyid(Integer.toString(phieuXuat.getIdkhachhang()) + "").getHoTen().toLowerCase().contains(input.toLowerCase())) {
                         match = true;
@@ -122,18 +121,20 @@ public class BUS_PhieuXuat {
                 }
             }
 
-           if(convertStringToTimestamp(phieuXuat.getThoigian()).compareTo(timebd) >= 0 && convertStringToTimestamp(phieuXuat.getThoigian()).compareTo(timekt) <= 0){
                if (match && (manv == 0 || phieuXuat.getIdnhanvien() == manv)
+                       && (phieuXuat.getThoigian().compareTo(timebd) >=0)
+                       && (phieuXuat.getThoigian().compareTo(timekt) <=0)
                        && (makh == 0 || phieuXuat.getIdkhachhang() == makh)
-                       
                        && (price_min == 0 || phieuXuat.getTongtien() >= price_min)
-                       && (price_max == 0 || phieuXuat.getTongtien() <= price_max)){
-                // JOptionPane.showMessageDialog(null, "phieuXuat: "+phieuXuat.getTongtien());
+                       && (price_max == 0 || phieuXuat.getTongtien() <= price_max))
+                   
                 result.add(phieuXuat);
-            }
-           }
+            
+
+
+
+                 
         }
-        // JOptionPane.showMessageDialog(null, "phieuXuat: "+result);
         return result;
 
 
