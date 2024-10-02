@@ -1,8 +1,10 @@
 package DTO;
 
+import java.sql.Timestamp;
+
 public class DTO_PhieuXuat {
     int maphieuxuat;
-    String thoigian;
+    Timestamp thoigian;
     long tongtien;
     int idnhanvien;
     int idkhachhang;
@@ -10,7 +12,7 @@ public class DTO_PhieuXuat {
     public DTO_PhieuXuat() {
     }
 
-    public DTO_PhieuXuat(int maphieuxuat, String thoigian, long tongtien, int idnhanvien, int idkhachhang) {
+    public DTO_PhieuXuat(int maphieuxuat, Timestamp thoigian, long tongtien, int idnhanvien, int idkhachhang) {
         this.maphieuxuat = maphieuxuat;
         this.thoigian = thoigian;
         this.tongtien = tongtien;
@@ -27,11 +29,11 @@ public class DTO_PhieuXuat {
         this.maphieuxuat = maphieuxuat;
     }
 
-    public String getThoigian() {
+    public Timestamp getThoigian() {
         return thoigian;
     }
 
-    public void setThoigian(String thoigian) {
+    public void setThoigian(Timestamp thoigian) {
         this.thoigian = thoigian;
     }
 
