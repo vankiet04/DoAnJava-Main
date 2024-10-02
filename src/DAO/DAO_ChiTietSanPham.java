@@ -14,7 +14,6 @@ import DTO.DTO_ChiTietCauHinh;
 import DTO.DTO_ChiTietPhieuNhap;
 import DTO.DTO_NhanVien;
 
-import java.lang.reflect.Array;
 import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -410,23 +409,15 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
         return result;
     }
 
-    public ArrayList<Integer> getAllMaPhienBanByMaPhieuNhap(ArrayList<Integer> listMaPhieuNhap) {
-        ArrayList<Integer> result = new ArrayList<>();
-
+    public String getLargestImei() {
+        String result = "";
         try {
             Connection con = (Connection) JDBCUtil.getConnectDB();
-            String sql = "SELECT DISTINCT maphienbansp FROM ctsanpham WHERE maphieunhap IN (";
-            for (int i = 0; i < listMaPhieuNhap.size(); i++) {
-                if (i == listMaPhieuNhap.size() - 1) {
-                    sql += listMaPhieuNhap.get(i) + ")";
-                } else {
-                    sql += listMaPhieuNhap.get(i) + ",";
-                }
-            }
+            String sql = "SELECT maimei FROM ctsanpham ORDER BY maimei DESC LIMIT 1";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
-            while (rs.next()) {
-                result.add(rs.getInt("maphienbansp"));
+            if (rs.next()) {
+                result = rs.getString("maimei");
             }
             JDBCUtil.close(con);
         } catch (Exception e) {
@@ -435,103 +426,22 @@ public class DAO_ChiTietSanPham  implements DAOInterface<DTO_ChiTietSanPham>{
         return result;
     }
 
-    public ArrayList<DTO_ChiTietCauHinh> getAllPhienBanByListMaPhienBan(ArrayList<Integer> listmaphienban) {
-        ArrayList<DTO_ChiTietCauHinh> result = new ArrayList<>();
+    public ArrayList<String> getToanBoImeiTheoPhienBanSanPham(int mapb) {
+        ArrayList<String> result = new ArrayList<>();
         try {
             Connection con = (Connection) JDBCUtil.getConnectDB();
-            // lay tat ca phienbansanpham theo list maphienban cp soluongton>0 va sap xep theo Ten A-Z
-            // soluongton>0
-            String sql = "SELECT * FROM phienbansanpham WHERE maphienbansp IN (";
-            for (int i = 0; i < listmaphienban.size(); i++) {
-                if (i == listmaphienban.size() - 1) {
-                    sql += listmaphienban.get(i) + ")";
-                } else {
-                    sql += listmaphienban.get(i) + ",";
-                }
-            }
+            String sql = "SELECT maimei FROM ctsanpham WHERE maphienbansp = ?";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            while (rs.next()) {
-                int maphienbansp = rs.getInt("maphienbansp");
-                //so luong ton>0
-                if (rs.getInt("soluongton") > 0) {
-                    DTO_ChiTietCauHinh ct = new DTO_ChiTietCauHinh(maphienbansp, rs.getInt("masanpham"),
-                            rs.getInt("rom"), rs.getInt("ram"), rs.getInt("gianhap"), rs.getInt("giaxuat"),
-                            rs.getInt("soluongton"));
-                    result.add(ct);
-                }
-            }
-            JDBCUtil.close(con);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
-        }
-        return result;
-    }
-    
-    public ArrayList<DTO_ChiTietSanPham> getAllImeiByMaphienbanVaListMaphieunhap(int maphienban,
-            ArrayList<Integer> listmaphieunhap) {
-        ArrayList<DTO_ChiTietSanPham> result = new ArrayList<>();
-        try {
-            Connection con = (Connection) JDBCUtil.getConnectDB();
-            // lay tat ca imei theo maphienban va list maphieunhap
-            String sql = "SELECT * FROM ctsanpham WHERE maphienbansp = ? and maphieunhap IN (";
-            for (int i = 0; i < listmaphieunhap.size(); i++) {
-                if (i == listmaphieunhap.size() - 1) {
-                    sql += listmaphieunhap.get(i) + ")";
-                } else {
-                    sql += listmaphieunhap.get(i) + ",";
-                }
-            }
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setInt(1, maphienban);
+            pst.setInt(1, mapb);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
                 String imei = rs.getString("maimei");
-                int maphienbansp = rs.getInt("maphienbansp");
-                int maphieunhap = rs.getInt("maphieunhap");
-                int maphieuxuat = rs.getInt("maphieuxuat");
-                int tinhtrang = rs.getInt("tinhtrang");
-                DTO_ChiTietSanPham ct = new DTO_ChiTietSanPham(imei, maphienbansp, maphieunhap, maphieuxuat, tinhtrang);
-                result.add(ct);
+                result.add(imei);
             }
             JDBCUtil.close(con);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
         }
-
-        return result;
-    }
-
-    public ArrayList<DTO_ChiTietSanPham> getTongSoLuongPhienBanSanPham(int maphienban, ArrayList<Integer> listmaphieunhap, ArrayList<DTO_ChiTietSanPham> listImeiDaChon) {
-        ArrayList<DTO_ChiTietSanPham> result = new ArrayList<>();
-        try {
-            Connection con = (Connection) JDBCUtil.getConnectDB();
-            // lay tat ca imei theo maphienban va list maphieunhap
-            String sql = "SELECT * FROM ctsanpham WHERE maphienbansp = ? and maphieunhap IN (";
-            for (int i = 0; i < listmaphieunhap.size(); i++) {
-                if (i == listmaphieunhap.size() - 1) {
-                    sql += listmaphieunhap.get(i) + ")";
-                } else {
-                    sql += listmaphieunhap.get(i) + ",";
-                }
-            }
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setInt(1, maphienban);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            while (rs.next()) {
-                String imei = rs.getString("maimei");
-                int maphienbansp = rs.getInt("maphienbansp");
-                int maphieunhap = rs.getInt("maphieunhap");
-                int maphieuxuat = rs.getInt("maphieuxuat");
-                int tinhtrang = rs.getInt("tinhtrang");
-                DTO_ChiTietSanPham ct = new DTO_ChiTietSanPham(imei, maphienbansp, maphieunhap, maphieuxuat, tinhtrang);
-                result.add(ct);
-            }
-            JDBCUtil.close(con);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Loi lay imei san pham: " + e.getMessage());
-        }
-
         return result;
     }
 }

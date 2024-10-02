@@ -114,12 +114,13 @@ public class ThemThuongHieu extends javax.swing.JDialog {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here: them thuong hieu
-        if (!jTextField1.getText().matches("[a-zA-Z\\s]+")) {
+        String tenTH = jTextField1.getText().strip();        
+        if (!tenTH.matches("[a-zA-Z\\s]+")) {
             JOptionPane.showMessageDialog(null, "Tên thương hiệu chỉ chứa chữ cái");
             return;
             
         }
-        String tenTH = jTextField1.getText();
+
         if (busBrand.checkBrandName(tenTH)) {
             JOptionPane.showMessageDialog(null, "Tên thương hiệu đã tồn tại");
             return;

@@ -47,7 +47,7 @@ public class ThemHDH extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Nhập dung lượng RAM (GB)");
+        jLabel1.setText("Nhập tên hệ điều hành");
         jLabel1.setToolTipText("");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -67,10 +67,6 @@ public class ThemHDH extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(45, 45, 45))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -78,8 +74,11 @@ public class ThemHDH extends javax.swing.JDialog {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(95, 95, 95)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jLabel1)))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,14 +114,18 @@ public class ThemHDH extends javax.swing.JDialog {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here: them hdh
+            String hdhStr = jTextField1.getText().trim();
         try {
-            if (!jTextField1.getText().matches("[a-zA-Z\\s]+")) {
+            if (!hdhStr.matches("[a-zA-Z\\s]+")) {
                 JOptionPane.showMessageDialog(null, "Tên hệ điều hành chỉ chứa chữ cái");
                 return;
                 
             }
-            // TODO add your handling code here: sua thuong hieu
-            String hdhStr = jTextField1.getText();
+        if (hdhStr.equals("")){
+            JOptionPane.showMessageDialog(null, "Tên hệ điều hành không được để trống");
+            return;            
+        }
+            
     
         if (bushdh.checkBrandName(hdhStr)) {
                 JOptionPane.showMessageDialog(null, "Tên hệ điều hành đã tồn tại");

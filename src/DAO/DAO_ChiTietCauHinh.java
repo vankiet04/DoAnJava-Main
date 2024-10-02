@@ -51,7 +51,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
         }
         return result;
     }
-
+    
     public int insert(DTO_ChiTietCauHinh t) {
         int result = 0;
         try {
@@ -112,8 +112,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
                 int gianhap = rs.getInt("gianhap");
                 int giaxuat = rs.getInt("giaxuat");
                 int soluongton = rs.getInt("soluongton");
-                DTO_ChiTietCauHinh sp = new DTO_ChiTietCauHinh(maphienbansp, masanpham, rom, ram, gianhap, giaxuat,
-                        soluongton);
+                DTO_ChiTietCauHinh sp = new DTO_ChiTietCauHinh(maphienbansp, masanpham, rom, ram, gianhap, giaxuat, soluongton);
                 result.add(sp);
             }
             JDBCUtil.close(con);
@@ -122,19 +121,19 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
         }
         return result;
     }
-
+    
     public int getNextID(int idsp) {
         try {
-            Connection con = (Connection) JDBCUtil.getConnectDB();
-            String sql = "SELECT COUNT(*) AS soluong FROM phienbansanpham where masanpham = ?";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setInt(1, idsp);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            if (rs.next()) {
+             Connection con = (Connection) JDBCUtil.getConnectDB();
+             String sql = "SELECT COUNT(*) AS soluong FROM phienbansanpham where masanpham = ?";
+             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+             pst.setInt(1, idsp);
+             ResultSet rs = (ResultSet) pst.executeQuery();
+             if (rs.next()) {
                 int soLuong = rs.getInt("soluong");
                 return soLuong + 1;
-            }
-        } catch (SQLException e) {
+             }
+        } catch(SQLException e) {
             return -12;
         }
         return -1;
@@ -148,7 +147,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setInt(1, id);
             ResultSet rs = (ResultSet) pst.executeQuery();
-
+            
             while (rs.next()) {
                 int maphienbansp = rs.getInt("maphienbansp");
                 int masanpham = rs.getInt("masanpham");
@@ -158,8 +157,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
                 int giaxuat = rs.getInt("giaxuat");
                 int soluongton = rs.getInt("soluongton");
                 int trangthai = rs.getInt("trangthai");
-                DTO_ChiTietCauHinh sp = new DTO_ChiTietCauHinh(maphienbansp, masanpham, rom, ram, gianhap, giaxuat,
-                        soluongton);
+                DTO_ChiTietCauHinh sp = new DTO_ChiTietCauHinh(maphienbansp, masanpham, rom, ram, gianhap, giaxuat, soluongton);
                 result.add(sp);
             }
             JDBCUtil.close(con);
@@ -167,7 +165,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
         }
         return result;
     }
-
+    
     public int getMaxID(int masanpham) {
         try {
             Connection con = (Connection) JDBCUtil.getConnectDB();
@@ -204,6 +202,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
             }
             JDBCUtil.close(con);
 
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Loi select: " + e.getMessage());
         }
@@ -214,7 +213,6 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
         DTO_ChiTietCauHinh pbsp = this.selectById(maphienban);
         int result = 0;
         long quantity_change = pbsp.getSoluongton() + soluong;
-        JOptionPane.showMessageDialog(null, "so luong ton: " + quantity_change + " " + pbsp.getMaphienbansp());
         try {
             Connection con = (Connection) JDBCUtil.getConnectDB();
             String sql = "UPDATE `phienbansanpham` SET `soluongton`=? WHERE maphienbansp = ?";
@@ -222,12 +220,10 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
             pst.setLong(1, quantity_change);
             pst.setInt(2, pbsp.getMaphienbansp());
             result = pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "ress = " + result);
-            JOptionPane.showMessageDialog(null, "update so luong ton thanh cong");
             JDBCUtil.close(con);
-
+      
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Loi update so luong ton: " + ex.getMessage());
+           JOptionPane.showMessageDialog(null, "Loi update so luong ton: " + ex.getMessage());
 
         }
         return result;
@@ -248,8 +244,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
                 int gianhap = rs.getInt("gianhap");
                 int giaxuat = rs.getInt("giaxuat");
                 int soluongton = rs.getInt("soluongton");
-                DTO_ChiTietCauHinh sp = new DTO_ChiTietCauHinh(maphienbansp, masanpham, rom, ram, gianhap, giaxuat,
-                        soluongton);
+                DTO_ChiTietCauHinh sp = new DTO_ChiTietCauHinh(maphienbansp, masanpham, rom, ram, gianhap, giaxuat, soluongton);
                 result.add(sp);
             }
             JDBCUtil.close(con);
@@ -267,7 +262,6 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
             pst.setInt(1, soluong);
             pst.setInt(2, maphienbansp);
             result = pst.executeUpdate();
-            if (result > 0) JOptionPane.showMessageDialog(null, "tru so luong ton thanh cong");
             JDBCUtil.close(con);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Loi update so luong ton: " + ex.getMessage());
@@ -275,7 +269,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
         }
         return result;
     }
-
+    
     public int updateMPBSB(DTO_ChiTietCauHinh t) {
         int result = 0;
         try {
@@ -358,60 +352,5 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
         }
         return false;
     }
-
-
-    public ArrayList<DTO_ChiTietCauHinh> getAllPhienBanByListMaPhienBan(ArrayList<Integer> listmaphienban) {
-        ArrayList<DTO_ChiTietCauHinh> result = new ArrayList<DTO_ChiTietCauHinh>();
-        try {
-            Connection con = (Connection) JDBCUtil.getConnectDB();
-
-            String sql = "SELECT * FROM phienbansanpham WHERE maphienbansp IN (";
-            for (int i = 0; i < listmaphienban.size(); i++) {
-                if (i == listmaphienban.size() - 1) {
-                    sql += listmaphienban.get(i) + ")";
-                } else {
-                    sql += listmaphienban.get(i) + ",";
-                }
-            }
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            while (rs.next()) {
-                //neu so luong ton > 0 thi them vao list
-                if (rs.getInt("soluongton") > 0) {
-                    int maphienbansp = rs.getInt("maphienbansp");
-                    int masanpham = rs.getInt("masanpham");
-                    int rom = rs.getInt("rom");
-                    int ram = rs.getInt("ram");
-                    int gianhap = rs.getInt("gianhap");
-                    int giaxuat = rs.getInt("giaxuat");
-                    int soluongton = rs.getInt("soluongton");
-                    DTO_ChiTietCauHinh sp = new DTO_ChiTietCauHinh(maphienbansp, masanpham, rom, ram, gianhap, giaxuat,
-                            soluongton);
-                    result.add(sp);
-                }
-            }
-            JDBCUtil.close(con);
-        } catch (Exception e) {
-        }
-        //sap xep result co tensanpham tang dan
-        return result;
-    }
-
-    public int truSoLuongTonPhienBanSanPham(int maphienbansp, int soluong) {
-        int result = 0;
-        try {
-            Connection con = (Connection) JDBCUtil.getConnectDB();
-            String sql = "UPDATE `phienbansanpham` SET `soluongton`= soluongton - ? WHERE maphienbansp = ?";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setInt(1, soluong);
-            pst.setInt(2, maphienbansp);
-            result = pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "tru so luong ton thanh cong");
-            JDBCUtil.close(con);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Loi update so luong ton: " + ex.getMessage());
-        }
-        return result;
-
-}
+   
 }

@@ -36,7 +36,6 @@ import javax.swing.border.EmptyBorder;
 import org.bridj.cpp.std.list;
 
 import BUS.BUS_ChucNangNhomQuyen;
-import GUI.Menu.QuanLyTraHang;
 
 /**
  *
@@ -69,7 +68,6 @@ public class MenuTaskBar extends JPanel {
             { "Tài khoản", "account.svg", "account" },
             { "Phân quyền", "phanquyen.svg", "sanpham" },
             { "Đăng xuất", "logout.svg", "sanpham" },
-            { "Trả hàng", "phieuxuat.svg", "trahang" },
     };
 
     public itemTaskbar[] listitem;
@@ -107,7 +105,11 @@ public class MenuTaskBar extends JPanel {
         scrollPane.setBorder(new EmptyBorder(5, 10, 0, 0));
         this.add(scrollPane, BorderLayout.CENTER);
 
-      
+        pnlBottom = new JPanel();
+        pnlBottom.setPreferredSize(new Dimension(250, 50));
+        pnlBottom.setBackground(DefaultColor);
+        pnlBottom.setLayout(new BorderLayout(0, 0));
+        this.add(pnlBottom, BorderLayout.SOUTH);
 
         for (int i = 0; i < listComponent.length; i++) {
             listitem[i] = new itemTaskbar(listComponent[i][1], listComponent[i][0]);
@@ -127,7 +129,6 @@ public class MenuTaskBar extends JPanel {
         }
         listitem[0].setVisible(true);
         listitem[11].setVisible(true);
-        listitem[12].setVisible(true);
 
 
         listNQ = busNQ.selectAllChucNangNQ(user.getManhomquyen());
@@ -206,13 +207,6 @@ public class MenuTaskBar extends JPanel {
             public void mousePressed(MouseEvent evt) {
                 QuanLyPhieuXuat qlpx = new QuanLyPhieuXuat(main, user);
                 main.changePages(qlpx);
-            }
-        });
-        listitem[12].addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                QuanLyTraHang qlth = new QuanLyTraHang(main, user);
-                main.changePages(qlth);
             }
         });
 

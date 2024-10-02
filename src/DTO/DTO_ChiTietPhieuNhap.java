@@ -9,10 +9,10 @@ package DTO;
  * @author KIET
  */
 public class DTO_ChiTietPhieuNhap {
-     int maphieu;
-     int maphienbansp;
-     long soluong;
-     long dongia;
+    private int maphieu;
+    private int maphienbansp;
+    private long soluong;
+    private long dongia;
 
     public DTO_ChiTietPhieuNhap() {
     }

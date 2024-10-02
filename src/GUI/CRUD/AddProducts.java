@@ -144,11 +144,21 @@ public class AddProducts extends javax.swing.JDialog {
     public int addProduct() {
         DTO_Product p = getProductInput();
         // kiểm tra có cái anfo rỗng không
+        p.setTensanpham( p.getTensanpham().trim());
+        p.setBoxuly(p.getBoxuly().trim());
+
         if (p.getTensanpham().equals("") || p.getBoxuly().equals("") || p.getHedieuhanh().equals("") || p.getHinhsanpham().equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin1!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
             return -1;
         }
         
+        // kiểm tra đúng định dạng
+        String regex="[a-zA-Z0-9]+";
+        if ( !p.getTensanpham().matches(regex) || !p.getBoxuly().matches(regex)){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng!!", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+            return -1;            
+        }
+  
         // nếu thời gian bảo hành không phải là số
        
         ArrayList<DTO_Product> listProduct = productz.getAllData();

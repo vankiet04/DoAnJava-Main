@@ -242,23 +242,36 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
             return;
         }
    
-   
-
         
-        //net textfiel3 khong phai la so thi thong bao
-        if (!jTextField3.getText().matches("[0-9]+") && jTextField3.getText() != "") {
-            // JOptionPane.showMessageDialog(this, "Vui lòng nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-
+        int check = 0;
+        // Kiểm tra jTextField3
+        if (!jTextField3.getText().matches("[0-9]+") && !jTextField3.getText().equals("")) {
+            jTextField3.setText("0");
+            JOptionPane.showMessageDialog(this, "Vui lòng chỉ nhập số và số không âm", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            check += 1;
         }
-        if (!jTextField4.getText().matches("[0-9]+") && jTextField4.getText() != "") {
-            // JOptionPane.showMessageDialog(this, "Vui lòng nhập số", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
 
+        // Kiểm tra jTextField4
+        if (!jTextField4.getText().matches("[0-9]+") && !jTextField3.getText().equals("")) {
+            jTextField4.setText("1000000000");
+            JOptionPane.showMessageDialog(this, "Vui lòng chỉ nhập số và số không âm ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            check += 1;
         }
+
+        if (check != 0) {
+            return;
+        }   
+        
+        if((jTextField3.getText().trim().equals("")) && (jTextField4.getText().trim().equals(""))){
+            jTextField3.setText("0");    
+            jTextField4.setText("1000000000");
+            JOptionPane.showMessageDialog(this, "Cần nhập đủ 2 trường giá để lọc", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
        
-        long min_price = Long.parseLong(jTextField3.getText());
-        long max_price = Long.parseLong(jTextField4.getText());
+        long min_price = jTextField3.getText().trim().equals("") ? 0 : Long.parseLong(jTextField3.getText());
+        long max_price = jTextField4.getText().trim().equals("") ? 1000000000 : Long.parseLong(jTextField4.getText());
         if(min_price > max_price){
             JOptionPane.showMessageDialog(this, "Giá trị tối thiểu không được lớn hơn giá trị tối đa", "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
@@ -330,6 +343,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     public void loadDataTalbe(ArrayList<DTO_PhieuNhap> list) {
         model = (DefaultTableModel) jTablePN.getModel();
         model.setRowCount(0);
+        jTablePN.enable(false);
         for (int i = 0; i < list.size(); i++) {
             DTO_PhieuNhap phieu = list.get(i);
             model.addRow(new Object[] {
@@ -475,6 +489,9 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         myButton1NCC = new com.raven.suportSwing.MyButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jLabel3NCC = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel4NCC = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
@@ -484,8 +501,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         jPanel14 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jLabel1NCC = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel3NCC = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(3200, 800));
@@ -705,6 +720,41 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButton3.setText("HỦY PHIẾU");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel3NCC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-delete-85.png"))); // NOI18N
+        jLabel3NCC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3NCCMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3NCC, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jButton3)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3NCC, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4NCC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-view-75.png"))); // NOI18N
@@ -805,20 +855,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButton3.setText("HỦY PHIẾU");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jLabel3NCC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-delete-85.png"))); // NOI18N
-        jLabel3NCC.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel3NCCMousePressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -826,17 +862,13 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel3NCC)
-                        .addGap(10, 10, 10)))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -846,14 +878,11 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel3NCC, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
@@ -964,11 +993,62 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         dialog.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jLabel3NCCMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3NCCMousePressed
+        // this func to delete product
+        //        if (currentIDselected == -1) {
+            //            JOptionPane.showMessageDialog(parent, "Vui lòng chọn sản phẩm để xóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            //            return;
+            //        }
+        //        productBUS.delete(currentIDselected);
+        //        JOptionPane.showMessageDialog(parent, "Xóa sản phẩm thành công", "Thông báo!", JOptionPane.INFORMATION_MESSAGE);
+        //        FillTable(productBUS.getAllData());
+    }//GEN-LAST:event_jLabel3NCCMousePressed
+
 
     public void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
   
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here: Xoa
+        int index = jTablePN.getSelectedRow();
+        // kiem tra co bao nhieu phien ban phien ban trong ma phieu nhap co ton tai ma phieu xuat
+        if (index == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để hủy!");
+            return;
+        }
+        int cnt = busCTSP.getsoluongphienbansanphamtontaitrongphieuxuat(Integer.parseInt(jTablePN.getValueAt(index, 0).toString()));
+        if (cnt > 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Không thể hủy vì có " + cnt + " phiên bản sản phẩm trong phiếu nhập đã được xuất đi!");
+            return;
+        }
+        if (index != -1) {
+            int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\n Hãy nghĩ kĩ vì sau khi hủy\n không thể hoàn tác lại.", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (input == 0) {
+                DTO_PhieuNhap pn = listPhieu.get(index);
+                // if (!phieunhapBUS.checkCancelPn(pn.getMaphieu())) {
+                //     JOptionPane.showMessageDialog(null, "Sản phẩm trong phiếu này đã được xuất đi không thể hủy phiếu này!");
+                // } else {
+                int c = phieunhapBUS.cancelPhieuNhap(pn.getMaphieu());
+                //cap nhat maimei co ma phieu nhap vua xoa la tinh trang bang 0
+                int check = ctspBUS.capNhatctspTinhTrangbang0(pn.getMaphieu());
+
+                    if (c == 0 && check == 0) {
+                        JOptionPane.showMessageDialog(null, "Hủy phiếu không thành công!");
+                    } else {
+                        // ma phieu nhap tang them 1
+                        
+                        JOptionPane.showMessageDialog(null, "Hủy phiếu thành công!");
+                        listPhieu = phieunhapBUS.getAll();
+                        loadDataTalbe(listPhieu);
+                    }
+                // }
+            }
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void myButton1NCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myButton1NCCActionPerformed
         // TODO add your handling code here:
         resetAll();
@@ -990,57 +1070,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     private void txtSearchNCCFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchNCCFocusGained
 
     }//GEN-LAST:event_txtSearchNCCFocusGained
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here: Xoa
-        int index = jTablePN.getSelectedRow();
-        // kiem tra co bao nhieu phien ban phien ban trong ma phieu nhap co ton tai ma phieu xuat
-        if (index == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để hủy!");
-            return;
-        }
-        int cnt = busCTSP.getsoluongphienbansanphamtontaitrongphieuxuat(Integer.parseInt(jTablePN.getValueAt(index, 0).toString()));
-        if (cnt > 0) {
-            JOptionPane.showMessageDialog(null,
-                "Không thể hủy vì có " + cnt + " phiên bản sản phẩm trong phiếu nhập đã được xuất đi!");
-            return;
-        }
-        if (index != -1) {
-            int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\n Hãy nghĩ kĩ vì sau khi hủy\n không thể hoàn tác lại.", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-            if (input == 0) {
-                DTO_PhieuNhap pn = listPhieu.get(index);
-                // if (!phieunhapBUS.checkCancelPn(pn.getMaphieu())) {
-                    //     JOptionPane.showMessageDialog(null, "Sản phẩm trong phiếu này đã được xuất đi không thể hủy phiếu này!");
-                    // } else {
-                    int c = phieunhapBUS.cancelPhieuNhap(pn.getMaphieu());
-                    //cap nhat maimei co ma phieu nhap vua xoa la tinh trang bang 0
-                    int check = ctspBUS.capNhatctspTinhTrangbang0(pn.getMaphieu());
-
-                    if (c == 0 && check == 0) {
-                        JOptionPane.showMessageDialog(null, "Hủy phiếu không thành công!");
-                    } else {
-                        // ma phieu nhap tang them 1
-
-                        JOptionPane.showMessageDialog(null, "Hủy phiếu thành công!");
-                        listPhieu = phieunhapBUS.getAll();
-                        loadDataTalbe(listPhieu);
-                    }
-                    // }
-            }
-        }
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jLabel3NCCMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3NCCMousePressed
-        // this func to delete product
-        //        if (currentIDselected == -1) {
-            //            JOptionPane.showMessageDialog(parent, "Vui lòng chọn sản phẩm để xóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-            //            return;
-            //        }
-        //        productBUS.delete(currentIDselected);
-        //        JOptionPane.showMessageDialog(parent, "Xóa sản phẩm thành công", "Thông báo!", JOptionPane.INFORMATION_MESSAGE);
-        //        FillTable(productBUS.getAllData());
-    }//GEN-LAST:event_jLabel3NCCMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1078,6 +1107,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;

@@ -83,18 +83,6 @@ public class BUS_ChiTietCauHinh {
     public boolean checkMaSP(int masp) {
         return chitietproduct.checkMaSP(masp);
     }
-
-    public ArrayList<DTO_ChiTietCauHinh> getAllPhienBanByListMaPhienBan(ArrayList<Integer> listMaPhienBan) {
-        return chitietproduct.getAllPhienBanByListMaPhienBan(listMaPhienBan);
-    }
-    
-    public int truSoLuongTonPhienBanSanPham(int maphienbansp, int soluong) {
-        return chitietproduct.truSoLuongTonPhienBanSanPham(maphienbansp, soluong);
-    }
-    
-    public int updateSoLuongTon(int maphienbansp, int soluong) {
-        return chitietproduct.updateSoLuongTon(maphienbansp, -(soluong));
-    }
-    
+  
   
 }

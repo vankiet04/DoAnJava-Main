@@ -32,6 +32,7 @@ public class DTO_PhieuNhap extends DTO_Phieu {
         this.manguoitao = manguoitao;
         this.tongTien = tongTien;
         this.trangthai = trangthai;
+      
 
     }
 
