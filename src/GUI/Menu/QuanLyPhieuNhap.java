@@ -343,7 +343,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     public void loadDataTalbe(ArrayList<DTO_PhieuNhap> list) {
         model = (DefaultTableModel) jTablePN.getModel();
         model.setRowCount(0);
-        jTablePN.enable(false);
         for (int i = 0; i < list.size(); i++) {
             DTO_PhieuNhap phieu = list.get(i);
             model.addRow(new Object[] {
