@@ -127,7 +127,6 @@ public class MenuTaskBar extends JPanel {
         }
         listitem[0].setVisible(true);
         listitem[11].setVisible(true);
-        listitem[12].setVisible(true);
 
 
         listNQ = busNQ.selectAllChucNangNQ(user.getManhomquyen());
