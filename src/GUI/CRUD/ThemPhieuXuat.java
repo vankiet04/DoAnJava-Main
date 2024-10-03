@@ -1,4 +1,3 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
@@ -41,9 +40,11 @@ import DTO.DTO_PhieuXuat;
 import DTO.DTO_Product;
 import DTO.DTO_TaiKhoan;
 import helper.Formater;
+import java.awt.event.KeyEvent;
 
 //import numberformat
 import java.text.NumberFormat;
+import javax.swing.JLabel;
 /**
  *
  * @author Admin
@@ -83,9 +84,19 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
         this.px = px;
       
         initComponents();
+        // sự kiện tìm kiếm 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent evt) {
+                TimKiemSanPham(evt);
+            }
+            
+        });
+        
+        
         jTextField2.setEditable(false);
         jTextField8.setEditable(false);
-        loadTableProducts();
+        loadTableProducts(busProduct.getAllData());
         jComboBox1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -196,23 +207,19 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
     }
 
 
-    public void loadTableProducts() {
+    public void loadTableProducts(ArrayList<DTO_Product> list) {
+        
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
-        ArrayList<DTO_Product> arr = busProduct.getAllData();
+        map.clear();
         ArrayList<DTO_ChiTietCauHinh> arr2 = busChiTietCauHinh.getAllData();
         arr2.forEach((i) -> {
             map.put(i.getMasanpham(), map.getOrDefault(i.getMasanpham(), 0) + i.getSoluongton());
-        });
-
-        int ii = 1;
-        for (DTO_Product dto_Product : arr) {
-            model.addRow(new Object[]{
-                dto_Product.getMasanpham(),
-                dto_Product.getTensanpham(),
-                map.getOrDefault(dto_Product.getMasanpham(), 0)
-            });
+        });        
+        for (DTO_Product sp : list) {
+            model.addRow(new Object[]{sp.getMasanpham(), sp.getTensanpham(), map.getOrDefault(sp.getMasanpham(), 0)});
         }
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 
@@ -222,9 +229,7 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
 
     }
 
-    public void loadTableselected() {
-        
-    }
+
 
     public void loadInfo() {
         DTO_Product dto_Product = busProduct.getProductByID(currentIDselected);
@@ -248,9 +253,6 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
 
     }
 
-    public void getnewmaphieuxuat() {
-    }
-
     public void loaddsphieunhap() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
@@ -272,6 +274,26 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
             jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
     }
+    
+    
+    private void TimKiemSanPham(java.awt.event.KeyEvent evt){
+        ArrayList<DTO_Product> listSP = busProduct.getAllData();
+        String key = jTextField1.getText();
+        if (key.isEmpty())
+            loadTableProducts(listSP);
+        else{
+            ArrayList<DTO_Product> res = new ArrayList<>();
+            for(DTO_Product sp : listSP)
+                if(String.valueOf(sp.getMasanpham()).contains(key) ||
+                        sp.getTensanpham().toLowerCase().contains(key.toLowerCase()))
+                    res.add(sp);
+            
+            loadTableProducts(res);
+        }
+
+           
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -712,22 +734,25 @@ public class ThemPhieuXuat extends javax.swing.JDialog {
                 DTO_ChiTietPhieuXuat dto_ChiTietPhieuXuat = new DTO_ChiTietPhieuXuat(maphieuxuat, danhsachnhap.get(i).getMaphienbansp(), danhsachnhap.get(i).getSoluongton(), giamappingdanhsach.get(i) * danhsachnhap.get(i).getSoluongton());
                 arr.add(dto_ChiTietPhieuXuat);
             }
-            int res2 = busChiTietPhieuXuat.insert(arr);
-            if (res2 > 0) {
-                // 
-                // truwf so luong ton
-                for (int i = 0; i < danhsachnhap.size(); i++) {
-                    busChiTietCauHinh.truSoLuongPhienBanSanPham(danhsachnhap.get(i).getMaphienbansp(), danhsachnhap.get(i).getSoluongton());
-                }
+            
+            if( !arr.isEmpty()){
+                int res2 = busChiTietPhieuXuat.insert(arr);
+                if (res2 > 0) {
+                    // 
+                    // truwf so luong ton
+                    for (int i = 0; i < danhsachnhap.size(); i++) {
+                        busChiTietCauHinh.truSoLuongPhienBanSanPham(danhsachnhap.get(i).getMaphienbansp(), danhsachnhap.get(i).getSoluongton());
+                    }
 
-                // update ma phieu xuat cho imei trong table ctsp
-                busChiTietSanPham.updateMaPhieuXuat(danhsachnhap, Integer.parseInt(jTextField6.getText()), danhsachimeitungsanpham);
-                
-                px.loadtablepx(phieuxuatBUS.getAll());
-                JOptionPane.showMessageDialog(null, "Thêm phiếu xuất thành công");
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Thêm chi tiết phiếu xuất thất bại");
+                    // update ma phieu xuat cho imei trong table ctsp
+                    busChiTietSanPham.updateMaPhieuXuat(danhsachnhap, Integer.parseInt(jTextField6.getText()), danhsachimeitungsanpham);
+                    px.loadtablepx(phieuxuatBUS.getAll());
+                    JOptionPane.showMessageDialog(null, "Thêm phiếu xuất thành công");
+                    this.dispose();
+                }                 
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Chưa chọn sản phẩm để xuất");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Thêm phiếu xuất thất bại");

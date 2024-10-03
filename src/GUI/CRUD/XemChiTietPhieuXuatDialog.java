@@ -88,6 +88,7 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
     BUS_ChiTietPhieuXuat busChiTietPhieuXuat = new BUS_ChiTietPhieuXuat();
     int currentIDselected = -1;
     public XemChiTietPhieuXuatDialog(java.awt.Frame parent, boolean modal, int id) {
+        
         super(parent, modal);
         this.currentIDselected = id;
         initComponents();
@@ -95,6 +96,18 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
         loadctspxuat();
     }
 
+    public XemChiTietPhieuXuatDialog(java.awt.Frame parent, boolean modal, DTO_PhieuNhap phieunhapDTO) {
+        super(parent, modal);
+        this.phieunhap = phieunhapDTO;
+        phieunhapBus = new BUS_PhieuNhap();
+        chitietphieu = phieunhapBus.getChiTietPhieu_Type(phieunhapDTO.getMaphieu());
+
+        initComponents();
+        initPhieuNhap(phieunhap);
+        loadDataTableChiTietPhieu(chitietphieu);
+
+    }   
+    
     public void loadtt() {
         DTO_PhieuXuat arr = busPhieuXuat.getPhieuXuatTheoID(currentIDselected);
         String tennv = nhanvienBus.getNvtheoid(arr.getIdnhanvien()).getHoten();
@@ -109,10 +122,13 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
         ArrayList<DTO_ChiTietPhieuXuat> arr = busChiTietPhieuXuat.getPhieuXuatTheoID(currentIDselected);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
+        long tongtien = 0;
         for (int i = 0; i < arr.size(); i++) {
             DTO_ChiTietPhieuXuat pb = arr.get(i);
             DTO_ChiTietCauHinh cth = phienbanBus.getByMaPhienBan(pb.getMaphienbansp());
             DTO_Product sp = productBus.getsanphamtheomaphienban(cth.getMasanpham());
+            
+            tongtien+=pb.getDongia() / pb.getSoluong() * pb.getSoluong();
             model.addRow(new Object[] { pb.getMaphienbansp(), sp.getMasanpham(), sp.getTensanpham(), cth.getRam(), cth.getRom(),
                     Formater.FormatVND(pb.getDongia() / pb.getSoluong()) , pb.getSoluong() });
         }
@@ -133,20 +149,10 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
                 }
             }
         });
+        jLabel6.setText(Formater.FormatVND(tongtien));
     }
 
-    public XemChiTietPhieuXuatDialog(java.awt.Frame parent, boolean modal, DTO_PhieuNhap phieunhapDTO) {
-        super(parent, modal);
-        this.phieunhap = phieunhapDTO;
-        phieunhapBus = new BUS_PhieuNhap();
-        chitietphieu = phieunhapBus.getChiTietPhieu_Type(phieunhapDTO.getMaphieu());
 
-        initComponents();
-        initPhieuNhap(phieunhap);
-        loadDataTableChiTietPhieu(chitietphieu);
-        loadTongTien();
-
-    }
     public static Chunk createWhiteSpace(int length) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -329,14 +335,7 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
     //         });
     //     }
     // }
-    public void loadTongTien() {
-        int tongtien = 0;
-        for (DTO_ChiTietPhieuNhap ct : chitietphieu) {
-            tongtien += ct.getDongia() * ct.getSoluong();
-        }
-        jLabel6.setText(Formater.FormatVND(tongtien));
-    }
-    
+
     public void loadDataTableChiTietPhieu(ArrayList<DTO_ChiTietPhieuNhap> ctPhieu) {
         tblModel = (DefaultTableModel) jTable1.getModel();
         tblModel.setRowCount(0);
@@ -432,12 +431,14 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
             }
         });
 
+        jTextField1.setEnabled(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
+        jTextField2.setEnabled(false);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -462,6 +463,7 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
             }
         });
 
+        jTextField3.setEnabled(false);
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -471,6 +473,7 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Thời gian tạo:");
 
+        jTextField4.setEnabled(false);
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
@@ -540,6 +543,7 @@ public class XemChiTietPhieuXuatDialog extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.setEnabled(false);
         jScrollPane2.setViewportView(jTable2);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
