@@ -424,11 +424,12 @@ form KhachHangDialog
             
         }
         
-        if (!tenKh.matches("[a-zA-Z0-9 ]+")) {
-            JOptionPane.showMessageDialog(null, "Tên khách hàng không chứa kí tự đặc biệt");
+        if (!tenKh.matches("[a-zA-Z\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
             return;
         }
-        if (!diaChi.matches("[a-zA-Z0-9\\s/]+")) {
+        //dia chi duoc phep chua dau tieng viet
+        if (!diaChi.matches("[a-zA-Z0-9\\p{L}\\s]+")) {
             JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt");
             return;
         }

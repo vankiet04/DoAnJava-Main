@@ -451,13 +451,7 @@ form KhachHangDialog
     }
     private void jToggleButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MousePressed
         // TODO add your handling code here: sua khach hang
-        // DTO_KhachHang khid = buskh.getKHbyid(id);
-        // jTextField2.setText(khid.getMaKhachHang());
-        // jTextField4.setText(khid.getHoTen());
-        // jTextField6.setText(khid.getDiaChi());
-        // jComboBox2.setSelectedItem(khid.getgioitinh());
-        // jTextField5.setText(khid.getSoDienThoai()); 
-        // jTextField7.setText(khid.getNgayThamGia());
+       
 
         String makh = jTextField2.getText();
         String hoten = jTextField4.getText();
@@ -468,6 +462,7 @@ form KhachHangDialog
         // kiêm tra tên khách hàng đã tồn tại
         ArrayList<DTO_KhachHang> listkh = buskh.getAllData();
         // ho ten ma khach tenkhachhang
+
         if (!tenkhachhang.equals(hoten)) {
             for (DTO_KhachHang i : listkh) {
                 if (i.getHoTen().equals(hoten) && !i.getMaKhachHang().equals(makh)) {
@@ -475,31 +470,25 @@ form KhachHangDialog
                     return;
                 }
                 //kiemtra sdt   
-                if (i.getSoDienThoai().equals(sdt) && !i.getMaKhachHang().equals(makh)) {
-                    JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
-                    return;
-                }
-                //kiem tra dia
-                if (i.getDiaChi().equals(diachi) && !i.getMaKhachHang().equals(makh)) {
-                    JOptionPane.showMessageDialog(null, "Địa chỉ đã tồn tại");
-                    return;
 
-                }
             }
+        }
 
-            // tên khách hàng không chứa kí tự đặt biệt
-            if (!hoten.matches("[a-zA-Z\\s]+")) {
-                JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
-                return;
-            }
-            //kiem tra dia chi neu chua ki tự đac biệt ngoài trừ / va khoang trang 
-            if (!diachi.matches("[a-zA-Z0-9\\s/]+")) {
-                JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt");
-                return;
-            }
+        // ho ten chi chua chu cai va khoang trang va cho phep cp dau tieng viet
+
+        if (!hoten.matches("[a-zA-Z\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
+            return;
+        }
+        //dia chi duoc phep chua dau tieng viet
+        if (!diachi.matches("[a-zA-Z0-9\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt");
+            return;
+        }
             if (!validateKhachHang(hoten, diachi, gioitinh, sdt)) {
                 return;
             }
+
             DTO_KhachHang editkh = new DTO_KhachHang(makh, hoten, diachi, sdt, ngaythamgia, gioitinh);
 
             if (buskh.update(editkh) == 1) {
@@ -509,7 +498,6 @@ form KhachHangDialog
                 return;
             }
             JOptionPane.showMessageDialog(null, "Sửa thất bại");
-        }
     }//GEN-LAST:event_jToggleButton1MousePressed
 
     /**
