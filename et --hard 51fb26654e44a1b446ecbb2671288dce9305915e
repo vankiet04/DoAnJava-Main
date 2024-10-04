@@ -1,0 +1,270 @@
+[33mcommit 51fb26654e44a1b446ecbb2671288dce9305915e[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Fri Oct 4 07:32:35 2024 +0700
+
+    Lưu thay đổi trước khi chuyển nhánh
+
+[33mcommit 0444806b15e5daea02aa153d714a50d00229450f[m
+Merge: 4b99fe2 0affdee
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Fri Oct 4 07:26:09 2024 +0700
+
+    Giải quyết xung đột cho file 24.pdf
+
+[33mcommit 4b99fe28006b87627d3238c2631d7a90d709c70a[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Fri Oct 4 07:22:28 2024 +0700
+
+    Thông điệp commit của bạn
+
+[33mcommit 0affdee309b0b7792dd17ae1199fd4fed4aa12d3[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 20:02:27 2024 +0700
+
+    Hủy bỏ enable bảng
+
+[33mcommit 9b5cddd4245bb081577331c96e3736a804623fc8[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 19:58:45 2024 +0700
+
+    Hủy bỏ enable bảng
+
+[33mcommit 0e873751eaff0ecad2d890327248bfa816135837[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 19:57:28 2024 +0700
+
+    Hủy bỏ enable bảng
+
+[33mcommit c02c5dfd2f6f825ffae9eb50336a84dbb9e1b4c4[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Wed Oct 2 11:55:12 2024 +0700
+
+    SUA DOI LAN NUA
+
+[33mcommit 25a69d0b49ed3f520af928fddb33d8583acc1da5[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Wed Oct 2 11:42:06 2024 +0700
+
+    DA SUA RAT NHIEU.java
+
+[33mcommit 920b44a53736a97b7e84875afa04e6f561ecaa32[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Wed Oct 2 11:05:16 2024 +0700
+
+    Vk đã trộn code Ta
+
+[33mcommit f21407dbfaf85a9a613f396f3c23bc3b25c5d441[m
+Merge: d964d77 d035e44
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.github.com>
+Date:   Wed Oct 2 10:53:34 2024 +0700
+
+    Merge pull request #9 from vankiet04/ThuyAn
+    
+    TA lại sửa lỗi
+
+[33mcommit d035e4408f38eff1dd7e8dc02455887dda7a6b87[m
+Merge: eb3bb9c d964d77
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.github.com>
+Date:   Wed Oct 2 10:52:52 2024 +0700
+
+    Merge branch 'main' into ThuyAn
+
+[33mcommit eb3bb9ca76f96ba4c1a39bb0b25b03eca8972d49[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 09:33:48 2024 +0700
+
+    Add files via upload
+
+[33mcommit bc2f3169227d7a4b35db35aca911005c0929da8c[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 09:30:45 2024 +0700
+
+    Add files via upload
+
+[33mcommit 4c4fb2b81fe0ec31e59a6707fa3febc7bc771251[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 09:27:26 2024 +0700
+
+    Add files via upload
+
+[33mcommit d29780305b7369afac460e5f7e06410f50879eac[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 09:26:33 2024 +0700
+
+    Add files via upload
+
+[33mcommit 1903a5b1a3ab4c00620533c31f780c42788b6536[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Wed Oct 2 09:25:26 2024 +0700
+
+    Add files via upload
+
+[33mcommit d964d775e7f06445eacc9beaae004a892aa9aecf[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Tue Oct 1 19:41:31 2024 +0700
+
+    Cập nhật mới nhất lun
+
+[33mcommit 770c6bb5d9e7cd959521f2e956a0afe4ae873727[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Tue Oct 1 19:31:54 2024 +0700
+
+    Xoa lib
+
+[33mcommit de923c44a0eb5bd4e8f4536deab9408df27201a9[m
+Merge: 416844d 07b1950
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Tue Oct 1 18:05:31 2024 +0700
+
+    Resolve merge conflict
+
+[33mcommit 416844de17968ba29087ac0f5bbd295b02b5546f[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Tue Oct 1 17:27:16 2024 +0700
+
+    thêm thư viên
+
+[33mcommit 07b1950ef8245b31c91df18872e9f85fcb336ccb[m
+Merge: 4bbdc06 c9576d4
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.github.com>
+Date:   Tue Oct 1 17:09:49 2024 +0700
+
+    Merge pull request #8 from vankiet04/test
+    
+    Nhánh test của Văn Kiệt push nhé
+
+[33mcommit c9576d40e14b468b37879a06e96f20f80537ab8a[m[33m ([m[1;31morigin/test[m[33m)[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Tue Oct 1 17:08:51 2024 +0700
+
+    Update LogIn.java
+
+[33mcommit 4bbdc06863f8e5b861d802aaa5b3703028ac5e94[m
+Merge: d92457e 39f1ce6
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.github.com>
+Date:   Tue Oct 1 16:27:12 2024 +0700
+
+    Merge pull request #7 from vankiet04/ThuyAn
+    
+    Sửa chức năng sản phẩm + thuộc tính
+
+[33mcommit 39f1ce6e1c8e510984271dbf4b6f16bd2c175c0f[m[33m ([m[1;31morigin/ThuyAn[m[33m)[m
+Author: Thuy An <128052804+thuy0an@users.noreply.github.com>
+Date:   Tue Oct 1 14:01:34 2024 +0700
+
+    Sửa chức năng sản phẩm + thuộc tính
+
+[33mcommit d92457eb0aa31215234733eb3184c617327047db[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Sun Sep 22 07:50:56 2024 +0700
+
+    Lưu các thay đổi trước khi pull
+
+[33mcommit aeb0a0ed58fbaa9a4542d338e92be7178beb10ad[m
+Merge: 9e3e3ae 87018c4
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Sat Sep 21 21:17:33 2024 +0700
+
+    Merge branch 'vankiet'
+
+[33mcommit 87018c4fbf98d9b194e02d3a8162ea956969c909[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Sat Sep 21 21:17:18 2024 +0700
+
+    Mô tả ngắn gọn về thay đổi
+
+[33mcommit 9e3e3aecc3e1d5b48bb5693e45e5dc752e600f33[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Sat Sep 21 20:27:22 2024 +0700
+
+    Lưu các thay đổi trước khi chuyển nhánh
+
+[33mcommit 6f2c7397c1d1371f2024b806b7b2dc47610c4c87[m
+Merge: 60308ef 453a12c
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Sat Sep 21 20:23:58 2024 +0700
+
+    Giải quyết xung đột
+
+[33mcommit 453a12cf2b3e038c143be818d0fab54648d87b04[m[33m ([m[1;31morigin/vankiet[m[33m)[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Sat Sep 21 20:21:20 2024 +0700
+
+    Mô tả ngắn gọn tra hang
+
+[33mcommit afd898c557bdb7a8e6f0b6f3a31c8c45c5179f1b[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Wed Sep 18 08:08:39 2024 +0700
+
+    vankiet sua doi
+
+[33mcommit 60308efd22b7c4d045c0cc42e27bf7a4046fcc4e[m
+Merge: bcde298 1953487
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.github.com>
+Date:   Tue Sep 17 12:17:17 2024 +0700
+
+    Merge pull request #5 from vankiet04/test
+    
+    Test
+
+[33mcommit 1953487a1a68b164f327573f7ad74cf7599d1fdf[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Tue Sep 17 12:16:43 2024 +0700
+
+    to main
+
+[33mcommit 66cb629938f4792383c1b3b170066de9c92f08b4[m
+Merge: 03da0ee d25d6b3
+Author: kietng04 <124132816+kietng04@users.noreply.github.com>
+Date:   Tue Sep 17 12:15:10 2024 +0700
+
+    Merge pull request #4 from kietng04/main
+    
+    commit new
+
+[33mcommit d25d6b3a3bed5a2df53c8ec4e8652aa577000c98[m
+Merge: 0931750 bcde298
+Author: kietng04 <124132816+kietng04@users.noreply.github.com>
+Date:   Tue Sep 17 12:13:38 2024 +0700
+
+    M
+
+[33mcommit 09317508c8466c15152beb9db2af9ed05f6573eb[m
+Author: kietng04 <124132816+kietng04@users.noreply.github.com>
+Date:   Tue Sep 17 12:12:14 2024 +0700
+
+    m
+
+[33mcommit ce557a28658de8757293319a780844b9ea274fb5[m
+Author: kietng04 <124132816+kietng04@users.noreply.github.com>
+Date:   Tue Sep 17 12:11:51 2024 +0700
+
+    m
+
+[33mcommit c287a8d2f87b7be7cee012a8f7712edf20d1121f[m
+Merge: e987709 03da0ee
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.github.com>
+Date:   Tue Sep 17 12:00:05 2024 +0700
+
+    Merge pull request #3 from vankiet04/test
+    
+    Test ->vankiet
+
+[33mcommit 03da0ee8611995c226517d552fdcfe87e25e3b09[m
+Author: phamkiet17 <phamkiet210504@gmail.com>
+Date:   Tue Sep 17 11:58:03 2024 +0700
+
+    a
+
+[33mcommit bcde298b14672670f8070af0348a13e8b7cc10c5[m
+Merge: 47e9a2e f5aeda4
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.github.com>
+Date:   Tue Sep 17 11:56:34 2024 +0700
+
+    Merge pull request #2 from vankiet04/test
+    
+    Test -> main
+
+[33mcommit f5aeda4c0dfa99660a3c18e2d64aff64ef4e367b[m
+Merge: 47e9a2e e987709
+Author: Pham Van Kiet <148546465+vankiet04@users.noreply.git

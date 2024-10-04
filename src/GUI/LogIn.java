@@ -51,7 +51,7 @@ public class LogIn extends JFrame implements KeyListener {
         this.setSize(new Dimension(1000, 460));
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout(0, 0));
-        this.setTitle("HỆ THỐNG QUẢN LÝ BÁN MÁY TÍNH");
+        this.setTitle("HỆ THỐNG QUẢN LÝ BÁN MÁY TÍNH E");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JFrame jf = this;
