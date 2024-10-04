@@ -6,6 +6,7 @@ package GUI.CRUD;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -28,6 +29,7 @@ public class SuaNhanVienDialog extends javax.swing.JDialog {
     public ArrayList<DTO_NhanVien> listnv = busnv.getAllData();
     private NhanVien jpncc;
     private DTO_NhanVien nvDTO;
+    private DTO_NhanVien nvDTO1;
 
     /**
      * Creates new form SuaNhanVienDialog
@@ -37,6 +39,7 @@ public class SuaNhanVienDialog extends javax.swing.JDialog {
         this.ap = ap;
         initComponents();
         this.nvDTO = nvDTO;
+        this.nvDTO1 = nvDTO;
         jTextField1.setText(nvDTO.getHoten());
         jTextField2.setText(nvDTO.getEmail());
         jTextField3.setText(nvDTO.getSdt());
@@ -222,28 +225,77 @@ public class SuaNhanVienDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    public boolean validateNhanVien(String ten, String email, String soDienThoai, String ngaySinh, boolean isRadioButton1Selected, boolean isRadioButton2Selected) {
-        if (ten.length() < 3) {
-            JOptionPane.showMessageDialog(null, "Tên nhân viên phải có ít nhất 3 ký tự");
-            return false;
-        }
-        if (!email.matches(".+@.+\\..+")) {
-            JOptionPane.showMessageDialog(null, "Email nhân viên phải chứa @ và một ký tự trước @ và một dấu . sau @");
-            return false;
-        }
-        if (!soDienThoai.matches("\\d{8,10}")) {
-            JOptionPane.showMessageDialog(null, "Số điện thoại nhân viên phải là số và có từ 8 đến 10 chữ số");
-            return false;
-        }
-        if (!ngaySinh.matches("\\d{2}/\\d{2}/\\d{4}")) {
-            JOptionPane.showMessageDialog(null, "Ngày sinh nhân viên phải theo định dạng dd/MM/yyyy");
-            return false;
-        }
-       
-        if (!isRadioButton1Selected && !isRadioButton2Selected) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn giới tính");
-            return false;
-        }
+    public boolean validateNhanVien(String ten, String email, String soDienThoai, String ngaySinh,
+            boolean isRadioButton1Selected, boolean isRadioButton2Selected) {
+                if (!ten.matches("[a-zA-Z\\p{L}\\s]+")) {
+                    JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
+                    return false;
+                }
+                //dia chi duoc phep chua dau tieng viet
+                ArrayList<DTO_NhanVien> listnv = busnv.getAllData();
+                for (DTO_NhanVien nv : listnv) {
+                    if (!ten.equals(nvDTO1.getHoten())) {
+                        if (nv.getHoten().equals(ten)) {
+                            JOptionPane.showMessageDialog(null, "Tên nhân viên đã tồn tại");
+                            return false;
+                        }
+                    }
+                    //sdt
+                    if (!nv.getSdt().equals(nvDTO1.getSdt())) {
+                        if (nv.getSdt().equals(soDienThoai)) {
+                            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+                            return false;
+                        }
+                    }
+
+                    //email
+
+                    if (!nv.getEmail().equals(nvDTO1.getEmail())) {
+                        if (nv.getEmail().equals(email)) {
+                            JOptionPane.showMessageDialog(null, "Email đã tồn tại");
+                            return false;
+                        }
+                    }
+                }
+                    //emai khong duoc chua ki tu dac biet truoc @
+                    if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")) {
+                        JOptionPane.showMessageDialog(null, "Email không hợp lệ");
+                        return false;
+                    }
+
+                    //pahi lon hon 18 tuoi
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = new Date();
+                    try {
+                        date = sdf.parse(ngaySinh);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ");
+                        return false;
+                    }
+                    if (!ten.matches("[a-zA-Z\\p{L}\\s]+")) {
+                        JOptionPane.showMessageDialog(null, "Tên nhân viên không hợp lệ");
+                        return false;
+                    }
+                    if (!email.matches(".+@.+\\..+")) {
+                        JOptionPane.showMessageDialog(null,
+                                "Email nhân viên phải chứa @ và một ký tự trước @ và một dấu . sau @");
+                        return false;
+                    }
+                    if (!soDienThoai.matches("\\d{8,10}")) {
+                        JOptionPane.showMessageDialog(null,
+                                "Số điện thoại nhân viên phải là số và có từ 8 đến 10 chữ số");
+                        return false;
+                    }
+                    if (!ngaySinh.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                        JOptionPane.showMessageDialog(null, "Ngày sinh nhân viên phải theo định dạng dd/MM/yyyy");
+                        return false;
+                    }
+
+                    if (!isRadioButton1Selected && !isRadioButton2Selected) {
+                        JOptionPane.showMessageDialog(null, "Vui lòng chọn giới tính");
+                        return false;
+                    }
+                
         return true;
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

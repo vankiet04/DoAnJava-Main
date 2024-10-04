@@ -6,11 +6,13 @@ package GUI.Menu;
 
 import BUS.BUS_ChucNangNhomQuyen;
 import BUS.BUS_NhanVien;
+import BUS.BUS_PhieuNhap;
 import DAO.DAO_NhaCungCap;
 import DAO.DAO_NhanVien;
 import DTO.DTO_ChucNangNhomQuyen;
 import DTO.DTO_NhaCungCap;
 import DTO.DTO_NhanVien;
+import DTO.DTO_PhieuNhap;
 import DTO.DTO_TaiKhoan;
 import GUI.CRUD.SuaNhaCungCapDialog;
 import GUI.CRUD.SuaNhanVienDialog;
@@ -65,7 +67,8 @@ public class NhanVien extends javax.swing.JPanel {
    GUI.MainProgram main;
     DTO_TaiKhoan user;
      BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
-    ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+     ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+    BUS_PhieuNhap buspn = new BUS_PhieuNhap();
     /**
      * Creates new form NhanVien
      */
@@ -680,6 +683,14 @@ JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here: Xoa
         int index = jTable1.getSelectedRow();
+        ArrayList<DTO_PhieuNhap> listpn = buspn.getAll();
+        for (DTO_PhieuNhap pn : listpn) {
+            if (pn.getManguoitao() == (int) jTable1.getValueAt(index, 0)) {
+                JOptionPane.showMessageDialog(null, "Nhân viên này đã thực hiện phiếu nhập, không thể xóa");
+                return;
+            }
+        }
+
         if (index == -1) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn nhan vien cần xóa");
         } else {
