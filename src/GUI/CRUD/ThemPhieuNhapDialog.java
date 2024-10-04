@@ -82,7 +82,7 @@ public class ThemPhieuNhapDialog extends javax.swing.JDialog {
     
 
     public void eventBtnNhapHang() {
-        if (chitietphieu.isEmpty()) {
+        if (chitietphieu==null || chitietphieu.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Chưa có sản phẩm nào trong phiếu !", "Cảnh báo !", JOptionPane.ERROR_MESSAGE);
         } else {
             int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn tạo phiếu nhập !", "Xác nhận tạo phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -278,8 +278,6 @@ public class ThemPhieuNhapDialog extends javax.swing.JDialog {
         }
         return tong;
     }
-
-   
     
     public void loadDataTalbeSanPham(ArrayList<DTO_Product> result) {
         tblModelSP = (DefaultTableModel) jTable1.getModel();

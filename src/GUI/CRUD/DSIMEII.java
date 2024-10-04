@@ -34,7 +34,6 @@ import java.awt.Dimension;
 import BUS.BUS_ChiTietSanPham;
 import BUS.BUS_KhachHang;
 
-
 import DTO.DTO_Imei;
 import DTO.DTO_KhachHang;
 
@@ -421,10 +420,17 @@ form KhachHangDialog
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here: dong y
-        if (this.soluongxuat != dsImeidachon.size()) {
-            JOptionPane.showMessageDialog(this, "Số lượng IMEI vượt quá số lượng xuất");
-            return;
+        int flag=0;
+        if (this.soluongxuat > dsImeidachon.size()) {
+            JOptionPane.showMessageDialog(this, "Số lượng IMEI không đủ với số lượng xuất");
+            flag=1;
         }
+        else if (this.soluongxuat < dsImeidachon.size()){
+            JOptionPane.showMessageDialog(this, "Số lượng IMEI vượt quá số lượng xuất");
+            flag=1;
+        }
+        if( flag !=0)
+            return;
         themPhieuXuat.imeidachon = dsImeidachon;
         JOptionPane.showMessageDialog(this, "Đã chọn xong");
 
