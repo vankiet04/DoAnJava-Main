@@ -26,10 +26,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.itextpdf.text.List;
 
+import BUS.BUS_ChiTietPhieuXuat;
 import BUS.BUS_ChucNangNhomQuyen;
 import BUS.BUS_KhachHang;
+import BUS.BUS_PhieuXuat;
 import DTO.DTO_ChucNangNhomQuyen;
 import DTO.DTO_KhachHang;
+import DTO.DTO_PhieuXuat;
 import DTO.DTO_TaiKhoan;
 import GUI.CRUD.SuaKhachHang;
 import GUI.CRUD.ThemKhachHang;
@@ -47,7 +50,8 @@ public class KhachHang extends javax.swing.JPanel {
     GUI.MainProgram main;
     DTO_TaiKhoan user;
      BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
-    ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+     ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+     BUS_PhieuXuat busPX = new BUS_PhieuXuat();
     /**
      * Creates new form KhachHang
      */
@@ -487,6 +491,15 @@ public class KhachHang extends javax.swing.JPanel {
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here: xoa
         if (currentIDSelected != "-1") {
+            ArrayList<DTO_PhieuXuat> listpx = busPX.getAll();
+
+            for (DTO_PhieuXuat px : listpx) {
+                if (Integer.valueOf(px.getIdkhachhang()).equals(Integer.parseInt(currentIDSelected)) ) {
+                    JOptionPane.showMessageDialog(null, "Khách hàng này đã có phiếu xuất, không thể xóa", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+            
             int dialogButton = JOptionPane.YES_NO_OPTION;
             int dialogResult = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa khách hàng này?", "Cảnh báo", dialogButton);
             if (dialogResult == JOptionPane.YES_OPTION) {

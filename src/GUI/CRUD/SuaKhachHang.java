@@ -5,6 +5,9 @@
 package GUI.CRUD;
 
 import java.awt.BorderLayout;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -17,6 +20,7 @@ import DTO.DTO_KhachHang;
  */
 public class SuaKhachHang extends javax.swing.JDialog {
     private String tieuDe, loai, nutNhan;
+    String tenkhachhang;
     /**
      * Creates new      * Creates new form KhachHangDialog
 form KhachHangDialog
@@ -38,6 +42,7 @@ form KhachHangDialog
         this.kh = kh;
         initComponents();
         DTO_KhachHang khid = buskh.getKHbyid(id);
+        tenkhachhang = khid.getHoTen();
         jTextField2.setText(khid.getMaKhachHang());
         jTextField4.setText(khid.getHoTen());
         jTextField6.setText(khid.getDiaChi());
@@ -460,19 +465,51 @@ form KhachHangDialog
         String gioitinh = (String) jComboBox2.getSelectedItem();
         String sdt = jTextField5.getText();
         String ngaythamgia = jTextField7.getText();
-        if (!validateKhachHang(hoten, diachi, gioitinh, sdt)) {
-            return;
-        }
-        DTO_KhachHang editkh = new DTO_KhachHang(makh, hoten, diachi, sdt, ngaythamgia, gioitinh);
-        
-        if(buskh.update(editkh) == 1) {
-            JOptionPane.showMessageDialog(null, "Sửa thành công");
-            kh.listKh = buskh.getAllData();
-            kh.filltable(kh.listKh);
-            return;
-        }
-        JOptionPane.showMessageDialog(null, "Sửa thất bại");
+        // kiêm tra tên khách hàng đã tồn tại
+        ArrayList<DTO_KhachHang> listkh = buskh.getAllData();
+        // ho ten ma khach tenkhachhang
+        if (!tenkhachhang.equals(hoten)) {
+            for (DTO_KhachHang i : listkh) {
+                if (i.getHoTen().equals(hoten) && !i.getMaKhachHang().equals(makh)) {
+                    JOptionPane.showMessageDialog(null, "Họ tên đã tồn tại");
+                    return;
+                }
+                //kiemtra sdt   
+                if (i.getSoDienThoai().equals(sdt) && !i.getMaKhachHang().equals(makh)) {
+                    JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+                    return;
+                }
+                //kiem tra dia
+                if (i.getDiaChi().equals(diachi) && !i.getMaKhachHang().equals(makh)) {
+                    JOptionPane.showMessageDialog(null, "Địa chỉ đã tồn tại");
+                    return;
 
+                }
+            }
+
+            // tên khách hàng không chứa kí tự đặt biệt
+            if (!hoten.matches("[a-zA-Z\\s]+")) {
+                JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
+                return;
+            }
+            //kiem tra dia chi neu chua ki tự đac biệt ngoài trừ / va khoang trang 
+            if (!diachi.matches("[a-zA-Z0-9\\s/]+")) {
+                JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt");
+                return;
+            }
+            if (!validateKhachHang(hoten, diachi, gioitinh, sdt)) {
+                return;
+            }
+            DTO_KhachHang editkh = new DTO_KhachHang(makh, hoten, diachi, sdt, ngaythamgia, gioitinh);
+
+            if (buskh.update(editkh) == 1) {
+                JOptionPane.showMessageDialog(null, "Sửa thành công");
+                kh.listKh = buskh.getAllData();
+                kh.filltable(kh.listKh);
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "Sửa thất bại");
+        }
     }//GEN-LAST:event_jToggleButton1MousePressed
 
     /**
