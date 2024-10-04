@@ -5,6 +5,9 @@
 package GUI.CRUD;
 
 import java.awt.BorderLayout;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -399,6 +402,36 @@ form KhachHangDialog
         String diaChi = jTextField6.getText();
         String ngayThem = jTextField7.getText();
         String gioiTinh = jComboBox2.getSelectedItem().toString();
+        // tên khách hàng không chứa kí tư đặc biệt
+        ArrayList<DTO_KhachHang> listKh = khachHangBus.getAllData();
+        //kiem tra ten khach hang co ton tai
+        for (DTO_KhachHang kh : listKh) {
+            if (kh.getHoTen().equals(tenKh)) {
+                JOptionPane.showMessageDialog(null, "Tên khách hàng đã tồn tại");
+                return;
+            }
+            //kiem tra so dien thoai co ton tai
+            if (kh.getSoDienThoai().equals(sdt)) {
+                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+                return;
+            }
+            //kiem tra dia chi co ton tai
+            if (kh.getDiaChi().equals(diaChi)) {
+                JOptionPane.showMessageDialog(null, "Địa chỉ đã tồn tại");
+                return;
+            }
+            //kiem tra email co ton tai
+            
+        }
+        
+        if (!tenKh.matches("[a-zA-Z0-9 ]+")) {
+            JOptionPane.showMessageDialog(null, "Tên khách hàng không chứa kí tự đặc biệt");
+            return;
+        }
+        if (!diaChi.matches("[a-zA-Z0-9\\s/]+")) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt");
+            return;
+        }
         if (maKhachHang.equals("") || tenKh.equals("") || sdt.equals("") || diaChi.equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
             return;
