@@ -7,6 +7,10 @@ package GUI.CRUD;
 import BUS.BUS_NhaCungCap;
 import DAO.DAO_NhaCungCap;
 import DTO.DTO_NhaCungCap;
+import DTO.DTO_NhanVien;
+
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -167,6 +171,33 @@ public class ThemNhaCungCap extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     public boolean validateNhaCungCap(String ten, String diaChi, String email, String soDienThoai) {
+         if (!ten.matches("[a-zA-Z\\p{L}\\s]+")) {
+                    JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
+                    return false;
+                }
+                //dia chi duoc phep chua dau tieng viet
+                ArrayList<DTO_NhaCungCap> listnv = busncc.getAllData();
+                for (DTO_NhaCungCap nv : listnv) {
+                    if (nv.getTenncc().equals(ten)) {
+                        JOptionPane.showMessageDialog(null, "Tên nhân viên đã tồn tại");
+                        return false;
+                    }
+                    //sdt
+                    if (nv.getsodienthoai().equals(soDienThoai)) {
+                        JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+                        return false;
+                    }
+                }
+                //emai khong duoc chua ki tu dac biet truoc @
+                if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")) {
+                    JOptionPane.showMessageDialog(null, "Email không hợp lệ");
+                    return false;
+                }
+                //dia chi phai chua it nhat 1 ki tu khac khoang trang
+                if (!diaChi.matches(".*\\S.*")) {
+                    JOptionPane.showMessageDialog(null, "Địa chỉ không hợp lệ");
+                    return false;
+                }
         if (ten.length() < 3) {
             JOptionPane.showMessageDialog(null, "Tên nhà cung cấp phải có ít nhất 3 ký tự");
             return false;
