@@ -31,6 +31,7 @@ public class SuaNhomQuyen extends javax.swing.JDialog {
     BUS_ChucNangNhomQuyen chucNangNhomQuyen = new BUS_ChucNangNhomQuyen();
     BUS_NhomQuyen busNhomQuyen = new BUS_NhomQuyen();
     GUI.Menu.PhanQuyen phanquyen;
+    String tenquyensua;
     public SuaNhomQuyen(java.awt.Frame parent, boolean modal, int id, GUI.Menu.PhanQuyen phanquyen) {
         super(parent, modal);
         this.manhomquyen = id;
@@ -39,6 +40,7 @@ public class SuaNhomQuyen extends javax.swing.JDialog {
         DTO_NhomQuyen dtoNhomQuyen = busNhomQuyen.getNhomQuyen(id);
         loadNhomquyen();
         jTextField1.setText(dtoNhomQuyen.getTennhomquyen());
+        tenquyensua = busNhomQuyen.getNhomQuyen(id).getTennhomquyen();
     }
 
     public void loadNhomquyen() {
@@ -692,8 +694,25 @@ public class SuaNhomQuyen extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Tên nhóm quyền không được để trống");
             return;
         }
+        // ten quyen phai chua it nhat 1 ki tu khac khoang trang
+        if (!tenQuyen.matches(".*\\S.*")) {
+            JOptionPane.showMessageDialog(null, "Tên nhóm quyền phải chứa ít nhất 1 kí tự khác khoảng trắng");
+            return;
+        }
+        // kiem tra ten dan ton tai
         BUS_NhomQuyen busNhomQuyen = new BUS_NhomQuyen();
         ArrayList<DTO_NhomQuyen> dtoNhomQuyenz = busNhomQuyen.getAllData();
+        // hai ten tren bang nhau thì khong thic hienj vpng for ben duoi
+        if (!tenquyensua.equals(tenQuyen)){
+            for (DTO_NhomQuyen dtoNhomQuyen : dtoNhomQuyenz) {
+                if (dtoNhomQuyen.getTennhomquyen().equals(tenQuyen)) {
+                    JOptionPane.showMessageDialog(null, "Ten nhom quyen da ton tai");
+                    jTextField1.setText(tenquyensua);
+                    return;
+                }
+            }
+        }
+       
 
         DTO_NhomQuyen dtoNhomQuyen = new DTO_NhomQuyen(manhomquyen, tenQuyen);
         busNhomQuyen.update(dtoNhomQuyen);
@@ -727,16 +746,27 @@ public class SuaNhomQuyen extends javax.swing.JDialog {
                 three += 4;
             }
             HashMap<String, ArrayList<String>> chucnangnhomquyen = new HashMap<>();
-            String[] keys = {"sanpham", "thuoctinh", "nhaphang", "xuathang", "khachhang", "thongke", "nhanvien", "nhacungcap", "taikhoan", "phanquyen"};
+            String[] keys = { "sanpham", "thuoctinh", "nhaphang", "xuathang", "khachhang", "thongke", "nhanvien",
+                    "nhacungcap", "taikhoan", "phanquyen" };
+            int cnt = 0;
             for (int i = 0; i < 10; i++) {
                 ArrayList<String> chucnang = new ArrayList<>();
                 for (int j = 0; j < 4; j++) {
                     if (listCheckBox.get(i).get(j).isSelected()) {
+                        cnt++;
                         chucnang.add(map.get(j));
                     }
                 }
                 chucnangnhomquyen.put(keys[i], chucnang);
             }
+            //neu listCheckBox chua chon chuc nang nao thi thong bao
+            if (cnt == 0) {
+                JOptionPane.showMessageDialog(null, "Chọn ít nhất 1 chức năng");
+                return;
+            }
+
+            // neu khong chon chuc nang nao thi thong bao
+           
             // xoa chitiet nhom quyen
             if (busNhomQuyen.deleteChitietNhomQuyen(manhomquyen) == 0) {
                 JOptionPane.showMessageDialog(null, "Sửa nhóm quyền thất bạái");

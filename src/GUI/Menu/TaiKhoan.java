@@ -7,15 +7,18 @@ package GUI.Menu;
 import BUS.BUS_ChucNangNhomQuyen;
 import BUS.BUS_NhanVien;
 import BUS.BUS_NhomQuyen;
+import BUS.BUS_PhieuNhap;
 import BUS.BUS_TaiKhoan;
 import DTO.DTO_ChucNangNhomQuyen;
 import DTO.DTO_NhanVien;
+import DTO.DTO_PhieuNhap;
 import DTO.DTO_TaiKhoan;
 import GUI.CRUD.SuaTaiKhoan;
 import GUI.CRUD.ThemNhanVienDialog;
 import GUI.CRUD.ThemTaiKhoan;
 import GUI.CRUD.XemTaiKhoan;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 
@@ -43,7 +46,8 @@ public class TaiKhoan extends javax.swing.JPanel {
      GUI.MainProgram main;
     DTO_TaiKhoan user;
      BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
-    ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+     ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+    BUS_PhieuNhap busPN = new BUS_PhieuNhap();
 
     public TaiKhoan(GUI.MainProgram main, DTO_TaiKhoan user) {
         this.main = main;
@@ -470,6 +474,15 @@ if (currentIDselected == -1) {
             JOptionPane.showMessageDialog(null, "Không thể xóa tài khoản admin", "Cảnh báo!",
                     JOptionPane.WARNING_MESSAGE);
             return;
+        }
+        //khong the xoa tai khoan neu tai khoan do da duoc su dung trong phieu nhap
+        ArrayList<DTO_PhieuNhap> listPN = busPN.getAll();
+        for (DTO_PhieuNhap pn : listPN) {
+            if (pn.getManguoitao() == currentIDselected) {
+                JOptionPane.showMessageDialog(null, "Không thể xóa tài khoản này vì đã được sử dụng trong phiếu nhập", "Cảnh báo!",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
         }
         int option = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa tài khoản này không?", "Cảnh báo!", JOptionPane.YES_NO_OPTION);
         if (option != JOptionPane.YES_OPTION) {

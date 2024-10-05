@@ -169,9 +169,16 @@ public class ThemTaiKhoan extends javax.swing.JDialog {
         // TODO add your handling code here: them 
         // if combobox nhanvien chua co tai khoan is empty
         if (jComboBox1.getItemCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Chưa chọn nhân viên. Nếu không có nhân viên ở combobox tức là tất cả nhân viên đã có tài khoản");
+            JOptionPane.showMessageDialog(null,
+                    "Chưa chọn nhân viên. Nếu không có nhân viên ở combobox tức là tất cả nhân viên đã có tài khoản");
             return;
         }
+        // ten dang nhap chua it nhat 1 ki tu khac khoang trang space
+        if(jTextField1.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được để trống");
+            return;
+        }
+        
         if (jTextField1.getText().equals("") || jPasswordField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Không được để trống tài khoản hoặc mật khẩu");
             return;
@@ -189,6 +196,9 @@ public class ThemTaiKhoan extends javax.swing.JDialog {
             tk.loadTable(tk.bustk.getAllData());
             this.dispose();
         } 
+        else {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập đã tồn tại");
+        }
     }//GEN-LAST:event_jButton1MousePressed
 
     /**

@@ -199,7 +199,7 @@ public class DAO_TaiKhoan implements DAOInterface<DTO_TaiKhoan> {
     
     public ArrayList<DTO_TaiKhoan> search(String keyword) {
         ArrayList<DTO_TaiKhoan> result = new ArrayList<DTO_TaiKhoan>();
-       
+
         try {
             Connection con = (Connection) JDBCUtil.getConnectDB();
             String sql = "SELECT * FROM taikhoan where trangthai = 1 and (manv like ? or tendangnhap like ? or matkhau like ? or manhomquyen like ?)";
@@ -223,6 +223,26 @@ public class DAO_TaiKhoan implements DAOInterface<DTO_TaiKhoan> {
             JOptionPane.showMessageDialog(null, "Loi lay tat ca nhan vien: " + e.getMessage());
         }
         return result;
+    }
+    
+    public String getTenDangNhapByIdNhanVien(int manv) {
+        try {
+            Connection con = (Connection) JDBCUtil.getConnectDB();
+            String sql = "SELECT * FROM taikhoan where manv = ?";
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            pst.setInt(1, manv);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+            if (rs.next()) {
+                String tendangnhap = rs.getString("tendangnhap");
+                JDBCUtil.close(con);
+                return tendangnhap;
+            }
+            JDBCUtil.close(con);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Loi lay tat ca nhan vien: " + e.getMessage());
+        }
+        return null;
+
     }
 
 }

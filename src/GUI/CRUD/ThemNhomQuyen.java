@@ -630,6 +630,10 @@ public class ThemNhomQuyen extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Ten nhom quyen khong duoc de trong");
             return;
         }
+        if (!tenQuyen.matches(".*\\S.*")) {
+            JOptionPane.showMessageDialog(null, "Tên nhóm quyền phải chứa ít nhất 1 kí tự khác khoảng trắng");
+            return;
+        }
         BUS_NhomQuyen busNhomQuyen = new BUS_NhomQuyen();
         ArrayList<DTO_NhomQuyen> dtoNhomQuyenz = busNhomQuyen.getAllData();
         for (DTO_NhomQuyen dtoNhomQuyen : dtoNhomQuyenz) {
@@ -665,17 +669,26 @@ public class ThemNhomQuyen extends javax.swing.JDialog {
             three += 4;
         }
         HashMap<String, ArrayList<String>> chucnangnhomquyen = new HashMap<>();
-        String[] keys = {"sanpham", "thuoctinh", "nhaphang", "xuathang", "khachhang", "thongke", "nhanvien", "nhacungcap", "taikhoan", "nhomquyen"};
+        String[] keys = { "sanpham", "thuoctinh", "nhaphang", "xuathang", "khachhang", "thongke", "nhanvien",
+                "nhacungcap", "taikhoan", "nhomquyen" };
+        int cnt = 0;
         for (int i = 0; i < 10; i++) {
             ArrayList<String> chucnang = new ArrayList<>();
             for (int j = 0; j < 4; j++) {
-                if (listCheckBox.get(i*4 + j).isSelected()) {
+                if (listCheckBox.get(i * 4 + j).isSelected()) {
                     chucnang.add(map.get(j));
+                    cnt++;
                 }
             }
             chucnangnhomquyen.put(keys[i], chucnang);
         }
+        // neu khong chon checkbox nao thi khong cho them
+             
 
+        if (cnt == 0) {
+            JOptionPane.showMessageDialog(null, "Chua chon chuc nang nao");
+            return;
+        }
         // them vao table nhomquyen
         int manhomquyen = busNhomQuyen.getnewIncrement();
         DTO_NhomQuyen dtoNhomQuyen = new DTO_NhomQuyen(manhomquyen, tenQuyen);
