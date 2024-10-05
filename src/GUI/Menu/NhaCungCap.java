@@ -701,12 +701,6 @@ JOptionPane.showMessageDialog(null, "Xuất dữ liệu thành công");
         // TODO add your handling code here: Xoa
       
         int index = jTable2.getSelectedRow();
-        ArrayList<DTO_PhieuNhap> listncc = buspn.getAll();
-        for( DTO_PhieuNhap pn : listncc){
-            if(pn.getManguoitao() == (int) jTable2.getValueAt(index, 0)){
-                JOptionPane.showMessageDialog(null, "Không thể xóa nhà cung cấp này vì đã có phiếu nhập");
-                return;
-            }
         if (index == -1) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp cần xóa");
         } else {
