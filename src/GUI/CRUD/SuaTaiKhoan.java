@@ -203,6 +203,12 @@ public class SuaTaiKhoan extends javax.swing.JDialog {
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here: sua
         //validate
+        if (jTextField1.getText().trim().equals("") || jPasswordField1.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Không được để trống tài khoản hoặc mật khẩu");
+            return;
+        }
+        
+        
         if (jTextField1.getText().equals("") || jPasswordField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
             return;
