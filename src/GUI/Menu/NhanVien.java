@@ -6,11 +6,13 @@ package GUI.Menu;
 
 import BUS.BUS_ChucNangNhomQuyen;
 import BUS.BUS_NhanVien;
+import BUS.BUS_PhieuNhap;
 import DAO.DAO_NhaCungCap;
 import DAO.DAO_NhanVien;
 import DTO.DTO_ChucNangNhomQuyen;
 import DTO.DTO_NhaCungCap;
 import DTO.DTO_NhanVien;
+import DTO.DTO_PhieuNhap;
 import DTO.DTO_TaiKhoan;
 import GUI.CRUD.SuaNhaCungCapDialog;
 import GUI.CRUD.SuaNhanVienDialog;
@@ -65,7 +67,8 @@ public class NhanVien extends javax.swing.JPanel {
    GUI.MainProgram main;
     DTO_TaiKhoan user;
      BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
-    ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+     ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+    BUS_PhieuNhap buspn = new BUS_PhieuNhap();
     /**
      * Creates new form NhanVien
      */
@@ -279,8 +282,6 @@ JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
         jButton5 = new javax.swing.JButton();
         jLabel4NCC = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
-        jLabel5NCC = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jLabel6NCC = new javax.swing.JLabel();
@@ -443,15 +444,8 @@ JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setForeground(new java.awt.Color(255, 255, 255));
 
-        jButton6.setText("Them");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
 
-        jLabel5NCC.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5NCC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-excel-75.png"))); // NOI18N
+
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -460,17 +454,15 @@ JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5NCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING))
+                )
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5NCC, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                )
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -680,14 +672,22 @@ JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here: Xoa
         int index = jTable1.getSelectedRow();
+        ArrayList<DTO_PhieuNhap> listpn = buspn.getAll();
+        for (DTO_PhieuNhap pn : listpn) {
+            if (pn.getManguoitao() == (int) jTable1.getValueAt(index, 0)) {
+                JOptionPane.showMessageDialog(null, "Nhân viên này đã thực hiện phiếu nhập, không thể xóa");
+                return;
+            }
+        }
+
         if (index == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhan vien cần xóa");
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhan viên cần xóa");
         } else {
-            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhà cung cấp này không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhân viên này không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 int id = (int) jTable1.getValueAt(index, 0);
                 busnv.delete(id);
-                JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp thành công");
+                JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công");
                 loadTable(busnv.getAllData());
             }
         }
@@ -722,13 +722,7 @@ JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        importExcel();
-        loadTable(busnv.getAllData());
 
-
-    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
@@ -760,13 +754,11 @@ JOptionPane.showMessageDialog(null, "Xuất file Excel thành công");
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1NCC;
     private javax.swing.JLabel jLabel2NCC;
     private javax.swing.JLabel jLabel3NCC;
     private javax.swing.JLabel jLabel4NCC;
-    private javax.swing.JLabel jLabel5NCC;
     private javax.swing.JLabel jLabel6NCC;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;

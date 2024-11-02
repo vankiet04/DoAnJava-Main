@@ -34,7 +34,7 @@ import DTO.DTO_ChucNangNhomQuyen;
 import DTO.DTO_PhieuXuat;
 import DTO.DTO_Product;
 import DTO.DTO_TaiKhoan;
-import GUI.CRUD.HuyHoaDon;
+// import GUI.CRUD.HuyHoaDon;
 import GUI.CRUD.ThemPhieuXuat;
 import GUI.CRUD.XemChiTietPhieuXuatDialog;
 // import them phieu nhap hang
@@ -1068,9 +1068,9 @@ public class QuanLyPhieuXuat extends javax.swing.JPanel {
             return;
         }
 
-        HuyHoaDon huy = new HuyHoaDon(parent, true, currentIDselected, user.getManv());
-        huy.setLocationRelativeTo(null);
-        huy.setVisible(true);
+        // HuyHoaDon huy = new HuyHoaDon(parent, true, currentIDselected, user.getManv());
+        // huy.setLocationRelativeTo(null);
+        // huy.setVisible(true);
     }//GEN-LAST:event_jButton6MousePressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -4,11 +4,13 @@
  */
 package GUI.Menu;
 
+import BUS.BUS_ChiTietCauHinh;
 import BUS.BUS_ChiTietSanPham;
 import BUS.BUS_ChucNangNhomQuyen;
 import BUS.BUS_NhaCungCap;
 import BUS.BUS_NhanVien;
 import BUS.BUS_PhieuNhap;
+import DTO.DTO_ChiTietCauHinh;
 import DTO.DTO_ChiTietSanPham;
 import DTO.DTO_ChucNangNhomQuyen;
 import DTO.DTO_Phieu;
@@ -53,6 +55,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     BUS_NhaCungCap nccBUS = new BUS_NhaCungCap();
     BUS_NhanVien nvBUS = new BUS_NhanVien();
     BUS_ChiTietSanPham ctspBUS = new BUS_ChiTietSanPham();
+    BUS_ChiTietCauHinh ctchBUS = new BUS_ChiTietCauHinh();
     ArrayList<DTO_PhieuNhap> listPhieu;
     DefaultTableModel model;
 
@@ -61,6 +64,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
      BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
      ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
      BUS_ChiTietSanPham busCTSP = new BUS_ChiTietSanPham();
+     Integer maphieu;   
      public QuanLyPhieuNhap() {
 
          initComponents();
@@ -1010,33 +1014,33 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
   
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here: Xoa
-        int index = jTablePN.getSelectedRow();
-        // kiem tra co bao nhieu phien ban phien ban trong ma phieu nhap co ton tai ma phieu xuat
-        if (index == -1) {
+        maphieu = (int) jTablePN.getValueAt(jTablePN.getSelectedRow(), 0);
+        // JOptionPane.showMessageDialog(null, "maphieu: " + maphieu);
+        if (maphieu == -1) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu nhập để hủy!");
             return;
         }
-        int cnt = busCTSP.getsoluongphienbansanphamtontaitrongphieuxuat(Integer.parseInt(jTablePN.getValueAt(index, 0).toString()));
-        if (cnt > 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Không thể hủy vì có " + cnt + " phiên bản sản phẩm trong phiếu nhập đã được xuất đi!");
-            return;
+        ArrayList<DTO_ChiTietSanPham> listctch = ctspBUS.getAll();
+        for (DTO_ChiTietSanPham ctch : listctch) {
+            if (ctch.getMaphieunhap() == maphieu && ctch.getMaphieuxuat() > 0) {
+                JOptionPane.showMessageDialog(null, "Phiếu nhập đã được xuất hàng, không thể hủy!");
+                return;
+            }
         }
-        if (index != -1) {
+      
+        if (maphieu != -1) {
             int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\n Hãy nghĩ kĩ vì sau khi hủy\n không thể hoàn tác lại.", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
             if (input == 0) {
-                DTO_PhieuNhap pn = listPhieu.get(index);
-                // if (!phieunhapBUS.checkCancelPn(pn.getMaphieu())) {
-                //     JOptionPane.showMessageDialog(null, "Sản phẩm trong phiếu này đã được xuất đi không thể hủy phiếu này!");
-                // } else {
-                int c = phieunhapBUS.cancelPhieuNhap(pn.getMaphieu());
+                // DTO_PhieuNhap pn = listPhieu.get(maphieu-1);
+            //   JOptionPane.showMessageDialog(null, "maphieu: " + maphieu);
+                int c = phieunhapBUS.cancelPhieuNhap(maphieu);
                 //cap nhat maimei co ma phieu nhap vua xoa la tinh trang bang 0
-                int check = ctspBUS.capNhatctspTinhTrangbang0(pn.getMaphieu());
+                int check = ctspBUS.capNhatctspTinhTrangbang0(maphieu);
 
                     if (c == 0 && check == 0) {
                         JOptionPane.showMessageDialog(null, "Hủy phiếu không thành công!");
                     } else {
-                        // ma phieu nhap tang them 1
+                   
                         
                         JOptionPane.showMessageDialog(null, "Hủy phiếu thành công!");
                         listPhieu = phieunhapBUS.getAll();

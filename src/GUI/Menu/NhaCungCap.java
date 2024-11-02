@@ -29,10 +29,12 @@ import com.mysql.cj.xdevapi.Schema.Validation;
 import BUS.BUS_Brand;
 import BUS.BUS_ChucNangNhomQuyen;
 import BUS.BUS_NhaCungCap;
+import BUS.BUS_PhieuNhap;
 import BUS.BUS_Product;
 import DAO.DAO_NhaCungCap;
 import DTO.DTO_ChucNangNhomQuyen;
 import DTO.DTO_NhaCungCap;
+import DTO.DTO_PhieuNhap;
 import DTO.DTO_Product;
 import DTO.DTO_TaiKhoan;
 import GUI.CRUD.SuaNhaCungCapDialog;
@@ -52,7 +54,8 @@ public class NhaCungCap extends javax.swing.JPanel {
     GUI.MainProgram main;
     DTO_TaiKhoan user;
      BUS_ChucNangNhomQuyen busNQ = new BUS_ChucNangNhomQuyen();
-    ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+     ArrayList<DTO_ChucNangNhomQuyen> listNQ = new ArrayList<>();
+    BUS_PhieuNhap buspn = new BUS_PhieuNhap();
     /**
      * Creates new form NhaCungCap
      */
@@ -311,7 +314,7 @@ JOptionPane.showMessageDialog(null, "Xuất dữ liệu thành công");
                 {null, null, null, null, null}
             },
             new String [] {
-                "Mã nhà cung cấp", "Tên nhà cung cấp", "Địa chỉ", "Giới tính", "Số điện thoại"
+                "Mã nhà cung cấp", "Tên nhà cung cấp", "Địa chỉ", "Email", "Số điện thoại"
             }
         ));
         jScrollPane1.setViewportView(jTable2);
@@ -696,6 +699,7 @@ JOptionPane.showMessageDialog(null, "Xuất dữ liệu thành công");
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here: Xoa
+      
         int index = jTable2.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp cần xóa");

@@ -100,10 +100,10 @@ public class ThongKeTonKho extends javax.swing.JPanel {
     }
 
     public void timKiemTheoMaHoacTenSanPham() {
-        String key = jTextField3.getText();
+        String key = jTextField3.getText().toLowerCase();
         ArrayList<DTO_Product> result = new ArrayList<>();
         for (DTO_Product sp : listSP) {
-            if (String.valueOf(sp.getMasanpham()).contains(key) || sp.getTensanpham().contains(key)) {
+            if (String.valueOf(sp.getMasanpham()).contains(key) || sp.getTensanpham().toLowerCase().contains(key)) {
                 result.add(sp);
             }
         }

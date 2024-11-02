@@ -36,7 +36,7 @@ public class PhanQuyen extends javax.swing.JPanel {
    public ArrayList<DTO_NhomQuyen> listnq = busnq.getAllData();
    private DTO_NhanVien nvDTO;
    DefaultTableModel modelNV;
-   int currentIDselected = 1;
+   int currentIDselected = -1;
 
     /**
      * Creates new form NhanVien
@@ -444,6 +444,7 @@ public class PhanQuyen extends javax.swing.JPanel {
             return;
         }
         SuaNhomQuyen suanhomquyen = new SuaNhomQuyen(new javax.swing.JFrame(), true, currentIDselected, this);
+
         suanhomquyen.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         suanhomquyen.setLocationRelativeTo(null);
         suanhomquyen.setVisible(true);
