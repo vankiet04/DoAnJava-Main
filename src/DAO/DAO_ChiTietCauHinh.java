@@ -222,7 +222,7 @@ public class DAO_ChiTietCauHinh implements DAOInterface_Detail<DTO_ChiTietCauHin
             pst.setLong(1, quantity_change);
             pst.setInt(2, pbsp.getMaphienbansp());
             result = pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "ress = " + result);
+          
             JOptionPane.showMessageDialog(null, "update so luong ton thanh cong");
             JDBCUtil.close(con);
 

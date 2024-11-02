@@ -145,7 +145,7 @@ public class DAO_PhieuNhap implements DAOInterface<DTO_PhieuNhap> {
             pst.setInt(1, maphieu);
             result = pst.executeUpdate();
             JDBCUtil.close(con);
-            // JOptionPane.showMessageDialog(null, "Huy phieu nhap thanh cong: "+ result);
+            JOptionPane.showMessageDialog(null, "Huy phieu nhap thanh cong roi ne: "+ result);
         } catch (SQLException ex) {
             // JOptionPane.showMessageDialog(null, "Loi huy phieu nhap: "+ ex.getMessage());
 
