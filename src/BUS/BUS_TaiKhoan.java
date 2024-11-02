@@ -39,8 +39,11 @@ public class BUS_TaiKhoan {
         return tk.delete(manv);
     }
 
-    public ArrayList<DTO_TaiKhoan> search( String keyword) {
+    public ArrayList<DTO_TaiKhoan> search(String keyword) {
         return tk.search(keyword);
+    }
+    public String getTenDangNhapByIdNhanVien(int manv) {
+        return tk.getTenDangNhapByIdNhanVien(manv);
     }
 }
 
