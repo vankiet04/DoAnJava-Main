@@ -860,22 +860,36 @@ public class ThemPhieuNhapDialog extends javax.swing.JDialog {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
      
-        if (jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("")
-                || jTextField8.getText().equals("") || jTextField9.getText().equals("")) {
+        
+        
+        if (jTextField5.getText().trim().equals("") || jTextField6.getText().trim().equals("") || jTextField7.getText().trim().equals("")
+                || jTextField8.getText().trim().equals("") || jTextField9.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm và nhập đầy đủ thông tin !");
             return;
         }
        
-        if (Long.parseLong(jTextField8.getText()) <= 0) {
-            JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0 ");
+        try {
+            if (Long.parseLong(jTextField8.getText()) <= 0) {
+                JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng định dạng cho số lượng");
+            jTextField8.setText("");
             return;
         }
 
-       
-        if (Long.parseLong(jTextField7.getText()) <= 0) {
-            JOptionPane.showMessageDialog(null, "Đơn giá phải lớn hơn 0 ");
+        try {
+            if (Long.parseLong(jTextField7.getText()) <= 0) {
+                JOptionPane.showMessageDialog(null, "Đơn giá phải lớn hơn 0");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng định dạng cho đơn giá");
+            jTextField7.setText("");
             return;
         }
+
         
         addCtPhieu();
     }//GEN-LAST:event_jButton4ActionPerformed

@@ -8,7 +8,11 @@ import BUS.BUS_NhanVien;
 import DAO.DAO_NhanVien;
 import DTO.DTO_NhanVien;
 import com.toedter.calendar.JDateChooser;
+
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -220,11 +224,74 @@ public class ThemNhanVienDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    public boolean validateNhanVien(String ten, String email, String soDienThoai, String ngaySinh, boolean isRadioButton1Selected, boolean isRadioButton2Selected) {
-        if (ten.length() < 3) {
-            JOptionPane.showMessageDialog(null, "Tên nhân viên phải có ít nhất 3 ký tự");
-            return false;
-        }
+    public boolean validateNhanVien(String ten, String email, String soDienThoai, String ngaySinh,boolean isRadioButton1Selected, boolean isRadioButton2Selected)  {
+                if(ten.trim().equals("") || email.trim().equals("") || soDienThoai.trim().equals("")){
+                    JOptionPane.showMessageDialog(null, "Vui lòng không để trống dữ liệu");
+                    return false;                    
+                }
+                ten=ten.trim();
+                email=email.trim();
+                soDienThoai=soDienThoai.trim();
+                
+                if (!ten.matches("[a-zA-Z\\p{L}\\s]+")) {
+                    JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
+                    return false;
+                }
+                //dia chi duoc phep chua dau tieng viet
+                ArrayList<DTO_NhanVien> listnv = busnv.getAllData();
+                for (DTO_NhanVien nv : listnv) {
+                    if (nv.getHoten().equals(ten)) {
+                        JOptionPane.showMessageDialog(null, "Tên nhân viên đã tồn tại");
+                        return false;
+                    }
+                    //sdt
+                    if (nv.getSdt().equals(soDienThoai)) {
+                        JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+                        return false;
+                    }
+                    
+                    if(nv.getEmail().equals(email)){
+                        JOptionPane.showMessageDialog(null, "Email đã tồn tại");
+                        return false;                        
+                    }
+                }
+                //emai khong duoc chua ki tu dac biet truoc @
+                if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")) {
+                    JOptionPane.showMessageDialog(null, "Email không hợp lệ");
+                    return false;
+                }
+
+                //pahi lon hon 18 tuoi
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateOfBirth;
+                Date currentDate = new Date();
+                try {
+                    dateOfBirth = sdf.parse(ngaySinh);
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(currentDate);
+                    cal.add(Calendar.YEAR, -18);  // Lùi lại 18 năm
+
+                    Date minDateOfBirth = cal.getTime();  // Ngày giới hạn tối thiểu
+
+                    // Kiểm tra nếu ngày sinh lớn hơn ngày giới hạn
+                    if (dateOfBirth.after(minDateOfBirth)) {
+                        JOptionPane.showMessageDialog(null, "Tuổi phải lớn hơn hoặc bằng 18");
+                        return false;
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ");
+                    return false;
+                }
+                
+                
+                //ten nhan vien phai chua ki tu chu
+                if (!ten.matches("[a-zA-Z\\p{L}\\s]+")) {
+                    JOptionPane.showMessageDialog(null, "Tên nhân viên không hợp lệ");
+                    return false;
+                }
+
+                
         if (!email.matches(".+@.+\\..+")) {
             JOptionPane.showMessageDialog(null, "Email nhân viên phải chứa @ và một ký tự trước @ và một dấu . sau @");
             return false;

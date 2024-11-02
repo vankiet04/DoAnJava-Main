@@ -42,6 +42,43 @@ public class SuaNhaCungCapDialog extends javax.swing.JDialog {
     }
     
     public boolean validateNhaCungCap(String ten, String diaChi, String email, String soDienThoai) {
+        if(ten.trim().equals("") || email.trim().equals("") || soDienThoai.trim().equals("") || diaChi.trim().equals("")){
+                    JOptionPane.showMessageDialog(null, "Vui lòng không để trống dữ liệu");
+                    return false;                    
+                }     
+        ten=ten.trim();
+        email=email.trim();
+        soDienThoai=soDienThoai.trim();
+        diaChi= diaChi.trim();
+                
+                
+        if (!ten.matches("[a-zA-Z\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Tên không chứa kí tự đặc biệt");
+            return false;
+        }
+        //dia chi duoc phep chua dau tieng viet
+        ArrayList<DTO_NhaCungCap> listnv = busncc.getAllData();
+        for (DTO_NhaCungCap nv : listnv) {
+            if (nv.getTenncc().equals(ten)) {
+                JOptionPane.showMessageDialog(null, "Tên nhà cung cấp đã tồn tại");
+                return false;
+            }
+            //sdt
+            if (nv.getsodienthoai().equals(soDienThoai) && nv.getMancc() != nccDTO.getMancc()) {
+                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+                return false;
+            }
+        }
+        //emai khong duoc chua ki tu dac biet truoc @
+        if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")) {
+            JOptionPane.showMessageDialog(null, "Email không hợp lệ");
+            return false;
+        }
+        //dia chi phai chua it nhat 1 ki tu khac khoang trang
+        if (!diaChi.matches(".*\\S.*")) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ không hợp lệ");
+            return false;
+        }
         if (ten.length() < 3) {
             JOptionPane.showMessageDialog(null, "Tên nhà cung cấp phải có ít nhất 3 ký tự");
             return false;

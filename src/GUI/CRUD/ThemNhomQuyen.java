@@ -624,17 +624,21 @@ public class ThemNhomQuyen extends javax.swing.JDialog {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here: them nhom quyen
-        String tenQuyen = jTextField1.getText();
+        String tenQuyen = jTextField1.getText().trim();
         //validate ten quyen
-        if (tenQuyen.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ten nhom quyen khong duoc de trong");
+        if (tenQuyen.trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Tên nhóm quyền không được để trống");
+            return;
+        }
+        if (!tenQuyen.matches(".*\\S.*")) {
+            JOptionPane.showMessageDialog(null, "Tên nhóm quyền phải chứa ít nhất 1 kí tự khác khoảng trắng");
             return;
         }
         BUS_NhomQuyen busNhomQuyen = new BUS_NhomQuyen();
         ArrayList<DTO_NhomQuyen> dtoNhomQuyenz = busNhomQuyen.getAllData();
         for (DTO_NhomQuyen dtoNhomQuyen : dtoNhomQuyenz) {
             if (dtoNhomQuyen.getTennhomquyen().equals(tenQuyen)) {
-                JOptionPane.showMessageDialog(null, "Ten nhom quyen da ton tai");
+                JOptionPane.showMessageDialog(null, "Tên nhóm quyền đã tồn tại");
                 return;
             }
         }
@@ -665,24 +669,33 @@ public class ThemNhomQuyen extends javax.swing.JDialog {
             three += 4;
         }
         HashMap<String, ArrayList<String>> chucnangnhomquyen = new HashMap<>();
-        String[] keys = {"sanpham", "thuoctinh", "nhaphang", "xuathang", "khachhang", "thongke", "nhanvien", "nhacungcap", "taikhoan", "nhomquyen"};
+        String[] keys = { "sanpham", "thuoctinh", "nhaphang", "xuathang", "khachhang", "thongke", "nhanvien",
+                "nhacungcap", "taikhoan", "nhomquyen" };
+        int cnt = 0;
         for (int i = 0; i < 10; i++) {
             ArrayList<String> chucnang = new ArrayList<>();
             for (int j = 0; j < 4; j++) {
-                if (listCheckBox.get(i*4 + j).isSelected()) {
+                if (listCheckBox.get(i * 4 + j).isSelected()) {
                     chucnang.add(map.get(j));
+                    cnt++;
                 }
             }
             chucnangnhomquyen.put(keys[i], chucnang);
         }
+        // neu khong chon checkbox nao thi khong cho them
+             
 
+        if (cnt == 0) {
+            JOptionPane.showMessageDialog(null, "Chưa chọn chức năng nào");
+            return;
+        }
         // them vao table nhomquyen
         int manhomquyen = busNhomQuyen.getnewIncrement();
         DTO_NhomQuyen dtoNhomQuyen = new DTO_NhomQuyen(manhomquyen, tenQuyen);
         if (busNhomQuyen.insert(dtoNhomQuyen) == 1) {
-            JOptionPane.showMessageDialog(null, "Them nhom quyen thanh cong");
+            JOptionPane.showMessageDialog(null, "Thêm nhóm quyền thành công");
         } else {
-            JOptionPane.showMessageDialog(null, "Them nhom quyen that bai");
+            JOptionPane.showMessageDialog(null, "Thêm nhóm quyền thất bại");
         }
         // them chitiet nhom quyen
         if (busNhomQuyen.insertChitietNhomQuyen(manhomquyen, chucnangnhomquyen) == 1) {
@@ -691,10 +704,10 @@ public class ThemNhomQuyen extends javax.swing.JDialog {
         // ap.loadTable(ap.listnv);
         ap.listnq = busNhomQuyen.getAllData();
         ap.loadTable(ap.listnq);
-            JOptionPane.showMessageDialog(null, "Them chitiet nhom quyen thanh cong");
+            JOptionPane.showMessageDialog(null, "Thêm chitiet nhóm quyền thành công");
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Them chitiet nhom quyen that bai");
+            JOptionPane.showMessageDialog(null, "Thêm chitiet nhóm quyền thất bại");
         }
 
     }//GEN-LAST:event_jButton1MousePressed

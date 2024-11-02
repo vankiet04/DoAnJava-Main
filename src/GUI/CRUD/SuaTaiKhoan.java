@@ -32,11 +32,13 @@ public class SuaTaiKhoan extends javax.swing.JDialog {
     BUS_TaiKhoan busTaiKhoan = new BUS_TaiKhoan();
     BUS_ChucNangNhomQuyen busChucNangNhomQuyen = new BUS_ChucNangNhomQuyen();
     GUI.Menu.TaiKhoan tk;
+    String tendangnhapmacdinh;
     public SuaTaiKhoan(java.awt.Frame parent, boolean modal, int idNhanVien, GUI.Menu.TaiKhoan tk) {
         super(parent, modal);
         this.currentIDnhanvien = idNhanVien;
         this.tk = tk;
         initComponents();
+        tendangnhapmacdinh = busTaiKhoan.getTenDangNhapByIdNhanVien(idNhanVien);
         loadComboboxcurrentNV(currentIDnhanvien);
         loadcomboboxnhomquyen(currentIDnhanvien);
         loadtkmk(currentIDnhanvien);
@@ -201,6 +203,12 @@ public class SuaTaiKhoan extends javax.swing.JDialog {
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here: sua
         //validate
+        if (jTextField1.getText().trim().equals("") || jPasswordField1.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Không được để trống tài khoản hoặc mật khẩu");
+            return;
+        }
+        
+        
         if (jTextField1.getText().equals("") || jPasswordField1.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
             return;
@@ -211,12 +219,23 @@ public class SuaTaiKhoan extends javax.swing.JDialog {
             return;
         }
 
-        int newmanv = Integer.parseInt(jComboBox1.getSelectedItem().toString().split(" - ")[0]);
+        String tennhanvienthaydoi = jTextField1.getText();
+        if (!tendangnhapmacdinh.equals(tennhanvienthaydoi)) {
+            ArrayList<DTO_TaiKhoan> listtk = busTaiKhoan.getAllData();
+            for (DTO_TaiKhoan x : listtk) {
+                if (x.getTendangnhap().equals(tennhanvienthaydoi)) {
+
+                    JOptionPane.showMessageDialog(null, "Tên tài khoản đã tồn tại");
+                    jTextField1.setText(tendangnhapmacdinh);
+                    return;
+                }
+            }
+        }
         String username = jTextField1.getText();
         String password = jPasswordField1.getText();
         int manhomquyen = Integer.parseInt(jComboBox2.getSelectedItem().toString().split(" - ")[0]);
         int currentmanv = currentIDnhanvien;
-        int result = busTaiKhoan.updatetk(currentmanv, newmanv, username, password, manhomquyen);
+        int result = busTaiKhoan.updatetk(currentmanv, currentmanv, username, password, manhomquyen);
         if (result != -1) {
             JOptionPane.showMessageDialog(null, "Sửa tài khoản thành công");
             tk.loadTable(tk.bustk.getAllData());

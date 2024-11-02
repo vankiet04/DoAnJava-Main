@@ -5,6 +5,9 @@
 package GUI.CRUD;
 
 import java.awt.BorderLayout;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -17,6 +20,7 @@ import DTO.DTO_KhachHang;
  */
 public class SuaKhachHang extends javax.swing.JDialog {
     private String tieuDe, loai, nutNhan;
+    String tenkhachhang;
     /**
      * Creates new      * Creates new form KhachHangDialog
 form KhachHangDialog
@@ -38,6 +42,7 @@ form KhachHangDialog
         this.kh = kh;
         initComponents();
         DTO_KhachHang khid = buskh.getKHbyid(id);
+        tenkhachhang = khid.getHoTen();
         jTextField2.setText(khid.getMaKhachHang());
         jTextField4.setText(khid.getHoTen());
         jTextField6.setText(khid.getDiaChi());
@@ -446,13 +451,7 @@ form KhachHangDialog
     }
     private void jToggleButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MousePressed
         // TODO add your handling code here: sua khach hang
-        // DTO_KhachHang khid = buskh.getKHbyid(id);
-        // jTextField2.setText(khid.getMaKhachHang());
-        // jTextField4.setText(khid.getHoTen());
-        // jTextField6.setText(khid.getDiaChi());
-        // jComboBox2.setSelectedItem(khid.getgioitinh());
-        // jTextField5.setText(khid.getSoDienThoai()); 
-        // jTextField7.setText(khid.getNgayThamGia());
+       
 
         String makh = jTextField2.getText();
         String hoten = jTextField4.getText();
@@ -460,19 +459,50 @@ form KhachHangDialog
         String gioitinh = (String) jComboBox2.getSelectedItem();
         String sdt = jTextField5.getText();
         String ngaythamgia = jTextField7.getText();
-        if (!validateKhachHang(hoten, diachi, gioitinh, sdt)) {
+        // kiêm tra tên khách hàng đã tồn tại
+        ArrayList<DTO_KhachHang> listkh = buskh.getAllData();
+        // ho ten ma khach tenkhachhang
+
+            for (DTO_KhachHang i : listkh) {
+                if (i.getHoTen().equals(hoten) && !i.getMaKhachHang().equals(makh)) {
+                    JOptionPane.showMessageDialog(null, "Họ tên đã tồn tại");
+                    return;
+                }
+                //kiemtra sdt 
+                if (i.getSoDienThoai().equals(sdt) && !i.getMaKhachHang().equals(makh)){
+                    JOptionPane.showMessageDialog(null, "Số điện thoại này đã tồn tại");
+                    return;
+                }
+
+            }
+
+        // ho ten chi chua chu cai va khoang trang va cho phep cp dau tieng viet
+
+        if (!hoten.matches("[a-zA-Z\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
             return;
         }
-        DTO_KhachHang editkh = new DTO_KhachHang(makh, hoten, diachi, sdt, ngaythamgia, gioitinh);
-        
-        if(buskh.update(editkh) == 1) {
+        //dia chi duoc phep chua dau tieng viet
+        if (!diachi.matches("[a-zA-Z0-9\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt");
+            return;
+        }
+        if (!sdt.matches("\\d+")) {  
+            JOptionPane.showMessageDialog(null, "Số điện thoại chỉ chứa số!");
+            return;
+        }        
+            if (!validateKhachHang(hoten, diachi, gioitinh, sdt)) {
+                return;
+            }
+
+            DTO_KhachHang editkh = new DTO_KhachHang(makh, hoten, diachi, sdt, ngaythamgia, gioitinh);
+
+
             JOptionPane.showMessageDialog(null, "Sửa thành công");
             kh.listKh = buskh.getAllData();
             kh.filltable(kh.listKh);
+            this.dispose();
             return;
-        }
-        JOptionPane.showMessageDialog(null, "Sửa thất bại");
-
     }//GEN-LAST:event_jToggleButton1MousePressed
 
     /**

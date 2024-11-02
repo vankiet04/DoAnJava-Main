@@ -5,6 +5,9 @@
 package GUI.CRUD;
 
 import java.awt.BorderLayout;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -399,7 +402,33 @@ form KhachHangDialog
         String diaChi = jTextField6.getText();
         String ngayThem = jTextField7.getText();
         String gioiTinh = jComboBox2.getSelectedItem().toString();
-        if (maKhachHang.equals("") || tenKh.equals("") || sdt.equals("") || diaChi.equals("")) {
+        // tên khách hàng không chứa kí tư đặc biệt
+        ArrayList<DTO_KhachHang> listKh = khachHangBus.getAllData();
+        //kiem tra ten khach hang co ton tai
+        for (DTO_KhachHang kh : listKh) {
+            if (kh.getHoTen().equals(tenKh)) {
+                JOptionPane.showMessageDialog(null, "Tên khách hàng đã tồn tại");
+                return;
+            }
+            //kiem tra so dien thoai co ton tai
+            if (kh.getSoDienThoai().equals(sdt)) {
+                JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại");
+                return;
+            }
+            //kiem tra email co ton tai
+            
+        }
+        
+        if (!tenKh.matches("[a-zA-Z\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Họ tên không chứa kí tự đặc biệt");
+            return;
+        }
+        //dia chi duoc phep chua dau tieng viet
+        if (!diaChi.matches("[a-zA-Z0-9\\p{L}\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt");
+            return;
+        }
+        if (maKhachHang.trim().equals("") || tenKh.trim().equals("") || sdt.trim().equals("") || diaChi.trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
             return;
         }
@@ -407,6 +436,13 @@ form KhachHangDialog
             JOptionPane.showMessageDialog(null, "Số điện thoại phải có 10 chữ số");
             return;
         }
+        if (!sdt.matches("\\d+")) {  
+            JOptionPane.showMessageDialog(null, "Số điện thoại chỉ chứa số!");
+            return;
+        }        
+        
+        
+        
         if (maKhachHang.length() > 10) {
             JOptionPane.showMessageDialog(null, "Mã khách hàng không được quá 8 kí tự");
             return;
