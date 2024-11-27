@@ -121,17 +121,13 @@ public class LogIn extends JFrame implements KeyListener {
             } else {    
                 DAO_TaiKhoan daoTK = new DAO_TaiKhoan();
                 DTO_TaiKhoan tk = daoTK.getTaiKhoan(usernameCheck, passwordCheck);
-                if (tk.getTrangthai() == 0) {
-                    JOptionPane.showMessageDialog(this, "Tài khoản của bạn đang bị khóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                } else {
                     this.dispose();
                     MainProgram main = new MainProgram(tk);
                     main.setVisible(true);
-                }
-
             }
         }
     }
+    
     public static void main(String[] args)  {
         FlatRobotoFont.install();
         FlatLaf.setPreferredFontFamily(FlatRobotoFont.FAMILY);
